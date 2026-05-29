@@ -1,0 +1,4551 @@
+[
+  {
+    "question_id": 1,
+    "db_id": "NTSB",
+    "question": "Show a count of injuries by body region where the injury severity is critical. The lookup code for critical injury is 5.",
+    "gold_sql": "SELECT REGION, COUNT(*) INJCOUNT FROM INJURY WHERE AIS = 5 GROUP BY REGION",
+    "schema_links": {
+      "INJURY": [
+        "AIS",
+        "REGION"
+      ]
+    }
+  },
+  {
+    "question_id": 2,
+    "db_id": "PacificIslandLandbirds",
+    "question": "What is the station name of the station currently located at UTM coordinates X 272454 Y 2141631",
+    "gold_sql": "select Station  from tbl_stations  join tbl_Stations_UTMs on tbl_stations.Station_ID = tbl_stations_utms.Station_ID where X_final = 272454 and Y_final = 2141631",
+    "schema_links": {
+      "tbl_Stations": [
+        "Station",
+        "Station_ID"
+      ],
+      "tbl_Stations_UTMs": [
+        "Station_ID",
+        "X_final",
+        "Y_final"
+      ]
+    }
+  },
+  {
+    "question_id": 3,
+    "db_id": "SBODemoUS-Service",
+    "question": "How many service contract items are there for each service contract? Include the contract ID in the result.",
+    "gold_sql": "select OCTR.ContractID, count(*) itemCount from OCTR join CTR1 on OCTR.ContractID = CTR1.ContractID group by OCTR.ContractID",
+    "schema_links": {
+      "OCTR": [
+        "ContractID"
+      ],
+      "CTR1": [
+        "ContractID"
+      ]
+    }
+  },
+  {
+    "question_id": 4,
+    "db_id": "NTSB",
+    "question": "Make a list of tire models and the number of vehicles with those tires installed where tire damage was observed on at least one tire, as indicated by category values other than 0. Display them from most to least common models. Do not include the unknown damage category value 9.",
+    "gold_sql": "SELECT TIREMODEL, COUNT(DISTINCT CONCAT(T.CASEID, T.VEHNO)) VEHCOUNT FROM TIRE T LEFT JOIN TIREDAMAGE TD ON T.CASEID = TD.CASEID AND T.VEHNO = TD.VEHNO WHERE DAMAGE > 0 AND DAMAGE <> 9 GROUP BY TIREMODEL ORDER BY COUNT(DISTINCT CONCAT(T.CASEID, T.VEHNO)) DESC",
+    "schema_links": {
+      "TIRE": [
+        "CASEID",
+        "TIREMODEL",
+        "VEHNO"
+      ],
+      "TIREDAMAGE": [
+        "CASEID",
+        "DAMAGE",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 5,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "What are the role IDs of employees whos' salaries are less than 5000?",
+    "gold_sql": "select roleID from HEM6 join OHEM on HEM6.empID = OHEM.empID where salary < 5000",
+    "schema_links": {
+      "HEM6": [
+        "empID",
+        "roleID"
+      ],
+      "OHEM": [
+        "empID",
+        "salary"
+      ]
+    }
+  },
+  {
+    "question_id": 6,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "show the total number of minnows counted at each trap by location. Each location has multiple traps.",
+    "gold_sql": "select locationID, [Trap_#], sum(count) minnowCountSum from tblFieldDataMinnowTrapSurveys group by locationID, [Trap_#]",
+    "schema_links": {
+      "tblFieldDataMinnowTrapSurveys": [
+        "Count",
+        "LocationID",
+        "Trap_#"
+      ]
+    }
+  },
+  {
+    "question_id": 7,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the 2022 high school participation rates and graduation rates for the subgroup 'All Students' who attended Brooklyn Collegiate.",
+    "gold_sql": "select rate, grad_rate from [ACC_HS_Participation_Rate] p join [ACC_HS_Graduation_Rate] g  \ton p.ENTITY_CD = g.ENTITY_CD  \tand p.SUBGROUP_NAME = g.SUBGROUP_NAME  \tand p.YEAR = g.YEAR  \tand p.ENTITY_NAME = g.ENTITY_NAME \tand p.INSTITUTION_ID = g.INSTITUTION_ID where p.ENTITY_NAME = 'Brooklyn Collegiate' and p.SUBGROUP_NAME = 'All Students' and p.year = 2022",
+    "schema_links": {
+      "ACC_HS_Participation_Rate": [
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "INSTITUTION_ID",
+        "RATE",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ],
+      "ACC_HS_Graduation_Rate": [
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "GRAD_RATE",
+        "INSTITUTION_ID",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 8,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "What are the open and close dates for sales opportunity rows that have a closing percentage of six or less?",
+    "gold_sql": "select OpenDate, CloseDate from OPR1 where ClosePrcnt <= 6",
+    "schema_links": {
+      "OPR1": [
+        "CloseDate",
+        "ClosePrcnt",
+        "OpenDate"
+      ]
+    }
+  },
+  {
+    "question_id": 9,
+    "db_id": "NYSED_SRC2022",
+    "question": "What percent of students in the 'parent not in armed forces' subgroup enrolled at JOHANNA PERRIN MIDDLE SCHOOL scored in the entering level, the emerging level, the transitioning level, or the expanding level, on the TS_6 subject on the new york state english as a second language achievement test in 2021?",
+    "gold_sql": "select PER_ENT, PER_EMER, PER_TRAN, PER_EXP from [Annual_NYSESLAT] where SUBGROUP_NAME = 'Parent Not In Armed Forces' \tand SUBJECT = 'TS_6' \tand ENTITY_NAME = 'JOHANNA PERRIN MIDDLE SCHOOL' \tand year = 2021",
+    "schema_links": {
+      "Annual_NYSESLAT": [
+        "ENTITY_NAME",
+        "PER_EMER",
+        "PER_ENT",
+        "PER_EXP",
+        "PER_TRAN",
+        "SUBGROUP_NAME",
+        "SUBJECT",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 10,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the county name and total number of teachers teaching out of certification in each county.",
+    "gold_sql": "select COUNTY_NAME, sum(NUM_OUT_CERT) OOCCount from [Teachers_Teaching_Out_of_Certification] c join [BOCES_and_N/RC] b on c.ENTITY_CD = b.ENTITY_CD group by COUNTY_NAME",
+    "schema_links": {
+      "BOCES_and_N/RC": [
+        "COUNTY_NAME",
+        "ENTITY_CD"
+      ],
+      "Teachers_Teaching_Out_of_Certification": [
+        "ENTITY_CD",
+        "NUM_OUT_CERT"
+      ]
+    }
+  },
+  {
+    "question_id": 11,
+    "db_id": "NTSB",
+    "question": "How many vehicles had A pillar damage?",
+    "gold_sql": "SELECT COUNT(DISTINCT CONCAT(CASEID, VEHNO)) VEHICLECOUNT FROM CDC WHERE DAMAPILLAR = 1",
+    "schema_links": {
+      "CDC": [
+        "CASEID",
+        "DAMAPILLAR",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 12,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many public elementary school entities have white student subgroups who are english language learners?",
+    "gold_sql": "select count(*) schoolCount from [ACC_EM_ELP] where subgroup_name = 'white' \tand ell_count <> '0' \tand ENTITY_CD in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere group_name = 'Public School' \t)",
+    "schema_links": {
+      "ACC_EM_ELP": [
+        "ELL_COUNT",
+        "ENTITY_CD",
+        "SUBGROUP_NAME"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 13,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the position title, city, state, and zip code, of the contact with the first name Ivan and the last name C?",
+    "gold_sql": "select Position_Title, City, State_Code, Zip_Code from tlu_Contacts where First_Name = 'Ivan' and Last_Name = 'C'",
+    "schema_links": {
+      "tlu_Contacts": [
+        "City",
+        "First_Name",
+        "Last_Name",
+        "Position_Title",
+        "State_Code",
+        "Zip_Code"
+      ]
+    }
+  },
+  {
+    "question_id": 14,
+    "db_id": "ATBI",
+    "question": "Get the Plot ID, x and y coordinates, and directions for the location with the event that has the most nested subplot observations",
+    "gold_sql": "SELECT Plot_ID, X_Coord, Y_Coord, Directions  from tbl_Locations l JOIN tbl_Events e on e.Location_ID = l.Location_ID WHERE e.Event_ID in ( \tSELECT TOP 1 Event_ID  \tfrom tbl_Nests  \tgroup by Event_ID  \torder by count(*)  )",
+    "schema_links": {
+      "tbl_Locations": [
+        "Directions",
+        "Location_ID",
+        "Plot_ID",
+        "X_Coord",
+        "Y_Coord"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Location_ID"
+      ],
+      "tbl_Nests": [
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 15,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "For each location type, show a count of locations in shasta county.",
+    "gold_sql": "select Loc_Type, count(*) locCount from tbl_Locations where county = 'Shasta' group by Loc_Type",
+    "schema_links": {
+      "tbl_Locations": [
+        "County",
+        "Loc_Type"
+      ]
+    }
+  },
+  {
+    "question_id": 16,
+    "db_id": "NTSB",
+    "question": "For each of the first manufacturer's recommended front tire sizes, list the average first recommended pressure.",
+    "gold_sql": "SELECT RECFRONT1, AVG(RECFRPRESS1) AVGPRESS FROM TIREPLAC GROUP BY RECFRONT1",
+    "schema_links": {
+      "TIREPLAC": [
+        "RECFRONT1",
+        "RECFRPRESS1"
+      ]
+    }
+  },
+  {
+    "question_id": 17,
+    "db_id": "NTSB",
+    "question": "How many crashes are there where the vehicle-to-vehicle heading angle at impact was between 0 and 90 degrees inclusive?",
+    "gold_sql": "SELECT COUNT(DISTINCT CASEID) CRASHCOUNT FROM CDC WHERE HEADINGANG >= 0 AND HEADINGANG <= 90",
+    "schema_links": {
+      "CDC": [
+        "CASEID",
+        "HEADINGANG"
+      ]
+    }
+  },
+  {
+    "question_id": 18,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "show a count of minnow measurements by stage description",
+    "gold_sql": "select description, count(*) minnowCount from tlustage s join tblFieldDataMinnowTrapSurveys m on s.stage = m.stage group by description",
+    "schema_links": {
+      "tluStage": [
+        "Description",
+        "Stage"
+      ],
+      "tblFieldDataMinnowTrapSurveys": [
+        "Stage"
+      ]
+    }
+  },
+  {
+    "question_id": 19,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "How many five year old turtles were measured?",
+    "gold_sql": "select count(*) turtleCount  from tblFieldDataTurtleMeasurements where age = '5'",
+    "schema_links": {
+      "tblFieldDataTurtleMeasurements": [
+        "Age"
+      ]
+    }
+  },
+  {
+    "question_id": 20,
+    "db_id": "NTSB",
+    "question": "Show the number of crashes in each intrusion magnitude category",
+    "gold_sql": "SELECT INTMAG, (COUNT(DISTINCT CASEID)) CRASHCOUNT FROM INTRUSION GROUP BY INTMAG",
+    "schema_links": {
+      "INTRUSION": [
+        "CASEID",
+        "INTMAG"
+      ]
+    }
+  },
+  {
+    "question_id": 21,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the first name of the contact associated with the highest number of unique events?",
+    "gold_sql": "select top 1 First_Name from tlu_Contacts c join xref_Event_Contacts x on c.Contact_ID = x.Contact_ID group by First_Name order by count(distinct event_id) desc",
+    "schema_links": {
+      "tlu_Contacts": [
+        "Contact_ID",
+        "First_Name"
+      ],
+      "xref_Event_Contacts": [
+        "Contact_ID",
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 22,
+    "db_id": "NTSB",
+    "question": "Show a count of injuries by severity where the body region is the spine. The lookup code for spine is 6.",
+    "gold_sql": "SELECT AIS, COUNT(*) INJCOUNT FROM INJURY WHERE REGION = 6 GROUP BY AIS",
+    "schema_links": {
+      "INJURY": [
+        "AIS",
+        "REGION"
+      ]
+    }
+  },
+  {
+    "question_id": 23,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Which species were documented as road kill at highway mile marker 235? Include only one entry per species type.",
+    "gold_sql": "select distinct Species  from Roadkill where HWY_Mile_Marker = '235'",
+    "schema_links": {
+      "Roadkill": [
+        "HWY_Mile_Marker",
+        "Species"
+      ]
+    }
+  },
+  {
+    "question_id": 24,
+    "db_id": "SBODemoUS-General",
+    "question": "What values are associated with the dictionary key 'HomePage'?",
+    "gold_sql": "select _Value from CDIC where _Key like 'HomePage'",
+    "schema_links": {
+      "CDIC": [
+        "_Key",
+        "_Value"
+      ]
+    }
+  },
+  {
+    "question_id": 25,
+    "db_id": "PacificIslandLandbirds",
+    "question": "What is the most common understory composition and canopy composition combination of events entered by Caitlin Jensen?",
+    "gold_sql": "select top 1 canopy_comp, understory_comp from tbl_habitat h join tbl_events e on h.event_id = e.event_id where entered_by = 'caitlin jensen' group by canopy_comp, understory_comp order by count(*) desc",
+    "schema_links": {
+      "tbl_Habitat": [
+        "Canopy_Comp",
+        "Event_ID",
+        "Understory_Comp"
+      ],
+      "tbl_Events": [
+        "Entered_by",
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 26,
+    "db_id": "CratersWildlifeObservations",
+    "question": "How many roadkill records have a date that is identical to at least on vertebrate record?",
+    "gold_sql": "select count(*) recordCount from Roadkill r where exists( \tselect *  \tfrom vertebrates \twhere r.Date = Date )",
+    "schema_links": {
+      "Roadkill": [
+        "Date"
+      ],
+      "VERTEBRATES": [
+        "Date"
+      ]
+    }
+  },
+  {
+    "question_id": 27,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "What is the marital status, home street, home block, home zip code, and home state of the employee with the last name Bridi?",
+    "gold_sql": "select martstatus, homestreet, homeblock, homezip, homestate from OHEM where lastName = 'Bridi'",
+    "schema_links": {
+      "OHEM": [
+        "homeBlock",
+        "homeState",
+        "homeStreet",
+        "homeZip",
+        "lastName",
+        "martStatus"
+      ]
+    }
+  },
+  {
+    "question_id": 28,
+    "db_id": "ATBI",
+    "question": "What is the decay stage description for the decay stage associated with the lowest recorded midpoint diameter (in meters)?",
+    "gold_sql": "select DecayStage_Descr from tlu_DecayStage ds where ds.DecayStage_ID in ( \tselect top 1 decay \tfrom tbl_Deadwood \torder by MPD asc )",
+    "schema_links": {
+      "tlu_DecayStage": [
+        "DecayStage_Descr",
+        "DecayStage_ID"
+      ],
+      "tbl_Deadwood": [
+        "Decay",
+        "MPD"
+      ]
+    }
+  },
+  {
+    "question_id": 29,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "How many decay stages are there?",
+    "gold_sql": "select count(*) from tlu_DecayStage",
+    "schema_links": {
+      "tlu_DecayStage": []
+    }
+  },
+  {
+    "question_id": 30,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show the starting and ending X and Y coordinates for the site named Nobles Pass C",
+    "gold_sql": "select Site_Start_X, Site_End_X, Site_Start_Y, Site_End_Y from tbl_Sites where Site_Name = 'Nobles Pass C'",
+    "schema_links": {
+      "tbl_Sites": [
+        "Site_End_X",
+        "Site_End_Y",
+        "Site_Name",
+        "Site_Start_X",
+        "Site_Start_Y"
+      ]
+    }
+  },
+  {
+    "question_id": 31,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "How many events were documented at each site? Show the site name, site description, and count of events. Only show the 10 sites with the highest number of events.",
+    "gold_sql": "select top 10 Site_Name, site_Desc, count(*) eventCount from tbl_locations l join tbl_events e on l.Location_ID = e.Location_ID join tbl_Sites s on l.Site_ID = s.Site_ID group by Site_Name, Site_Desc order by count(*) desc",
+    "schema_links": {
+      "tbl_Sites": [
+        "Site_Desc",
+        "Site_ID",
+        "Site_Name"
+      ],
+      "tbl_Locations": [
+        "Location_ID",
+        "Site_ID"
+      ],
+      "tbl_Events": [
+        "Location_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 32,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "How many places are in each state?",
+    "gold_sql": "select State, count(*) placeCount from tlu_PlaceNames group by state",
+    "schema_links": {
+      "tlu_PlaceNames": [
+        "State"
+      ]
+    }
+  },
+  {
+    "question_id": 33,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many events does each station have? Show them in the descending order of event counts. Include the station name and the event count in the output.",
+    "gold_sql": "select station, count(*) as event_count from tbl_stations ts join tbl_events te on ts.station_id = te.station_id group by ts.station order by event_count desc",
+    "schema_links": {
+      "tbl_Stations": [
+        "Station",
+        "Station_ID"
+      ],
+      "tbl_Events": [
+        "Station_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 34,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "What does the evidence code DOR mean?",
+    "gold_sql": "select text  from tluEvidenceCode where [evidence_code] = 'DOR'",
+    "schema_links": {
+      "tluEvidenceCode": [
+        "Evidence_Code",
+        "Text"
+      ]
+    }
+  },
+  {
+    "question_id": 35,
+    "db_id": "NTSB",
+    "question": "Show a count of injuries by body region",
+    "gold_sql": "SELECT REGION, COUNT(*) INJCOUNT FROM INJURY GROUP BY REGION",
+    "schema_links": {
+      "INJURY": [
+        "REGION"
+      ]
+    }
+  },
+  {
+    "question_id": 36,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show the length and midpoint diameter of dead wood in the decay stage that has 'log is flat' in the description?",
+    "gold_sql": "select length, mpd from tbl_Deadwood dw join tlu_DecayStage dc on dw.Decay = dc.DecayStage_ID where DecayStage_Descr like '%log is flat%'",
+    "schema_links": {
+      "tbl_Deadwood": [
+        "Decay",
+        "Length",
+        "MPD"
+      ],
+      "tlu_DecayStage": [
+        "DecayStage_Descr",
+        "DecayStage_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 37,
+    "db_id": "SBODemoUS-Finance",
+    "question": "Show the account name and number of journal entries for the general ledger account with code '_SYS00000000002'.",
+    "gold_sql": "select AcctName, count(*) EntryCount from OACT O join JDT1 J on O.AcctCode = J.Account where Account = '_SYS00000000002' group by Acctname",
+    "schema_links": {
+      "OACT": [
+        "AcctCode",
+        "AcctName"
+      ],
+      "JDT1": [
+        "Account"
+      ]
+    }
+  },
+  {
+    "question_id": 38,
+    "db_id": "NTSB",
+    "question": "How many vehicles had damage to the windshield glazing?",
+    "gold_sql": "SELECT COUNT(*) AS WINDSHIELD_DAMAGE_COUNT FROM GLAZING WHERE GLAZLOC = 1",
+    "schema_links": {
+      "GLAZING": [
+        "GLAZLOC"
+      ]
+    }
+  },
+  {
+    "question_id": 39,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Get a count of big game roadkill for each location. The value for big game is 'yes'.",
+    "gold_sql": "select Location, count(*) gameCount from roadkill where Big_Game like 'yes' group by Location",
+    "schema_links": {
+      "Roadkill": [
+        "Big_Game",
+        "Location"
+      ]
+    }
+  },
+  {
+    "question_id": 40,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many station locations are documented using WGS84 and how many are documented using NAD83 datums?",
+    "gold_sql": "select distinct datum, count(*) stationCount from tbl_stations_utms where datum in ('WGS84', 'NAD83') group by datum",
+    "schema_links": {
+      "tbl_Stations_UTMs": [
+        "Datum"
+      ]
+    }
+  },
+  {
+    "question_id": 41,
+    "db_id": "CratersWildlifeObservations",
+    "question": "What are the Universal Transverse Mercator north and east coordinates for the records documenting the invertebrate with the Common_Name 'western white'?",
+    "gold_sql": "select UTMN, UTME  from INVERTEBRATES where Common_Name like 'western white'",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Common_Name",
+        "UTME",
+        "UTMN"
+      ]
+    }
+  },
+  {
+    "question_id": 42,
+    "db_id": "NTSB",
+    "question": "How many vehicles had wrangler model tires?",
+    "gold_sql": "SELECT COUNT(DISTINCT CONCAT(CASEID, VEHNO)) VEHCOUNT FROM TIRE WHERE TIREMODEL = 'WRANGLER'",
+    "schema_links": {
+      "TIRE": [
+        "CASEID",
+        "TIREMODEL",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 43,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show the genus, species, and common name of plant species observed in nested subpluts of event 30. Include only one row per type",
+    "gold_sql": "select distinct genus, species, CommonName from tbl_Nests n join tlu_PlantSpecies s on n.SpCode = s.SpeciesCode where Event_ID = 30",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "CommonName",
+        "SpeciesCode",
+        "genus",
+        "species"
+      ],
+      "tbl_Nests": [
+        "Event_ID",
+        "SpCode"
+      ]
+    }
+  },
+  {
+    "question_id": 44,
+    "db_id": "NTSB",
+    "question": "For each vehicle, show the road speed limit, the highest speed the vehicle was recorded by the event data recorder, and how much higher or lower than the speed limit the vehicle was traveling. Limit travel speed and speedlimit to values less than 300 kph.",
+    "gold_sql": "SELECT SPEEDLIMIT, MAXSPEED, MAXSPEED - SPEEDLIMIT DIFF FROM GV JOIN ( \tSELECT CASEID, VEHNO, MAX(PVALUE) MAXSPEED FROM EDRPRECRASH \tWHERE PCODE = 1010 AND PVALUE < 300 \tGROUP BY CASEID, VEHNO ) S ON GV.CASEID = S.CASEID AND GV.VEHNO = S.VEHNO WHERE SPEEDLIMIT < 300",
+    "schema_links": {
+      "GV": [
+        "CASEID",
+        "SPEEDLIMIT",
+        "VEHNO"
+      ],
+      "EDRPRECRASH": [
+        "CASEID",
+        "PCODE",
+        "PVALUE",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 45,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "For each year, display a count of distinct species in the Redwood National Parks species lookup table.",
+    "gold_sql": "select SampleYear, count(distinct Species) SpeciesCount from tlu_Species_REDW group by SampleYear",
+    "schema_links": {
+      "tlu_Species_REDW": [
+        "SampleYear",
+        "Species"
+      ]
+    }
+  },
+  {
+    "question_id": 46,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Show the habitat names and descriptions of the 'Temporary Pond' and 'Permanent Pond' micro habitats.",
+    "gold_sql": "select habitat, description  from tluMicroHabitat where habitat in ('Temporary Pond', 'Permanent Pond')",
+    "schema_links": {
+      "tluMicroHabitat": [
+        "Description",
+        "Habitat"
+      ]
+    }
+  },
+  {
+    "question_id": 47,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Show the first name, last name, and number of logged events for members of the national park service.",
+    "gold_sql": "select last_name, first_name, count(*) num_events from tlu_contacts tlc join xref_event_contacts xrec on tlc.Contact_ID = xrec.Contact_ID where organization = 'National Park Service' group by last_name, first_name, organization order by last_name desc",
+    "schema_links": {
+      "tlu_Contacts": [
+        "Contact_ID",
+        "First_Name",
+        "Last_Name",
+        "Organization"
+      ],
+      "xref_Event_Contacts": [
+        "Contact_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 48,
+    "db_id": "CratersWildlifeObservations",
+    "question": "What is the highest number of invertebrates  recorded in an observation for each family? Do not include NULL values in the number column.",
+    "gold_sql": "select family, max(number) maxNum from INVERTEBRATES  where number IS NOT NULL group by family",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Family",
+        "Number"
+      ]
+    }
+  },
+  {
+    "question_id": 49,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "For each canopy position name, show how many overstory were classified for each position for the species with the common name 'Red Maple'",
+    "gold_sql": "select CanPos_Name, count(*) OverstoryCount from tlu_Can_Pos c join tbl_Overstory o on c.CanPos_Num = o.CanPos join tlu_PlantSpecies s on s.SpeciesCode = o.SpCode where CommonName = 'Red maple' group by CanPos_Name",
+    "schema_links": {
+      "tlu_Can_Pos": [
+        "CanPos_Name",
+        "CanPos_Num"
+      ],
+      "tbl_Overstory": [
+        "CanPos",
+        "SpCode"
+      ],
+      "tlu_PlantSpecies": [
+        "CommonName",
+        "SpeciesCode"
+      ]
+    }
+  },
+  {
+    "question_id": 50,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many schools are a part of each county in 2020? Show the county name and the count of schools.",
+    "gold_sql": "select COUNTY_NAME, count(distinct school_name) SchoolCount from [BOCES_and_N/RC] where year = 2020 group by COUNTY_NAME",
+    "schema_links": {
+      "BOCES_and_N/RC": [
+        "COUNTY_NAME",
+        "SCHOOL_NAME",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 51,
+    "db_id": "CratersWildlifeObservations",
+    "question": "For each location that isn't listed as 'unknown', show the count of invertebrates observed at that location by the observer named Munts",
+    "gold_sql": "select location, count(*) obsCount from INVERTEBRATES where location not like 'unknown' and observer like 'Munts' group by location",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Location",
+        "Observer"
+      ]
+    }
+  },
+  {
+    "question_id": 52,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "What is the volume of the box package type?",
+    "gold_sql": "select volume from OPKG where PkgType = 'Box'",
+    "schema_links": {
+      "OPKG": [
+        "PkgType",
+        "Volume"
+      ]
+    }
+  },
+  {
+    "question_id": 53,
+    "db_id": "NYSED_SRC2022",
+    "question": "What are the accountability level of the indicators 'HS Grad Rate' for the multiracial subgroup for all schools with the word friendship in their name? Include the institution ID, entity name, and accountability level in the result.",
+    "gold_sql": "select institution_id, ENTITY_NAME, LEVEL from [Accountability_Levels] where SUBGROUP_NAME = 'Multiracial' and INDICATOR = 'HS Grad Rate' and entity_name like '%friendship%'",
+    "schema_links": {
+      "Accountability_Levels": [
+        "ENTITY_NAME",
+        "INDICATOR",
+        "INSTITUTION_ID",
+        "LEVEL",
+        "SUBGROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 54,
+    "db_id": "NTSB",
+    "question": "List the case IDs and vehicle number, recommended and actual tire sizes for vehicles that had a left front tire size that matched the manufacturers first recommended front tire size.",
+    "gold_sql": "SELECT T.CASEID, T.VEHNO, TIRESIZE, RECFRONT1 FROM TIRE T JOIN TIREPLAC TP ON T.CASEID = TP.CASEID AND T.VEHNO = TP.VEHNO WHERE TIRELOC = 'LF' AND TIRESIZE = RECFRONT1",
+    "schema_links": {
+      "TIRE": [
+        "CASEID",
+        "TIRELOC",
+        "TIRESIZE",
+        "VEHNO"
+      ],
+      "TIREPLAC": [
+        "CASEID",
+        "RECFRONT1",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 55,
+    "db_id": "NTSB",
+    "question": "Display the Case ID, vehicle number, intrusion components, intrusion magnitude, and intrusion direction for cases with an ID less than 20392",
+    "gold_sql": "SELECT CASEID, VEHNO, INTCOMP, INTMAG, INTDIRECT FROM INTRUSION WHERE CASEID < 20392",
+    "schema_links": {
+      "INTRUSION": [
+        "CASEID",
+        "INTCOMP",
+        "INTDIRECT",
+        "INTMAG",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 56,
+    "db_id": "PacificIslandLandbirds",
+    "question": "What are the names of the sites on each island?",
+    "gold_sql": "select distinct Island, Site_name from tbl_locations join tbl_sites on tbl_locations.site_id = tbl_sites.site_id",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island",
+        "Site_ID"
+      ],
+      "tbl_Sites": [
+        "Site_ID",
+        "Site_Name"
+      ]
+    }
+  },
+  {
+    "question_id": 57,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "How many events are logged for each Hydrology type?",
+    "gold_sql": "select Hydrology, count(*) EventCount from tbl_MacroHabitat group by Hydrology",
+    "schema_links": {
+      "tbl_MacroHabitat": [
+        "Hydrology"
+      ]
+    }
+  },
+  {
+    "question_id": 58,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "What are the barcodes for the item named 'Printer Paper A4 White' with unit of measurement entries that are either 3 or 4?",
+    "gold_sql": "select BcdCode  from OITM join OBCD on OITM.ItemCode = OBCD.ItemCode where ItemName =  'Printer Paper A4 White'       and UomEntry in (3, 4)",
+    "schema_links": {
+      "OBCD": [
+        "BcdCode",
+        "ItemCode",
+        "UomEntry"
+      ],
+      "OITM": [
+        "ItemCode",
+        "ItemName"
+      ]
+    }
+  },
+  {
+    "question_id": 59,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show the database title, file name, release notes, author email, and organization name, for the application release that occurred in 2015",
+    "gold_sql": "select Database_title, File_name, Release_notes, Author_email, Author_org_name from tsys_App_Releases where year(release_date) = 2015",
+    "schema_links": {
+      "tsys_App_Releases": [
+        "Author_email",
+        "Author_org_name",
+        "Database_title",
+        "File_name",
+        "Release_date",
+        "Release_notes"
+      ]
+    }
+  },
+  {
+    "question_id": 60,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the revision reason and description for revisions made by Allison S?",
+    "gold_sql": "select Revision_Reason, Revision_Desc from tbl_Db_Revisions r join tlu_Contacts c on r.Revision_Contact_ID = c.Contact_ID where First_Name = 'Allison' and Last_Name = 'S'",
+    "schema_links": {
+      "tbl_Db_Revisions": [
+        "Revision_Contact_ID",
+        "Revision_Desc",
+        "Revision_Reason"
+      ],
+      "tlu_Contacts": [
+        "Contact_ID",
+        "First_Name",
+        "Last_Name"
+      ]
+    }
+  },
+  {
+    "question_id": 61,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the last name, education status, and number of children for employees of type Technician",
+    "gold_sql": "select lastName, StatusOfE, nChildren from OHEM join OHTY on OHTY.typeID = OHEM.type where OHTY.name = 'Technician'",
+    "schema_links": {
+      "OHEM": [
+        "StatusOfE",
+        "lastName",
+        "nChildren",
+        "type"
+      ],
+      "OHTY": [
+        "name",
+        "typeID"
+      ]
+    }
+  },
+  {
+    "question_id": 62,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show all the different locations where the Invertebrate species Trichodes ornatus has been observed",
+    "gold_sql": "select location  from INVERTEBRATES where Genus_species like 'Trichodes ornatus'",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Genus_species",
+        "Location"
+      ]
+    }
+  },
+  {
+    "question_id": 63,
+    "db_id": "ATBI",
+    "question": "Create a list of trees where their condition is 'down'. Include the tree tag number, and species common name.",
+    "gold_sql": "select CommonName, TreeTag from tlu_PlantSpecies s join tbl_Overstory o on s.SpeciesCode = o.SpCode join tlu_Tree_Cond c on o.TreeCond = c.TreeCond_Num where TreeCond_Text = 'down'",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "CommonName",
+        "SpeciesCode"
+      ],
+      "tbl_Overstory": [
+        "SpCode",
+        "TreeCond",
+        "TreeTag"
+      ],
+      "tlu_Tree_Cond": [
+        "TreeCond_Num",
+        "TreeCond_Text"
+      ]
+    }
+  },
+  {
+    "question_id": 64,
+    "db_id": "SBODemoUS-Banking",
+    "question": "Show the payee names, zip, city, street, country, and states for the payees with the user department named 'General'",
+    "gold_sql": "select PayeeName, PayeeZip, PayeeCity, PayeeStree, PayCountry, PayeeState from OUDP departments join OPEX paymentResultsTable on departments.Code = paymentResultsTable.department where departments.Name = 'General'",
+    "schema_links": {
+      "OPEX": [
+        "Department",
+        "PayCountry",
+        "PayeeCity",
+        "PayeeName",
+        "PayeeState",
+        "PayeeStree",
+        "PayeeZip"
+      ],
+      "OUDP": [
+        "Code",
+        "Name"
+      ]
+    }
+  },
+  {
+    "question_id": 65,
+    "db_id": "NTSB",
+    "question": "How many vehicles have a gross vehicle weight rating less than 4000?",
+    "gold_sql": "SELECT COUNT(*) VEHCOUNT FROM TIREPLAC WHERE GVWR < 4000",
+    "schema_links": {
+      "TIREPLAC": [
+        "GVWR"
+      ]
+    }
+  },
+  {
+    "question_id": 66,
+    "db_id": "ATBI",
+    "question": "For each tree condition text description, show a count of the number of sapling records.",
+    "gold_sql": "select TreeCond_Text, count(*) saplingCount from tbl_Saplings s join tlu_Tree_Cond c on s.Condition = c.TreeCond_Num group by TreeCond_Text",
+    "schema_links": {
+      "tlu_Tree_Cond": [
+        "TreeCond_Num",
+        "TreeCond_Text"
+      ],
+      "tbl_Saplings": [
+        "Condition"
+      ]
+    }
+  },
+  {
+    "question_id": 67,
+    "db_id": "SBODemoUS-Finance",
+    "question": "Show the account name and current total balance of accounts with the category name cash",
+    "gold_sql": "select AcctName, CurrTotal from OACT join OACG on OACT.category = OACG.AbsId where OACG.Name = 'cash'",
+    "schema_links": {
+      "OACT": [
+        "AcctName",
+        "Category",
+        "CurrTotal"
+      ],
+      "OACG": [
+        "AbsId",
+        "Name"
+      ]
+    }
+  },
+  {
+    "question_id": 68,
+    "db_id": "NTSB",
+    "question": "Which vehicle make with more than 5 vehicles in the database has the highest number of distracted drivers in proportion to the total number of the make and model in the data?",
+    "gold_sql": "SELECT MAKE, COUNT(*) AS VEHICLE_COUNT, COUNT(DISTRACTN) AS DISTRACT_COUNT, \tCAST(COUNT(DISTRACTN) AS FLOAT) / CAST(COUNT(*) AS FLOAT) AS PROP_DISTRACT FROM VPICDECODE V LEFT JOIN DISTRACT D ON V.CASEID = D.CASEID AND V.VEHNO = D.VEHNO GROUP BY MAKE HAVING COUNT(*) > 5 ORDER BY PROP_DISTRACT DESC",
+    "schema_links": {
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "VEHNO"
+      ],
+      "DISTRACT": [
+        "CASEID",
+        "DISTRACTN",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 69,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many public elementary school entities have the subgroup 'multiracial' included in the core and weighted performance data?",
+    "gold_sql": "select count(distinct ENTITY_CD) schoolCount from [ACC_EM_Core_and_Weighted_Performance] where SUBGROUP_NAME = 'multiracial' \tand ENTITY_CD in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere group_name = 'Public School' \t)",
+    "schema_links": {
+      "ACC_EM_Core_and_Weighted_Performance": [
+        "ENTITY_CD",
+        "SUBGROUP_NAME"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 70,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Which island has the location called Northwest Kahuku?",
+    "gold_sql": "select Island from tbl_locations where loc_name = 'Northwest Kahuku'",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island",
+        "Loc_Name"
+      ]
+    }
+  },
+  {
+    "question_id": 71,
+    "db_id": "NTSB",
+    "question": "How many vehicle occupants received attention from emergency services?",
+    "gold_sql": "SELECT COUNT(*) OCCCOUNT FROM OCC WHERE EMSDATA = 1",
+    "schema_links": {
+      "OCC": [
+        "EMSDATA"
+      ]
+    }
+  },
+  {
+    "question_id": 72,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "How many events are there?",
+    "gold_sql": "select count(*) eventCount from tbl_events",
+    "schema_links": {
+      "tbl_Events": []
+    }
+  },
+  {
+    "question_id": 73,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the english language learner count, benchmark, progress rate, and success ratio for the sub group all students at 'pine bush' elementary school?",
+    "gold_sql": "select ell_count, benchmark, progress_rate, success_ratio from [ACC_EM_ELP] where ENTITY_NAME = 'PINE BUSH'  \tand SUBGROUP_NAME = 'All Students'",
+    "schema_links": {
+      "ACC_EM_ELP": [
+        "BENCHMARK",
+        "ELL_COUNT",
+        "ENTITY_NAME",
+        "PROGRESS_RATE",
+        "SUBGROUP_NAME",
+        "SUCCESS_RATIO"
+      ]
+    }
+  },
+  {
+    "question_id": 74,
+    "db_id": "NTSB",
+    "question": "Show a count of occupant ejections by sex",
+    "gold_sql": "SELECT SEX, COUNT(*) FROM OCC JOIN EJECT ON OCC.CASEID = EJECT.CASEID AND OCC.VEHNO = EJECT.VEHNO AND OCC.OCCNO = EJECT.VEHNO GROUP BY SEX",
+    "schema_links": {
+      "OCC": [
+        "CASEID",
+        "OCCNO",
+        "SEX",
+        "VEHNO"
+      ],
+      "EJECT": [
+        "CASEID",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 75,
+    "db_id": "SBODemoUS-General",
+    "question": "Show the description and expected costs of project management stages with start dates before october 20th, 2021.",
+    "gold_sql": "select DSCRIPTION, EXPCOSTS from PMG1 where year < '2021-10-20'",
+    "schema_links": {
+      "PMG1": [
+        "DSCRIPTION",
+        "EXPCOSTS"
+      ]
+    }
+  },
+  {
+    "question_id": 76,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many different new york state english as a second language achievement test elementary school subjects are there?",
+    "gold_sql": "select count(distinct subject) subjectCount from [ACC_EM_NYSESLAT_for_Participation]",
+    "schema_links": {
+      "ACC_EM_NYSESLAT_for_Participation": [
+        "SUBJECT"
+      ]
+    }
+  },
+  {
+    "question_id": 77,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "Show the average potential max sales opportunity amount in local currency for each card group",
+    "gold_sql": "select CardGroup, avg(MaxSumLoc) avgMax from OOPR group by CardGroup",
+    "schema_links": {
+      "OOPR": [
+        "CardGroup",
+        "MaxSumLoc"
+      ]
+    }
+  },
+  {
+    "question_id": 78,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "what is the average air temperature for each weather type for herpetological survey events?",
+    "gold_sql": "select weather, avg(airtemp) avgAirTemp  from tblEventDataHerps group by weather",
+    "schema_links": {
+      "tblEventDataHerps": [
+        "AirTemp",
+        "Weather"
+      ]
+    }
+  },
+  {
+    "question_id": 79,
+    "db_id": "NTSB",
+    "question": "Show number of crashes by month in month order",
+    "gold_sql": "SELECT CRASHMONTH, COUNT(*) AS CRASHCOUNT  FROM CRASH GROUP BY CRASHMONTH ORDER BY CRASHMONTH",
+    "schema_links": {
+      "CRASH": [
+        "CRASHMONTH"
+      ]
+    }
+  },
+  {
+    "question_id": 80,
+    "db_id": "ATBI",
+    "question": "What is the canopy position name and the count of trees for each canopy position",
+    "gold_sql": "select CanPos_Name, count(*) as treeCount from tlu_Can_Pos p join tbl_Overstory o on p.CanPos_Num = o.CanPos group by CanPos_Name",
+    "schema_links": {
+      "tlu_Can_Pos": [
+        "CanPos_Name",
+        "CanPos_Num"
+      ],
+      "tbl_Overstory": [
+        "CanPos"
+      ]
+    }
+  },
+  {
+    "question_id": 81,
+    "db_id": "CratersWildlifeObservations",
+    "question": "how many habitat codes are there?",
+    "gold_sql": "select count(*) codeCount from HABITAT_CODES",
+    "schema_links": {
+      "HABITAT_CODES": []
+    }
+  },
+  {
+    "question_id": 82,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "For all of the locations with a Midslope topographical position, show the site description, slope, aspect, slope shape, and elevation",
+    "gold_sql": "select SiteDescription, Slope, Aspect, Slope_shape, Elevation from tbl_Locations l join tlu_topo_position p on l.Topo_Position = p.ID where TopoPosition = 'Midslope'",
+    "schema_links": {
+      "tbl_Locations": [
+        "Aspect",
+        "Elevation",
+        "SiteDescription",
+        "Slope",
+        "Slope_shape",
+        "Topo_Position"
+      ],
+      "tlu_topo_position": [
+        "ID",
+        "TopoPosition"
+      ]
+    }
+  },
+  {
+    "question_id": 83,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show the name, ID, description, length, and route of the site with the highest starting Y coordinate.",
+    "gold_sql": "select top 1 Site_ID, Site_Name, Site_Desc, Length, Route from tbl_Sites order by Site_Start_Y desc",
+    "schema_links": {
+      "tbl_Sites": [
+        "Length",
+        "Route",
+        "Site_Desc",
+        "Site_ID",
+        "Site_Name",
+        "Site_Start_Y"
+      ]
+    }
+  },
+  {
+    "question_id": 84,
+    "db_id": "NTSB",
+    "question": "How many accidents were related to distracted driving?",
+    "gold_sql": "SELECT COUNT(DISTINCT CASEID) DISTRACTACCIDENTCOUNT FROM DISTRACT D",
+    "schema_links": {
+      "DISTRACT": [
+        "CASEID"
+      ]
+    }
+  },
+  {
+    "question_id": 85,
+    "db_id": "NTSB",
+    "question": "Show a list of vehicle make, model, and curb weight for all vehicles with a curb weight between 2000 and 3000 kg.",
+    "gold_sql": "SELECT V.MAKE, V.MODEL, CURBWT FROM GV  JOIN VPICDECODE V ON GV.CASEID = V.CASEID AND GV.VEHNO = V.VEHNO WHERE CURBWT >= 2000 AND CURBWT <= 3000",
+    "schema_links": {
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "Model",
+        "VEHNO"
+      ],
+      "GV": [
+        "CASEID",
+        "CURBWT",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 86,
+    "db_id": "NTSB",
+    "question": "How many of each model year vehicle are there? Present them from oldest to newest.",
+    "gold_sql": "SELECT MODELYR, COUNT(*) VEHCOUNT FROM GV GROUP BY MODELYR ORDER BY MODELYR",
+    "schema_links": {
+      "GV": [
+        "MODELYR"
+      ]
+    }
+  },
+  {
+    "question_id": 87,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "For each first presence description text entry, show the number of nested subplots in the event with id 30.",
+    "gold_sql": "select Pres_Text, count(*) nestCount from tlu_Presence p join tbl_Nests n on p.Pres_Num = n.Presence_First where Event_ID = 30 group by Pres_text",
+    "schema_links": {
+      "tlu_Presence": [
+        "Pres_Num",
+        "Pres_Text"
+      ],
+      "tbl_Nests": [
+        "Event_ID",
+        "Presence_First"
+      ]
+    }
+  },
+  {
+    "question_id": 88,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the 2021 chronic absenteeism count and rate for the sub group 'All students' at the public high school entity with the highest enrollment? Exclude enrollment data that has the value 's'. Include the school name in the result.",
+    "gold_sql": "select top 1 entity_name, absent_count, absent_rate from [ACC_HS_Chronic_Absenteeism] where enrollment <> 's' \tand year = 2021 \tand ENTITY_CD in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere group_name = 'Public School' \t) \tand SUBGROUP_NAME = 'All Students' order by cast(enrollment as float) desc",
+    "schema_links": {
+      "ACC_HS_Chronic_Absenteeism": [
+        "ABSENT_COUNT",
+        "ABSENT_RATE",
+        "ENROLLMENT",
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 89,
+    "db_id": "SBODemoUS-Banking",
+    "question": "How many incoming invoices document an applied value added tax of more than 700?",
+    "gold_sql": "select count(*) invoiceCount from RCT2 where vatApplied > 700",
+    "schema_links": {
+      "RCT2": [
+        "vatApplied"
+      ]
+    }
+  },
+  {
+    "question_id": 90,
+    "db_id": "SBODemoUS-Service",
+    "question": "What are the internal serial numbers of the service contract with the customer named microhips and the iten code A00006?",
+    "gold_sql": "select internalSN from OINS where custmrName = 'Microchips' and itemCode = 'A00006'",
+    "schema_links": {
+      "OINS": [
+        "custmrName",
+        "internalSN",
+        "itemCode"
+      ]
+    }
+  },
+  {
+    "question_id": 91,
+    "db_id": "CratersWildlifeObservations",
+    "question": "What is the scientific name of the mammal commonly known as the moose? Only include one row in the response",
+    "gold_sql": "select Scientific_Name from WILDLIFE_MASTERLIST where Common_Name like 'moose'",
+    "schema_links": {
+      "WILDLIFE_MASTERLIST": [
+        "COMMON_NAME",
+        "SCIENTIFIC_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 92,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the date of birth, country of birth, home city, home county, and home country for the employees with the job title of accountant",
+    "gold_sql": "select birthDate, brthCountr, homeCity, homeCounty, homeCountr from OHEM where jobTitle = 'Accountant'",
+    "schema_links": {
+      "OHEM": [
+        "birthDate",
+        "brthCountr",
+        "homeCity",
+        "homeCountr",
+        "homeCounty",
+        "jobTitle"
+      ]
+    }
+  },
+  {
+    "question_id": 93,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show the event notes and location IDs from events that started on August 5th, 2011",
+    "gold_sql": "select Event_Notes, Location_ID from tbl_Event_Details d join tbl_Events e on e.Event_ID = d.Event_ID where DAY(Start_Date) = 5 \tand MONTH(Start_Date) = 8 \tand YEAR(Start_Date) = 2011",
+    "schema_links": {
+      "tbl_Event_Details": [
+        "Event_ID",
+        "Event_Notes"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Location_ID",
+        "Start_Date"
+      ]
+    }
+  },
+  {
+    "question_id": 94,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is Kenney Middle School's 2021 enrollment, absentee count, and absentee rate for the subgroup of students with disabilities?",
+    "gold_sql": "select enrollment, absent_count, absent_rate from [ACC_EM_Chronic_Absenteeism] where entity_name = 'KENNEY MIDDLE SCHOOL' and year = 2021 and SUBGROUP_NAME = 'Students with disabilities'",
+    "schema_links": {
+      "ACC_EM_Chronic_Absenteeism": [
+        "ABSENT_COUNT",
+        "ABSENT_RATE",
+        "ENROLLMENT",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 95,
+    "db_id": "CratersWildlifeObservations",
+    "question": "List all scientific names in the wildlife master list that do not appear in the vertebrates table",
+    "gold_sql": "select Scientific_Name  from WILDLIFE_MASTERLIST where Scientific_Name not in ( \tselect Scientific_Name \tfrom VERTEBRATES )",
+    "schema_links": {
+      "WILDLIFE_MASTERLIST": [
+        "SCIENTIFIC_NAME"
+      ],
+      "VERTEBRATES": [
+        "Scientific_Name"
+      ]
+    }
+  },
+  {
+    "question_id": 96,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many schools are a part of each board of cooperative educational services in 2020? Show the board name and the count of schools.",
+    "gold_sql": "select BOCES_NAME, count(distinct school_name) SchoolCount from [BOCES_and_N/RC] where year = 2020 group by BOCES_NAME",
+    "schema_links": {
+      "BOCES_and_N/RC": [
+        "BOCES_NAME",
+        "SCHOOL_NAME",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 97,
+    "db_id": "NTSB",
+    "question": "Show the first recommended front and rear tire sizes and pressure levels for all of the Honda Civics manufactured before 2012 in the dataset.",
+    "gold_sql": "SELECT RECFRONT1, RECREAR1, RECFRPRESS1, RECRRPRESS1 FROM VPICDECODE V JOIN TIREPLAC T ON V.CASEID = T.CASEID  AND V.VEHNO = T.VEHNO WHERE MAKE = 'HONDA' AND MODEL = 'CIVIC' AND MODELYEAR < 2012",
+    "schema_links": {
+      "TIREPLAC": [
+        "CASEID",
+        "RECFRONT1",
+        "RECFRPRESS1",
+        "RECREAR1",
+        "RECRRPRESS1",
+        "VEHNO"
+      ],
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "Model",
+        "ModelYear",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 98,
+    "db_id": "NYSED_SRC2022",
+    "question": "What are the average public elementary school level 1, level 2, level 3, and level 4 percent tested for each sub group for the Science8 assessment? Exclude scores with the value 's'.",
+    "gold_sql": "select SUBGROUP_NAME, avg(cast([LEVEL1_%TESTED] as float)) L1, avg(cast([LEVEL2_%TESTED] as float)) L2, avg(cast([LEVEL3_%TESTED] as float)) L3, avg(cast([LEVEL4_%TESTED] as float)) L4 from [Annual_EM_Science] where [LEVEL1_%TESTED] <> 's' \tand ASSESSMENT_NAME = 'Science8' \tand entity_cd in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere GROUP_NAME = 'public school' \t) group by SUBGROUP_NAME",
+    "schema_links": {
+      "Annual_EM_SCIENCE": [
+        "ASSESSMENT_NAME",
+        "ENTITY_CD",
+        "LEVEL1_%TESTED",
+        "LEVEL2_%TESTED",
+        "LEVEL3_%TESTED",
+        "LEVEL4_%TESTED",
+        "SUBGROUP_NAME"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 99,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many sites does each island have?",
+    "gold_sql": "select Island, count(distinct site_id) as site_count from tbl_locations group by Island",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island",
+        "Site_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 100,
+    "db_id": "NTSB",
+    "question": "List the case IDs, make, model, recommended and actual tire sizes for vehicles that had a left front tire size that did not match the manufacturers first recommended front tire size.",
+    "gold_sql": "SELECT T.CASEID, MAKE, MODEL, T.VEHNO, TIRESIZE, RECFRONT1 FROM TIRE T JOIN TIREPLAC TP ON T.CASEID = TP.CASEID AND T.VEHNO = TP.VEHNO JOIN VPICDECODE V ON T.CASEID = V.CASEID AND T.VEHNO = V.VEHNO WHERE TIRELOC = 'LF' AND TIRESIZE <> RECFRONT1",
+    "schema_links": {
+      "TIRE": [
+        "CASEID",
+        "TIRELOC",
+        "TIRESIZE",
+        "VEHNO"
+      ],
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "Model",
+        "VEHNO"
+      ],
+      "TIREPLAC": [
+        "CASEID",
+        "RECFRONT1",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 101,
+    "db_id": "NTSB",
+    "question": "What are all the makes of vehicles in the database?",
+    "gold_sql": "SELECT DISTINCT MAKE FROM VPICDECODE",
+    "schema_links": {
+      "VPICDECODE": [
+        "Make"
+      ]
+    }
+  },
+  {
+    "question_id": 102,
+    "db_id": "ATBI",
+    "question": "What are the listed and valid names of the trail adjacent to the location associated with event id 2?",
+    "gold_sql": "select ListedName, ValidName  from tlu_Roads_and_Trails rt join tbl_locations l on l.Trail = rt.ListedName join tbl_Events e on e.Location_ID = l.Location_ID where e.Event_ID = 2",
+    "schema_links": {
+      "tlu_Roads_and_Trails": [
+        "ListedName",
+        "ValidName"
+      ],
+      "tbl_Locations": [
+        "Location_ID",
+        "Trail"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Location_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 103,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Show the board number and types for boards at site with ID 18CB1. Ignore boards with a number 0.",
+    "gold_sql": "select [Board_#], type  from tblFieldDataCoverBoard cb join tblLocations l on cb.LocationID = l.LocationID where siteid = '18CB1' and [Board_#] <> 0",
+    "schema_links": {
+      "tblFieldDataCoverBoard": [
+        "Board_#",
+        "LocationID",
+        "Type"
+      ],
+      "tblLocations": [
+        "LocationID",
+        "SiteID"
+      ]
+    }
+  },
+  {
+    "question_id": 104,
+    "db_id": "SBODemoUS-Reports",
+    "question": "What are the type codes and screen fonts for documents that use the email font 'Tahoma'?",
+    "gold_sql": "select TypeCode, ScreenFont from RDOC where EmailFont = 'Tahoma'",
+    "schema_links": {
+      "RDOC": [
+        "EmailFont",
+        "ScreenFont",
+        "TypeCode"
+      ]
+    }
+  },
+  {
+    "question_id": 105,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the average of the total number of teachers and principals in low-poverty schools statewide?",
+    "gold_sql": "select avg(TOT_PRINC_LOW) princLow, avg(TOT_TEACH_LOW) teachLow from [Inexperienced_Teachers_and_Principals]",
+    "schema_links": {
+      "Inexperienced_Teachers_and_Principals": [
+        "TOT_PRINC_LOW",
+        "TOT_TEACH_LOW"
+      ]
+    }
+  },
+  {
+    "question_id": 106,
+    "db_id": "NTSB",
+    "question": "Show the highest speed recorded by the event data recorder for each case for cases where at least one vehicle exceeded 160 (but no more than 300). Include the case id, vehicle make and model. Sort from fastest to slowest.",
+    "gold_sql": "SELECT PR.CASEID, MAKE, MODEL, MAX(PVALUE) MAXSPEED  FROM EDRPRECRASH PR JOIN VPICDECODE V ON PR.CASEID = V.CASEID AND V.VEHNO = PR.VEHNO WHERE PCODE = 1010 AND PVALUE > 160 AND PVALUE < 300 GROUP BY PR.CASEID, PR.VEHNO, MAKE, MODEL ORDER BY MAX(PVALUE) DESC",
+    "schema_links": {
+      "EDRPRECRASH": [
+        "CASEID",
+        "PCODE",
+        "PVALUE",
+        "VEHNO"
+      ],
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "Model",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 107,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the names of the public elementary school entities with level 2 english learner programs that have a non-zero number of english language learners in the all students subgroup, who did not participate in the new york state english as a second language achievement test. Include only one row per school name.",
+    "gold_sql": "select distinct entity_name from [ACC_EM_ELP]  where entity_cd in ( \tselect distinct entity_cd \tfrom [ACC_EM_NYSESLAT_for_Participation] \twhere NYSESLAT_PART = '0' )  \tand ELL_COUNT <> '0'  \tand SUBGROUP_NAME = 'all students'  \tand level = '2' \tand ENTITY_CD in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere group_name = 'Public School' \t)",
+    "schema_links": {
+      "ACC_EM_ELP": [
+        "ELL_COUNT",
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "LEVEL",
+        "SUBGROUP_NAME"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ],
+      "ACC_EM_NYSESLAT_for_Participation": [
+        "ENTITY_CD",
+        "NYSESLAT_PART"
+      ]
+    }
+  },
+  {
+    "question_id": 108,
+    "db_id": "SBODemoUS-Banking",
+    "question": "What is the Withholding tax posted, account number, and functional currency sum for the incoming checks with the country code 'CA'",
+    "gold_sql": "select WTOnhldPst, AcctNum, CheckSumFC from ORCT join RCT1 on ORCT.DocNum = RCT1.DocNum where CountryCod = 'CA'",
+    "schema_links": {
+      "ORCT": [
+        "CheckSumFC",
+        "DocNum",
+        "WTOnhldPst"
+      ],
+      "RCT1": [
+        "AcctNum",
+        "CountryCod",
+        "DocNum"
+      ]
+    }
+  },
+  {
+    "question_id": 109,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Which invertebrate records were recorded on the same day, at the same habitat, as at least one vertebrate record? Include the date, observer, and species Common_Name from the invertebrate entry.",
+    "gold_sql": "select date, observer, Common_Name  from INVERTEBRATES i where exists ( \tselect *  \tfrom VERTEBRATES \twhere i.date = date and i.Habitat = Habitat )",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Common_Name",
+        "Date",
+        "Habitat",
+        "Observer"
+      ],
+      "VERTEBRATES": [
+        "Date",
+        "Habitat"
+      ]
+    }
+  },
+  {
+    "question_id": 110,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the reason for the most-recent database edit, and what table and field was edited, and when was it changed?",
+    "gold_sql": "select top 1 Reason, [Table], Field, Date_Change from tbl_Edit_Log order by Date_change desc",
+    "schema_links": {
+      "tbl_Edit_Log": [
+        "Date_Change",
+        "Field",
+        "Reason",
+        "Table"
+      ]
+    }
+  },
+  {
+    "question_id": 111,
+    "db_id": "NTSB",
+    "question": "Show the average weight of the adjusted jackknife replicate weight 5 by case category",
+    "gold_sql": "SELECT CATEGORY, AVG(JKWGT5) WGT5AVG FROM JKWGT GROUP BY CATEGORY",
+    "schema_links": {
+      "JKWGT": [
+        "CATEGORY",
+        "JKWGT5"
+      ]
+    }
+  },
+  {
+    "question_id": 112,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the total number of new york state alternate assessment records for assessments performed in 2022",
+    "gold_sql": "select count(*) entryCount from [Annual_NYSAA] where year = 2022",
+    "schema_links": {
+      "Annual_NYSAA": [
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 113,
+    "db_id": "SBODemoUS-General",
+    "question": "Show the Dashboard name, dashboard path, status, and query name for dashboards and their queries where the query category is 2",
+    "gold_sql": "select DashbdName, DashbdPath, Status, QryName from ODAB join DAB1 on ODAB.AbsEntry = DAB1.DsbEntry where QryCtgry = 2",
+    "schema_links": {
+      "ODAB": [
+        "AbsEntry",
+        "DashbdName",
+        "DashbdPath",
+        "Status"
+      ],
+      "DAB1": [
+        "DsbEntry",
+        "QryCtgry",
+        "QryName"
+      ]
+    }
+  },
+  {
+    "question_id": 114,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Show a count of events in the herpetological survey table, group the counts by weather condition. Also include the average air and water temperatures.",
+    "gold_sql": "select weather, count(*) eventCount, avg(airtemp) avgAirTemp, avg(watertemp) avgWaterTemp  from tblEventDataHerps group by weather",
+    "schema_links": {
+      "tblEventDataHerps": [
+        "AirTemp",
+        "WaterTemp",
+        "Weather"
+      ]
+    }
+  },
+  {
+    "question_id": 115,
+    "db_id": "NTSB",
+    "question": "Show the make, model, manufacture year, and number of ignition cycles of all vehicles with fewer than 200 ignition cycles registered in the event data recorder at the time of crash. Display them by model year older, with the newest models at the top.",
+    "gold_sql": "SELECT DISTINCT MAKE, MODEL, MODELYEAR, IGCYCRASH  FROM EDREVENT E JOIN VPICDECODE V ON E.CASEID = V.CASEID AND E.VEHNO = V.VEHNO WHERE IGCYCRASH < 200 AND IGCYCRASH > 0 ORDER BY MODELYEAR DESC",
+    "schema_links": {
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "Model",
+        "ModelYear",
+        "VEHNO"
+      ],
+      "EDREVENT": [
+        "CASEID",
+        "IGCYCRASH",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 116,
+    "db_id": "ATBI",
+    "question": "What are the x an y coordinates for the tree with tag 652?",
+    "gold_sql": "select Xcoord, Ycoord  from tbl_Tree_Tags where tag = 652",
+    "schema_links": {
+      "tbl_Tree_Tags": [
+        "Tag",
+        "Xcoord",
+        "Ycoord"
+      ]
+    }
+  },
+  {
+    "question_id": 117,
+    "db_id": "SBODemoUS-Banking",
+    "question": "For the payment term with the term group code 'Net30', show the number of additional days, number of installments, and whether or not value added tax is applied on the first installment.",
+    "gold_sql": "select ExtraDays, InstNum, VATFirst from OCTG where PymntGroup = 'Net30'",
+    "schema_links": {
+      "OCTG": [
+        "ExtraDays",
+        "InstNum",
+        "PymntGroup",
+        "VATFirst"
+      ]
+    }
+  },
+  {
+    "question_id": 118,
+    "db_id": "NTSB",
+    "question": "How many vehicles had no driver present?",
+    "gold_sql": "SELECT COUNT(*) VEHCOUNT FROM GV WHERE DRPRESENT = 0",
+    "schema_links": {
+      "GV": [
+        "DRPRESENT"
+      ]
+    }
+  },
+  {
+    "question_id": 119,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the average diamater of overstory of the montana species observed in events 15 and 16",
+    "gold_sql": "select avg(DBH) avgDiameter from tbl_events e join tbl_Overstory o on e.Event_ID = o.Event_ID join tlu_PlantSpecies s on o.SpCode = s.SpeciesCode where species = 'montana' \tand e.Event_ID in (15, 16)",
+    "schema_links": {
+      "tbl_Overstory": [
+        "DBH",
+        "Event_ID",
+        "SpCode"
+      ],
+      "tbl_Events": [
+        "Event_ID"
+      ],
+      "tlu_PlantSpecies": [
+        "SpeciesCode",
+        "species"
+      ]
+    }
+  },
+  {
+    "question_id": 120,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many public elementary school entities met a 95 percent participation rate in at least one subject?",
+    "gold_sql": "select count(distinct entity_cd) schoolCount from [ACC_EM_Participation_Rate] where MET_95_PERCENT = 'Y' \tand ENTITY_CD in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere group_name = 'Public School' \t)",
+    "schema_links": {
+      "ACC_EM_Participation_Rate": [
+        "ENTITY_CD",
+        "MET_95_PERCENT"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 121,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show a count of roads and trails by layer for entries that have the word Balsam in their valid name.",
+    "gold_sql": "select layer, count(*) from tlu_Roads_and_Trails where ValidName like '%Balsam%' group by layer",
+    "schema_links": {
+      "tlu_Roads_and_Trails": [
+        "Layer",
+        "ValidName"
+      ]
+    }
+  },
+  {
+    "question_id": 122,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the professional status, citizenship and passport number  of the employee whos last name is Buyer",
+    "gold_sql": "select StatusOfP, citizenshp, passportNo from OHEM where lastName = 'Buyer'",
+    "schema_links": {
+      "OHEM": [
+        "StatusOfP",
+        "citizenshp",
+        "lastName",
+        "passportNo"
+      ]
+    }
+  },
+  {
+    "question_id": 123,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "Show the group name and count of business partners in each card group",
+    "gold_sql": "select GroupName, count(*) partnerCount from OCRG join OCRD on OCRG.GroupCode = OCRD.GroupCode group by GroupName",
+    "schema_links": {
+      "OCRG": [
+        "GroupCode",
+        "GroupName"
+      ],
+      "OCRD": [
+        "GroupCode"
+      ]
+    }
+  },
+  {
+    "question_id": 124,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Which island has the fewest stations, and how many stations does it have?",
+    "gold_sql": "select top 1 Island, count(*) as station_count from tbl_locations loc join tbl_transect trans on loc.location_id = trans.location_id join tbl_stations sta on trans.transect_id = sta.Transect_ID group by Island order by station_count asc",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island",
+        "Location_ID"
+      ],
+      "tbl_Transect": [
+        "Location_ID",
+        "Transect_ID"
+      ],
+      "tbl_Stations": [
+        "Transect_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 125,
+    "db_id": "PacificIslandLandbirds",
+    "question": "List the distinct family and species code of all bird observed during events logged when it was raining (denoted by the value 1).",
+    "gold_sql": "select distinct family, species_code from tlu_species s join tbl_observations o on s.species_id = o.species_id join tbl_events e on o.event_id = e.event_id join tbl_event_details ed on e.event_id = ed.event_id where rain = 1",
+    "schema_links": {
+      "tlu_Species": [
+        "Family",
+        "Species_Code",
+        "Species_ID"
+      ],
+      "tbl_Observations": [
+        "Event_ID",
+        "Species_ID"
+      ],
+      "tbl_Events": [
+        "Event_ID"
+      ],
+      "tbl_Event_Details": [
+        "Event_ID",
+        "Rain"
+      ]
+    }
+  },
+  {
+    "question_id": 126,
+    "db_id": "ATBI",
+    "question": "Show the description and location notes for locations higher than 4000 feet in elevation",
+    "gold_sql": "select SiteDescription, Loc_Notes  from tbl_locations where Elevation > 4000",
+    "schema_links": {
+      "tbl_Locations": [
+        "Elevation",
+        "Loc_Notes",
+        "SiteDescription"
+      ]
+    }
+  },
+  {
+    "question_id": 127,
+    "db_id": "ATBI",
+    "question": "How many events recorded seedling density data?",
+    "gold_sql": "select count(distinct Event_ID) EventCount from tbl_Seedlings",
+    "schema_links": {
+      "tbl_Seedlings": [
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 128,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the professional status and educational statuses as well as the home and work street numbers of employees on the purchasing team.",
+    "gold_sql": "select StatusOfP, StatusOfE, StreetNoW, StreetNoH from OHEM employees join HTM1 teamMembers on employees.empId = teamMembers.empID join OHTM emplTeams on teamMembers.teamID = emplTeams.teamID where emplTeams.name = 'Purchasing'",
+    "schema_links": {
+      "OHEM": [
+        "StatusOfE",
+        "StatusOfP",
+        "StreetNoH",
+        "StreetNoW",
+        "empID"
+      ],
+      "HTM1": [
+        "empID",
+        "teamID"
+      ],
+      "OHTM": [
+        "name",
+        "teamID"
+      ]
+    }
+  },
+  {
+    "question_id": 129,
+    "db_id": "SBODemoUS-Finance",
+    "question": "Get a count of recurring postings by year of the next execution",
+    "gold_sql": "select year(NextDeu) NextYear, count(*) NumPostings from ORCR group by year(NextDeu)",
+    "schema_links": {
+      "ORCR": [
+        "NextDeu"
+      ]
+    }
+  },
+  {
+    "question_id": 130,
+    "db_id": "NYSED_SRC2022",
+    "question": "what are the combined subject, core and weighted, performance scores for elementary students with disabilities who attended May Moore Primary School?",
+    "gold_sql": "select core_cohort, weighted_cohort  from [ACC_EM_Core_and_Weighted_Performance] where entity_name = 'May Moore Primary School' \tand subject = 'combined' \tand SUBGROUP_NAME = 'Students with Disabilities'",
+    "schema_links": {
+      "ACC_EM_Core_and_Weighted_Performance": [
+        "CORE_COHORT",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME",
+        "SUBJECT",
+        "WEIGHTED_COHORT"
+      ]
+    }
+  },
+  {
+    "question_id": 131,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the school name and the average weighted index subject score for science for the five lowest scoring public school districts. Exclude weighted index scores with the value 's'.",
+    "gold_sql": "select top 5 entity_name, avg(cast(weighted_index as float)) averageScienceScore from [ACC_HS_Core_and_Weighted_Performance] where weighted_index <> 's' and subject = 'SCIENCE' and entity_cd in ( \tselect entity_cd \tfrom [Institution_Grouping] \twhere GROUP_NAME = 'public school district' ) group by entity_name order by avg(cast(weighted_index as float)) asc",
+    "schema_links": {
+      "ACC_HS_Core_and_Weighted_Performance": [
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "SUBJECT",
+        "WEIGHTED_INDEX"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 132,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the Genus, species, and common name of the species with the highest seedling density?",
+    "gold_sql": "select top 1 Genus, species, CommonName from tbl_Seedlings s join tlu_PlantSpecies sp on s.SpCode = sp.SpeciesCode order by density desc",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "CommonName",
+        "SpeciesCode",
+        "genus",
+        "species"
+      ],
+      "tbl_Seedlings": [
+        "Density",
+        "SpCode"
+      ]
+    }
+  },
+  {
+    "question_id": 133,
+    "db_id": "NTSB",
+    "question": "How many adjusted jackknife replicate weight entries are there for cases in category 3?",
+    "gold_sql": "SELECT COUNT(*) CASECOUNT FROM JKWGT WHERE CATEGORY = 3",
+    "schema_links": {
+      "JKWGT": [
+        "CATEGORY"
+      ]
+    }
+  },
+  {
+    "question_id": 134,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show the Macro Habitat, Micro Habitat, Hydrology, Land Use, Slope, and Aspect of the Macro Habitats associated with events started in July of 2015",
+    "gold_sql": "select MacroHab, MicroHab, Hydrology, LandUse, Slope, Aspect from tbl_MacroHabitat mh join tbl_Events e on mh.Event_ID = e.Event_ID where year(Start_Date) = 2015 and month(Start_Date) = 7",
+    "schema_links": {
+      "tbl_MacroHabitat": [
+        "Aspect",
+        "Event_ID",
+        "Hydrology",
+        "LandUse",
+        "MacroHab",
+        "MicroHab",
+        "Slope"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Start_Date"
+      ]
+    }
+  },
+  {
+    "question_id": 135,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "Show the sales opportunity average gross profit in local currency by year created",
+    "gold_sql": "select year(CreateDate) yearCreated, avg(SumProfL) avgLocProfit from OOPR group by year(CreateDate)",
+    "schema_links": {
+      "OOPR": [
+        "CreateDate",
+        "SumProfL"
+      ]
+    }
+  },
+  {
+    "question_id": 136,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the 2022 english language learner count, benchmark size, progress rate, success ration, and level of the english language program at Alfred E Smith Career-Tech HS for the all students subgroup?",
+    "gold_sql": "select ELL_COUNT, BENCHMARK, PROGRESS_RATE, SUCCESS_RATIO, LEVEL from [ACC_HS_ELP] where ENTITY_NAME = 'ALFRED E SMITH CAREER-TECH HS' \tand SUBGROUP_NAME = 'All Students' \tand year = 2022",
+    "schema_links": {
+      "ACC_HS_ELP": [
+        "BENCHMARK",
+        "ELL_COUNT",
+        "ENTITY_NAME",
+        "LEVEL",
+        "PROGRESS_RATE",
+        "SUBGROUP_NAME",
+        "SUCCESS_RATIO",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 137,
+    "db_id": "PacificIslandLandbirds",
+    "question": "what are the family, scientific and common names of all of the bird species that occupy Forest Bird habitats?",
+    "gold_sql": "select distinct family, scientific_name, common_name  from tlu_species where habitat = 'Forest Bird'",
+    "schema_links": {
+      "tlu_Species": [
+        "Common_Name",
+        "Family",
+        "Habitat",
+        "Scientific_Name"
+      ]
+    }
+  },
+  {
+    "question_id": 138,
+    "db_id": "SBODemoUS-Reports",
+    "question": "Get the field and object type xpaths for the mapping determinations associated with parameters with the description 'PEPPOL'.",
+    "gold_sql": "select ObjXPath, FieldXPath from ECM4 join OECM on ECM4.Code = OECM.Code where Descr = 'PEPPOL'",
+    "schema_links": {
+      "ECM4": [
+        "Code",
+        "FieldXPath",
+        "ObjXPath"
+      ],
+      "OECM": [
+        "Code",
+        "Descr"
+      ]
+    }
+  },
+  {
+    "question_id": 139,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many stations does each island have?",
+    "gold_sql": "select Island, count(*) as station_count from tbl_locations loc join tbl_transect trans on loc.location_id = trans.location_id join tbl_stations sta on trans.transect_id = sta.Transect_ID group by Island",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island",
+        "Location_ID"
+      ],
+      "tbl_Transect": [
+        "Location_ID",
+        "Transect_ID"
+      ],
+      "tbl_Stations": [
+        "Transect_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 140,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "How many different slope shapes are there in the lookup table?",
+    "gold_sql": "select count(*) from tlu_Slope_Shape",
+    "schema_links": {
+      "tlu_Slope_Shape": []
+    }
+  },
+  {
+    "question_id": 141,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "How many events were logged in each year?",
+    "gold_sql": "select year(Event_Date) EventsYear, count(*) eventCount from tbl_events group by year(Event_Date)",
+    "schema_links": {
+      "tbl_Events": [
+        "Event_Date"
+      ]
+    }
+  },
+  {
+    "question_id": 142,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show the event notes and location Names from events that started on August 5th, 2011",
+    "gold_sql": "select Event_Notes, Loc_Name from tbl_Event_Details d join tbl_Events e on e.Event_ID = d.Event_ID join tbl_Locations l on e.Location_ID = l.Location_ID where DAY(Start_Date) = 5 \tand MONTH(Start_Date) = 8 \tand YEAR(Start_Date) = 2011",
+    "schema_links": {
+      "tbl_Event_Details": [
+        "Event_ID",
+        "Event_Notes"
+      ],
+      "tbl_Locations": [
+        "Loc_Name",
+        "Location_ID"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Location_ID",
+        "Start_Date"
+      ]
+    }
+  },
+  {
+    "question_id": 143,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "What are the initials of observers who logged events relating to cover board observations? Include only one row per initials.",
+    "gold_sql": "select distinct o.ObsInits from Observer_LU o join tlinkObservers tlo on o.ObsInits = tlo.ObsInits join tblEvents e on tlo.EventID = e.EventID join tblFieldDataCoverBoard cb on e.EventID = cb.EventID",
+    "schema_links": {
+      "Observer_LU": [
+        "ObsInits"
+      ],
+      "tlinkObservers": [
+        "EventID",
+        "ObsInits"
+      ],
+      "tblEvents": [
+        "EventID"
+      ],
+      "tblFieldDataCoverBoard": [
+        "EventID"
+      ]
+    }
+  },
+  {
+    "question_id": 144,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Make a list of event ids for events that have more than 7 observations.",
+    "gold_sql": "select e.event_id from tbl_events e join tbl_observations o on e.Event_ID = o.Event_ID group by e.event_id having count(*) > 7",
+    "schema_links": {
+      "tbl_Events": [
+        "Event_ID"
+      ],
+      "tbl_Observations": [
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 145,
+    "db_id": "ATBI",
+    "question": "What are the directions to the plot where the tree with tag number 6 is located?",
+    "gold_sql": "select directions  from tbl_Tree_Tags t join tbl_Locations l on t.Location_ID = l.Location_ID where Tree_Tag_ID = 6",
+    "schema_links": {
+      "tbl_Locations": [
+        "Directions",
+        "Location_ID"
+      ],
+      "tbl_Tree_Tags": [
+        "Location_ID",
+        "Tree_Tag_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 146,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the annual regents exam percent of LONGWOOD HIGH SCHOOL students at each level from 1 to 5 for the Regents Common Core Algebra I subject taken in 2022. Include the subgroup name, number of students tested, and all of the appropriate percent level score columns.",
+    "gold_sql": "select SUBGROUP_NAME, tested, PER_LEVEL1, PER_LEVEL2, PER_LEVEL3, PER_LEVEL4, PER_LEVEL5 from [Annual_Regents_Exams] where ENTITY_NAME like '%LONGWOOD HIGH SCHOOL%' \tand year = 2022 \tand subject = 'Regents Common Core Algebra I'",
+    "schema_links": {
+      "Annual_Regents_Exams": [
+        "ENTITY_NAME",
+        "PER_LEVEL1",
+        "PER_LEVEL2",
+        "PER_LEVEL3",
+        "PER_LEVEL4",
+        "PER_LEVEL5",
+        "SUBGROUP_NAME",
+        "SUBJECT",
+        "TESTED",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 147,
+    "db_id": "ATBI",
+    "question": "For each genus and species, get the total number of witness trees observed.",
+    "gold_sql": "select genus, species, count(*) treeCount from tlu_PlantSpecies s join tbl_WitnessTrees w on s.SpeciesCode = w.Witness_SpCode group by genus, species",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "SpeciesCode",
+        "genus",
+        "species"
+      ],
+      "tbl_WitnessTrees": [
+        "Witness_SpCode"
+      ]
+    }
+  },
+  {
+    "question_id": 148,
+    "db_id": "ATBI",
+    "question": "For the event that observed the most decayed logs, how many of each stage of decay were observed? Show the description of each decay stage in the result.",
+    "gold_sql": "select DecayStage_Descr, count(*) as numLogs  from tbl_Deadwood join tlu_DecayStage on tbl_Deadwood.Decay = tlu_DecayStage.DecayStage_ID where Event_ID in ( \tselect TOP 1 Event_ID from tbl_Deadwood group by Event_ID order by count(*) desc ) group by DecayStage_Descr",
+    "schema_links": {
+      "tlu_DecayStage": [
+        "DecayStage_Descr",
+        "DecayStage_ID"
+      ],
+      "tbl_Deadwood": [
+        "Decay",
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 149,
+    "db_id": "SBODemoUS-General",
+    "question": "What are the table names of business object briefs with the description fields that have the word Memo in them?",
+    "gold_sql": "select TableName from OBOB where DescField like '%Memo%'",
+    "schema_links": {
+      "OBOB": [
+        "DescField",
+        "TableName"
+      ]
+    }
+  },
+  {
+    "question_id": 150,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "How many events have both micro habitat and macro habitat observations?",
+    "gold_sql": "select count(*)  from tbl_MacroHabitat mac join tbl_MicroHabitat mic on mac.Event_ID = mic.Event_ID",
+    "schema_links": {
+      "tbl_MacroHabitat": [
+        "Event_ID"
+      ],
+      "tbl_MicroHabitat": [
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 151,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show the orders for invertebrates in the Insecta class. Only include one row per value.",
+    "gold_sql": "select distinct [order] from INVERTEBRATES where class like 'Insecta'",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Class",
+        "Order"
+      ]
+    }
+  },
+  {
+    "question_id": 152,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Which observers have either only observed Invertebrates, or only observed Vertebrates, but not both?",
+    "gold_sql": "select distinct observer from INVERTEBRATES except select distinct observer from VERTEBRATES",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Observer"
+      ],
+      "VERTEBRATES": [
+        "Observer"
+      ]
+    }
+  },
+  {
+    "question_id": 153,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the team ID of the team that has the employee with the personal fiscal ID 51B.",
+    "gold_sql": "select teamID from HTM1  join OHEM on HTM1.empID = OHEM.empID where CPF = '51B'",
+    "schema_links": {
+      "HTM1": [
+        "empID",
+        "teamID"
+      ],
+      "OHEM": [
+        "CPF",
+        "empID"
+      ]
+    }
+  },
+  {
+    "question_id": 154,
+    "db_id": "ATBI",
+    "question": "What is the highest midpoint diameter (in meters) for each type of deadwood decay?",
+    "gold_sql": "select decay, max(MPD) maxMPD from tbl_Deadwood group by decay",
+    "schema_links": {
+      "tbl_Deadwood": [
+        "Decay",
+        "MPD"
+      ]
+    }
+  },
+  {
+    "question_id": 155,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "What type of park is the park with code ASIS?",
+    "gold_sql": "select parktype  from tluParkCode where parkcode = 'ASIS'",
+    "schema_links": {
+      "tluParkCode": [
+        "PARKCODE",
+        "PARKTYPE"
+      ]
+    }
+  },
+  {
+    "question_id": 156,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the student count, federal expenditure, and federal expenditure per student in 2022 for the school named 'MONTESSORI MAGNET SCHOOL'.",
+    "gold_sql": "select PUPIL_COUNT_TOT, FEDERAL_EXP, PER_FEDERAL_EXP from [Expenditures_per_Pupil] where entity_name = 'MONTESSORI MAGNET SCHOOL' and year = 2022",
+    "schema_links": {
+      "Expenditures_per_Pupil": [
+        "ENTITY_NAME",
+        "FEDERAL_EXP",
+        "PER_FEDERAL_EXP",
+        "PUPIL_COUNT_TOT",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 157,
+    "db_id": "CratersWildlifeObservations",
+    "question": "For each habitat definition, show the count of vertebrates and the count of invertebrates records",
+    "gold_sql": "select definition, vertHabCount, invertHabCount from HABITAT_CODES h join ( \tselect Habitat, count(*) vertHabCount \tfrom VERTEBRATES \tgroup by habitat ) v on v.Habitat = h.Code join ( \tselect Habitat, count(*) invertHabCount \tfrom INVERTEBRATES \tgroup by habitat ) i on i.Habitat = h.Code",
+    "schema_links": {
+      "HABITAT_CODES": [
+        "Code",
+        "Definition"
+      ],
+      "VERTEBRATES": [
+        "Habitat"
+      ],
+      "INVERTEBRATES": [
+        "Habitat"
+      ]
+    }
+  },
+  {
+    "question_id": 158,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show the ecology notes, coordinate units, coordinate system, and datum for the location on plot A14_1",
+    "gold_sql": "select Eco_notes, coord_units, Coord_system, datum from tbl_locations where Plot_ID = 'A14_1'",
+    "schema_links": {
+      "tbl_Locations": [
+        "Coord_System",
+        "Coord_Units",
+        "Datum",
+        "Eco_Notes",
+        "Plot_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 159,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "How many of each tree species have tree tags at locations abobe 4000 feet? Show the counts by genus and common species name.",
+    "gold_sql": "select genus, CommonName, count(*) tagCount from tbl_Tree_Tags tg join tlu_PlantSpecies sp on tg.SpCode = sp.SpeciesCode join tbl_Locations l on tg.Location_ID = l.Location_ID where Elevation > 4000 group by genus, CommonName",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "CommonName",
+        "SpeciesCode",
+        "genus"
+      ],
+      "tbl_Tree_Tags": [
+        "Location_ID",
+        "SpCode"
+      ],
+      "tbl_Locations": [
+        "Elevation",
+        "Location_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 160,
+    "db_id": "NTSB",
+    "question": "Show a count of injuries by injury severity",
+    "gold_sql": "SELECT AIS, COUNT(*) INJCOUNT FROM INJURY GROUP BY AIS",
+    "schema_links": {
+      "INJURY": [
+        "AIS"
+      ]
+    }
+  },
+  {
+    "question_id": 161,
+    "db_id": "ATBI",
+    "question": "What is the longest length for each type of deadwood decay?",
+    "gold_sql": "select decay, max(length) maxLength from tbl_Deadwood group by decay",
+    "schema_links": {
+      "tbl_Deadwood": [
+        "Decay",
+        "Length"
+      ]
+    }
+  },
+  {
+    "question_id": 162,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many islands are there?",
+    "gold_sql": "select count(distinct Island) from tbl_locations",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island"
+      ]
+    }
+  },
+  {
+    "question_id": 163,
+    "db_id": "CratersWildlifeObservations",
+    "question": "For vertebrate and invertebrate observations recorded at the same habitat on the same day, show the observer recorded on the invertebrate record as well as the observer recorded on the vertebrate record. Also include the date, and the habitat definition.",
+    "gold_sql": "select i.Observer, v.Observer, i.date, Definition from HABITAT_CODES h join INVERTEBRATES i on i.Habitat = h.Code join VERTEBRATES v on v.date = i.date and v.Habitat = i.Habitat",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Date",
+        "Habitat",
+        "Observer"
+      ],
+      "VERTEBRATES": [
+        "Date",
+        "Habitat",
+        "Observer"
+      ],
+      "HABITAT_CODES": [
+        "Code",
+        "Definition"
+      ]
+    }
+  },
+  {
+    "question_id": 164,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Which month has the highest average seedling density?",
+    "gold_sql": "select top 1 month(Event_Date) from tbl_seedlings s join tbl_Events e on s.Event_ID = e.Event_ID group by month(Event_Date) order by avg(Density) desc",
+    "schema_links": {
+      "tbl_Events": [
+        "Event_Date",
+        "Event_ID"
+      ],
+      "tbl_Seedlings": [
+        "Density",
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 165,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is Dominic D's position title?",
+    "gold_sql": "select Position_Title  from tlu_Contacts where First_Name = 'Dominic' and Last_Name = 'D'",
+    "schema_links": {
+      "tlu_Contacts": [
+        "First_Name",
+        "Last_Name",
+        "Position_Title"
+      ]
+    }
+  },
+  {
+    "question_id": 166,
+    "db_id": "SBODemoUS-Reports",
+    "question": "Show the document code and document name name, and count of reporting elements for each document with the type code 'WTR1'",
+    "gold_sql": "select RDOC.DocCode, DocName, count(*) elmtCt from RDOC join RITM on RDOC.DocCode = RITM.DocCode where TypeCode = 'WTR1' group by RDOC.DocCode, DocName",
+    "schema_links": {
+      "RDOC": [
+        "DocCode",
+        "DocName",
+        "TypeCode"
+      ],
+      "RITM": [
+        "DocCode"
+      ]
+    }
+  },
+  {
+    "question_id": 167,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "how many turtle measurements were of turtles carrying eggs or young? This is indicated by the value 1.",
+    "gold_sql": "select count(*) gravidCount from tblFieldDataTurtleMeasurements where gravid = 1",
+    "schema_links": {
+      "tblFieldDataTurtleMeasurements": [
+        "Gravid"
+      ]
+    }
+  },
+  {
+    "question_id": 168,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show the Common_Name and genus species for all invertebrates of class Arachnida",
+    "gold_sql": "select Common_Name, Genus_species  from INVERTEBRATES where class like 'arachnida'",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Class",
+        "Common_Name",
+        "Genus_species"
+      ]
+    }
+  },
+  {
+    "question_id": 169,
+    "db_id": "NYSED_SRC2022",
+    "question": "What are the core and weighted cohorts, and the core and weighted performance indexes of Economically Disadvantaged Students at Albany High School in the Math subject in 2022?",
+    "gold_sql": "select core_cohort, weighted_cohort, core_index, weighted_index from [ACC_HS_Core_and_Weighted_Performance] where year = 2022 \tand subject = 'MATH' \tand subgroup_name = 'Economically Disadvantaged' \tand entity_name = 'ALBANY HIGH SCHOOL'",
+    "schema_links": {
+      "ACC_HS_Core_and_Weighted_Performance": [
+        "CORE_COHORT",
+        "CORE_INDEX",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME",
+        "SUBJECT",
+        "WEIGHTED_COHORT",
+        "WEIGHTED_INDEX",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 170,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "show the total number of minnows counted at each location",
+    "gold_sql": "select locationid, sum(count) minnowCountSum from tblFieldDataMinnowTrapSurveys group by LocationID",
+    "schema_links": {
+      "tblFieldDataMinnowTrapSurveys": [
+        "Count",
+        "LocationID"
+      ]
+    }
+  },
+  {
+    "question_id": 171,
+    "db_id": "SBODemoUS-Service",
+    "question": "How many service calls are there per customer where the priority is medium? (value M) Include the custmer ID and customer name",
+    "gold_sql": "select customer, custmrName, count(*) callCount from OSCL where priority = 'M' group by customer, custmrName",
+    "schema_links": {
+      "OSCL": [
+        "custmrName",
+        "customer",
+        "priority"
+      ]
+    }
+  },
+  {
+    "question_id": 172,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many public elementary school entities had 0 participation in the new york state english as a second language achievement test?",
+    "gold_sql": "select count(distinct entity_cd) noPartCount from [ACC_EM_NYSESLAT_for_Participation] where NYSESLAT_PART = '0' \tand ENTITY_CD in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere group_name = 'Public School' \t)",
+    "schema_links": {
+      "ACC_EM_NYSESLAT_for_Participation": [
+        "ENTITY_CD",
+        "NYSESLAT_PART"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 173,
+    "db_id": "CratersWildlifeObservations",
+    "question": "While highway marker had the most roadkill observations in 2021?",
+    "gold_sql": "select top 1 HWY_Mile_Marker from roadkill where year = 2021 group by HWY_Mile_Marker order by count(location) desc",
+    "schema_links": {
+      "Roadkill": [
+        "HWY_Mile_Marker",
+        "Location",
+        "Year"
+      ]
+    }
+  },
+  {
+    "question_id": 174,
+    "db_id": "NTSB",
+    "question": "What is the average weight of adjusted jackknife replicate weight 3",
+    "gold_sql": "SELECT AVG(JKWGT3) WGT3AVG FROM JKWGT",
+    "schema_links": {
+      "JKWGT": [
+        "JKWGT3"
+      ]
+    }
+  },
+  {
+    "question_id": 175,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "What is the first and last name of the spouse of employee Maria Bridi?",
+    "gold_sql": "select FNameSP, SurnameSP from OHEM where lastName = 'Bridi' and firstName = 'Maria'",
+    "schema_links": {
+      "OHEM": [
+        "FNameSP",
+        "SurnameSP",
+        "firstName",
+        "lastName"
+      ]
+    }
+  },
+  {
+    "question_id": 176,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the school name and english language learner count for the subgroup 'all students' for public school entities that have the word preparatory in their name.",
+    "gold_sql": "select ENTITY_NAME, ELL_COUNT from [ACC_EM_ELP] where SUBGROUP_NAME = 'all students' \tand ENTITY_NAME like '%preparatory%'",
+    "schema_links": {
+      "ACC_EM_ELP": [
+        "ELL_COUNT",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 177,
+    "db_id": "ATBI",
+    "question": "Show me the events where both nested subplots and decayed logs were observed. Include the number of decayed logs, and the number of nested subplots were observed.",
+    "gold_sql": "SELECT e.Event_ID, Deadwood_Count, Nest_Count  FROM tbl_Events AS e JOIN (     SELECT Event_ID, COUNT(*) AS Deadwood_Count     FROM tbl_Deadwood     GROUP BY Event_ID ) AS dw ON e.Event_ID = dw.Event_ID JOIN (     SELECT Event_ID, COUNT(*) AS Nest_Count     FROM tbl_Nests     GROUP BY Event_ID ) AS ne ON e.Event_ID = ne.Event_ID order by Deadwood_Count desc",
+    "schema_links": {
+      "tbl_Events": [
+        "Event_ID"
+      ],
+      "tbl_Deadwood": [
+        "Event_ID"
+      ],
+      "tbl_Nests": [
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 178,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "show how many minnows of each stage were counted at the location ASIS_HERPS_20H",
+    "gold_sql": "select stage, sum(count) minnowCountSum from tblFieldDataMinnowTrapSurveys where locationID = 'ASIS_HERPS_20H' group by stage",
+    "schema_links": {
+      "tblFieldDataMinnowTrapSurveys": [
+        "Count",
+        "LocationID",
+        "Stage"
+      ]
+    }
+  },
+  {
+    "question_id": 179,
+    "db_id": "NTSB",
+    "question": "How many vehicles had tire damage?",
+    "gold_sql": "SELECT COUNT(*) VEHCOUNT FROM ( \tSELECT DISTINCT CASEID, VEHNO \tFROM TIREDAMAGE ) T",
+    "schema_links": {
+      "TIREDAMAGE": [
+        "CASEID",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 180,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the accountability status and progress status of the  bronx career and college prep HS in 2022?",
+    "gold_sql": "select overall_status, made_progress from [Accountability_Status] where entity_name = 'bronx career and college prep hs' and year = 2022",
+    "schema_links": {
+      "Accountability_Status": [
+        "ENTITY_NAME",
+        "MADE_PROGRESS",
+        "OVERALL_STATUS",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 181,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many different subjects are present in the new york state english as a second language achievement test data?",
+    "gold_sql": "select count(distinct subject) subjectCount from [Annual_NYSESLAT]",
+    "schema_links": {
+      "Annual_NYSESLAT": [
+        "SUBJECT"
+      ]
+    }
+  },
+  {
+    "question_id": 182,
+    "db_id": "NTSB",
+    "question": "What is the average time it takes for emergency services to be notified after a crash occurs? Exclude values greater than 1000",
+    "gold_sql": "SELECT AVG(NOTIFIED) AVGNOTIFICATIONTIME FROM EMSCARE WHERE NOTIFIED <= 1000",
+    "schema_links": {
+      "EMSCARE": [
+        "NOTIFIED"
+      ]
+    }
+  },
+  {
+    "question_id": 183,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the number of students in the 'parent not in armed forces' subgroup enrolled at JOHANNA PERRIN MIDDLE SCHOOL scored in the entering level, the emerging level, the transitioning level, or the expanding level, on the TS_6 subject on the new york state english as a second language achievement test in 2021?",
+    "gold_sql": "select NUM_ENT, NUM_EMER, NUM_TRAN, NUM_EXP from [Annual_NYSESLAT] where SUBGROUP_NAME = 'Parent Not In Armed Forces' \tand SUBJECT = 'TS_6' \tand ENTITY_NAME = 'JOHANNA PERRIN MIDDLE SCHOOL' \tand year = 2021",
+    "schema_links": {
+      "Annual_NYSESLAT": [
+        "ENTITY_NAME",
+        "NUM_EMER",
+        "NUM_ENT",
+        "NUM_EXP",
+        "NUM_TRAN",
+        "SUBGROUP_NAME",
+        "SUBJECT",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 184,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "What are the average vacation days in the current year for employees on the sales team?",
+    "gold_sql": "select avg(vacCurYear) from OHEM employees join HTM1 teamMembers on employees.empId = teamMembers.empID join OHTM emplTeams on teamMembers.teamID = emplTeams.teamID where emplTeams.name = 'Sales'",
+    "schema_links": {
+      "OHEM": [
+        "VacCurYear",
+        "empID"
+      ],
+      "HTM1": [
+        "empID",
+        "teamID"
+      ],
+      "OHTM": [
+        "name",
+        "teamID"
+      ]
+    }
+  },
+  {
+    "question_id": 185,
+    "db_id": "NTSB",
+    "question": "What is the average difference in crush between the door sill and the door structure for all vehicles where this information was reported? Ignore the codes 888 and 999.",
+    "gold_sql": "SELECT AVG(DOORSILLDIFF) AVGDIFF FROM CDC WHERE DOORSILLDIFF NOT IN (888, 999)",
+    "schema_links": {
+      "CDC": [
+        "DOORSILLDIFF"
+      ]
+    }
+  },
+  {
+    "question_id": 186,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "What are the names of sales employees in the high commission group?",
+    "gold_sql": "select SlpName from OSLP join OCOG on OSLP.GroupCode = OCOG.GroupCode where GroupName = 'High Commission'",
+    "schema_links": {
+      "OSLP": [
+        "GroupCode",
+        "SlpName"
+      ],
+      "OCOG": [
+        "GroupCode",
+        "GroupName"
+      ]
+    }
+  },
+  {
+    "question_id": 187,
+    "db_id": "ATBI",
+    "question": "What is the default datum for this project?",
+    "gold_sql": "select Datum  from tsys_App_Defaults",
+    "schema_links": {
+      "tsys_App_Defaults": [
+        "Datum"
+      ]
+    }
+  },
+  {
+    "question_id": 188,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the description of the Logging code in the Land Use enumeration group?",
+    "gold_sql": "select Enum_Description from tlu_Enumerations where Enum_Group = 'Land Use' \tand Enum_Code = 'Logging'",
+    "schema_links": {
+      "tlu_Enumerations": [
+        "Enum_Code",
+        "Enum_Description",
+        "Enum_Group"
+      ]
+    }
+  },
+  {
+    "question_id": 189,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the municipality key, tax class, and income tax liability for all of the employees of type accountant.",
+    "gold_sql": "select MunKey, TaxClass, InTaxLiabi from OHEM join OHTY on OHEM.type = OHTY.typeID where OHTY.name = 'Accountant'",
+    "schema_links": {
+      "OHEM": [
+        "InTaxLiabi",
+        "MunKey",
+        "TaxClass",
+        "type"
+      ],
+      "OHTY": [
+        "name",
+        "typeID"
+      ]
+    }
+  },
+  {
+    "question_id": 190,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "Display a count of items for each item group. Include the item group name and count of items in the result.",
+    "gold_sql": "select ItmsGrpNam, count(*) ItmCt from OITM join OITB on OITM.ItmsGrpCod = OITB.ItmsGrpCod group by ItmsGrpNam",
+    "schema_links": {
+      "OITB": [
+        "ItmsGrpCod",
+        "ItmsGrpNam"
+      ],
+      "OITM": [
+        "ItmsGrpCod"
+      ]
+    }
+  },
+  {
+    "question_id": 191,
+    "db_id": "NTSB",
+    "question": "What are the unique category codes for glazing (glass) pre-crash status?",
+    "gold_sql": "SELECT DISTINCT GLAZPRE FROM GLAZING",
+    "schema_links": {
+      "GLAZING": [
+        "GLAZPRE"
+      ]
+    }
+  },
+  {
+    "question_id": 192,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "How many minnow traps are there at each location?",
+    "gold_sql": "select locationID, count(distinct [trap_#]) trapCount from tblFieldDataMinnowTrapSurveys group by locationID",
+    "schema_links": {
+      "tblFieldDataMinnowTrapSurveys": [
+        "LocationID",
+        "Trap_#"
+      ]
+    }
+  },
+  {
+    "question_id": 193,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the 2022 federal expenditure per student at the public high school with the highest english language learner count in the All Students sub group in their english language program? Include the school name, language learner count, and federal expenditure per student in the result.",
+    "gold_sql": "select top 1 el.ENTITY_NAME, ELL_COUNT, PER_FED_STATE_LOCAL_EXP from [ACC_HS_ELP] el join [Expenditures_per_Pupil] ex  \ton el.ENTITY_CD = ex.ENTITY_CD  \tand el.year = ex.year where SUBGROUP_NAME = 'All Students' \tand ELL_COUNT <> 's' \tand ex.YEAR = 2022 \tand el.entity_cd in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere GROUP_NAME = 'public school district' \t) order by cast(ELL_COUNT as float) desc",
+    "schema_links": {
+      "ACC_HS_ELP": [
+        "ELL_COUNT",
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ],
+      "Expenditures_per_Pupil": [
+        "ENTITY_CD",
+        "PER_FED_STATE_LOCAL_EXP",
+        "YEAR"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 194,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the name, county, state, and E and N coordinates of the northmost place?",
+    "gold_sql": "select top 1 Name, County, State, utmE, utmN from tlu_PlaceNames order by utmN desc",
+    "schema_links": {
+      "tlu_PlaceNames": [
+        "County",
+        "Name",
+        "State",
+        "utmE",
+        "utmN"
+      ]
+    }
+  },
+  {
+    "question_id": 195,
+    "db_id": "NTSB",
+    "question": "How many vehicles are there where there was a yield sign in their environment just prior to the crash? The lookup code for yield sign is 3.",
+    "gold_sql": "SELECT COUNT(*) VEHCOUNT FROM GV WHERE TRAFDEV = 3",
+    "schema_links": {
+      "GV": [
+        "TRAFDEV"
+      ]
+    }
+  },
+  {
+    "question_id": 196,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "how many distinct species were documented on a reptile survey green card?",
+    "gold_sql": "select count(distinct [species_code]) speciesCount from tblFieldDataGreenCardObservations",
+    "schema_links": {
+      "tblFieldDataGreenCardObservations": [
+        "Species_Code"
+      ]
+    }
+  },
+  {
+    "question_id": 197,
+    "db_id": "NTSB",
+    "question": "List vehicles by make and model and the count of the vehicles that had child car seats; Provide a separate count of how many of these vehicles had distracted drivers.",
+    "gold_sql": "SELECT MAKE, MODEL, COUNT(*) AS VEHICLE_COUNT, COUNT(DISTRACTN) AS DISTRACTION_COUNT FROM VPICDECODE V JOIN CHILDSEAT C ON V.CASEID = C.CASEID AND V.VEHNO = C.VEHNO  LEFT JOIN DISTRACT D ON D.CASEID = V.CASEID AND D.VEHNO = V.VEHNO GROUP BY MAKE, MODEL ORDER BY DISTRACTION_COUNT DESC",
+    "schema_links": {
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "Model",
+        "VEHNO"
+      ],
+      "DISTRACT": [
+        "CASEID",
+        "DISTRACTN",
+        "VEHNO"
+      ],
+      "CHILDSEAT": [
+        "CASEID",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 198,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "For each behavior type, how many records were documented for snakes captured using the coverboard method?",
+    "gold_sql": "select behavior, count(*) as recordCount from tblFieldDataSnakeDataCollection where capturemethod = 'coverboard' group by behavior",
+    "schema_links": {
+      "tblFieldDataSnakeDataCollection": [
+        "Behavior",
+        "CaptureMethod"
+      ]
+    }
+  },
+  {
+    "question_id": 199,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "for location points associated with records relating to cover boards, at the site with id 18CB1, what are the point IDs, snake ids, board numbers, and UTM X and Y coordinates?",
+    "gold_sql": "select PointID, SnakeID, [Board_#], UTMX, UTMY from tblFieldDataCoverBoard cb join tblLocations l on cb.LocationID = l.LocationID join tblLocationsPoints lp on l.LocationID = lp.LocationID where Recapture = 'new' and siteid = '18CB1'",
+    "schema_links": {
+      "tblLocationsPoints": [
+        "LocationID",
+        "PointID",
+        "UTMX",
+        "UTMY"
+      ],
+      "tblFieldDataCoverBoard": [
+        "Board_#",
+        "LocationID",
+        "Recapture",
+        "SnakeID"
+      ],
+      "tblLocations": [
+        "LocationID",
+        "SiteID"
+      ]
+    }
+  },
+  {
+    "question_id": 200,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "For each decay stage, show the description and the count of dead wood observations",
+    "gold_sql": "select DecayStage_Descr, count(*) DeadWoodCount from tlu_DecayStage dc join tbl_Deadwood dw on dc.DecayStage_ID = dw.Decay group by DecayStage_Descr",
+    "schema_links": {
+      "tlu_DecayStage": [
+        "DecayStage_Descr",
+        "DecayStage_ID"
+      ],
+      "tbl_Deadwood": [
+        "Decay"
+      ]
+    }
+  },
+  {
+    "question_id": 201,
+    "db_id": "NTSB",
+    "question": "Which vehicle manufacturer has the most neck injuries?",
+    "gold_sql": "SELECT TOP 1 MAKE FROM VPICDECODE V JOIN INJURY I ON  V.CASEID = I.CASEID AND V.VEHNO = I.VEHNO WHERE REGION = 3 GROUP BY MAKE ORDER BY COUNT(*)",
+    "schema_links": {
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "VEHNO"
+      ],
+      "INJURY": [
+        "CASEID",
+        "REGION",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 202,
+    "db_id": "ATBI",
+    "question": "Show the topographic position description from the topographic position lookup table for the location with X coordinate 269647 and Y coordinate 3943851",
+    "gold_sql": "select t.TopoPosition from tlu_topo_position t join tbl_Locations l on l.Topo_Position = t.ID where x_coord = 269647 and y_coord = 3943851",
+    "schema_links": {
+      "tlu_topo_position": [
+        "ID",
+        "TopoPosition"
+      ],
+      "tbl_Locations": [
+        "Topo_Position",
+        "X_Coord",
+        "Y_Coord"
+      ]
+    }
+  },
+  {
+    "question_id": 203,
+    "db_id": "SBODemoUS-Service",
+    "question": "For each queue, show the description, manager, and email address",
+    "gold_sql": "select descript, manager, email from OQUE",
+    "schema_links": {
+      "OQUE": [
+        "descript",
+        "email",
+        "manager"
+      ]
+    }
+  },
+  {
+    "question_id": 204,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many high schools (HS) had an accountability status of good standing in 2021 for the Multiracial sub group?",
+    "gold_sql": "select count(*) HSCount from [Accountability_Status_by_Subgroup] where SCHOOL_TYPE = 'HS' \tand SUBGROUP_NAME = 'Multiracial' \tand year = 2021",
+    "schema_links": {
+      "Accountability_Status_by_Subgroup": [
+        "SCHOOL_TYPE",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 205,
+    "db_id": "PacificIslandLandbirds",
+    "question": "what is Patrick Hart's position and organization?",
+    "gold_sql": "select position_title, organization from tlu_contacts where First_Name = 'Patrick' and Last_Name = 'Hart'",
+    "schema_links": {
+      "tlu_Contacts": [
+        "First_Name",
+        "Last_Name",
+        "Organization",
+        "Position_Title"
+      ]
+    }
+  },
+  {
+    "question_id": 206,
+    "db_id": "NTSB",
+    "question": "List the number of crashes by vehicle make from most to least. Show how many of these crashes resulted in a fire. Calculate the proportion of total crashes by make to crashes with a fire",
+    "gold_sql": "SELECT MAKE, COUNT(*) AS CASE_COUNT, SUM(FIRE) AS FIRE_COUNT, (CAST(SUM(FIRE) AS FLOAT)/ CAST(COUNT(*) AS FLOAT)) AS FIRE_PROPORTION FROM VPICDECODE VD \tJOIN FIRE F ON F.CASEID = VD.CASEID AND F.VEHNO = VD.VEHNO GROUP BY MAKE ORDER BY FIRE_PROPORTION DESC",
+    "schema_links": {
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "VEHNO"
+      ],
+      "FIRE": [
+        "CASEID",
+        "FIRE",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 207,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show the X and Y coordinates, the coordinate units, the coordinate system and datum, the horizontal error, accuracy notes and location type of the location named CRLA-Infestation-3924",
+    "gold_sql": "select Loc_Name, X_Coord, Y_Coord, Coord_Units, Coord_System, Datum, Est_H_Error, Accuracy_Notes, Loc_Type from tbl_locations where Loc_Name = 'CRLA-Infestation-3924'",
+    "schema_links": {
+      "tbl_Locations": [
+        "Accuracy_Notes",
+        "Coord_System",
+        "Coord_Units",
+        "Datum",
+        "Est_H_Error",
+        "Loc_Name",
+        "Loc_Type",
+        "X_Coord",
+        "Y_Coord"
+      ]
+    }
+  },
+  {
+    "question_id": 208,
+    "db_id": "NTSB",
+    "question": "How many toyota tacomas are there in the data?",
+    "gold_sql": "SELECT COUNT(*) TACOMACOUNT FROM VPICDECODE WHERE MAKE = 'TOYOTA' AND MODEL = 'TACOMA'",
+    "schema_links": {
+      "VPICDECODE": [
+        "Make",
+        "Model"
+      ]
+    }
+  },
+  {
+    "question_id": 209,
+    "db_id": "ATBI",
+    "question": "What are the five most common geni observed in nested subplots and how many nested subplotes have they been observed in?",
+    "gold_sql": "select TOP 5 genus, count(*) as NestCount  from tlu_PlantSpecies join tbl_Nests on tlu_PlantSpecies.SpeciesCode = tbl_Nests.SpCode group by genus order by NestCount desc",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "SpeciesCode",
+        "genus"
+      ],
+      "tbl_Nests": [
+        "SpCode"
+      ]
+    }
+  },
+  {
+    "question_id": 210,
+    "db_id": "SBODemoUS-Service",
+    "question": "What is the renewal status of the contracts with the customer named 'Maxi-Teq'? Include the contract ID and the status in the result.",
+    "gold_sql": "select ContractID, Renewal from OCTR where CstmrName = 'Maxi-Teq'",
+    "schema_links": {
+      "OCTR": [
+        "ContractID",
+        "CstmrName",
+        "Renewal"
+      ]
+    }
+  },
+  {
+    "question_id": 211,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Get a list of all of the holiday start and end dates and remarks for holidays in 2014.",
+    "gold_sql": "select StrDate, EndDate, Rmrks from HLD1 where StrDate >= '20140101 00:00:00.000' \tand EndDate <= '20141231 23:59:59.000'",
+    "schema_links": {
+      "HLD1": [
+        "EndDate",
+        "Rmrks",
+        "StrDate"
+      ]
+    }
+  },
+  {
+    "question_id": 212,
+    "db_id": "ATBI",
+    "question": "How many saplings records are there that have an entry higher than 10 in the diameter class 3 field?",
+    "gold_sql": "select count(*) as SaplingCount from tbl_Saplings where DClass3 > 10",
+    "schema_links": {
+      "tbl_Saplings": [
+        "DClass3"
+      ]
+    }
+  },
+  {
+    "question_id": 213,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Show the average air temperature on cloudy days that correspond to cover board  data where the board material is wood at the site with id 30CB2",
+    "gold_sql": "select avg(AirTemp) as avgTemp  from tblFieldDataCoverBoard cb join tblEventDataHerps ev on cb.EventID = ev.EventID join tblLocations l on cb.LocationID = l.LocationID where Type = 'Metal' and SiteId = '30CB2' and weather = 'cloudy'",
+    "schema_links": {
+      "tblEventDataHerps": [
+        "AirTemp",
+        "EventID",
+        "Weather"
+      ],
+      "tblFieldDataCoverBoard": [
+        "EventID",
+        "LocationID",
+        "Type"
+      ],
+      "tblLocations": [
+        "LocationID",
+        "SiteID"
+      ]
+    }
+  },
+  {
+    "question_id": 214,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Make an employee health insurance list that includes their employee ID, last name,  insurance company name, insurance code, and type of insurance.",
+    "gold_sql": "select empID, lastName, HeaInsName, HeaInsCode, HeaInsType from OHEM",
+    "schema_links": {
+      "OHEM": [
+        "HeaInsCode",
+        "HeaInsName",
+        "HeaInsType",
+        "empID",
+        "lastName"
+      ]
+    }
+  },
+  {
+    "question_id": 215,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "For each card associated with a sales opportunity, Show the carde name, the sum of the real total amount (both local and system), the sum of the real closing gross profit (local and system), and the average closing percentage.",
+    "gold_sql": "select CardName, sum(RealSumLoc) realSumLoc, sum(realSumSys) realSumSys, sum(RealProfS) realProfSys, sum(RealProfL) realProfLoc, avg(CloPrcnt) from OOPR group by CardName",
+    "schema_links": {
+      "OOPR": [
+        "CardName",
+        "CloPrcnt",
+        "RealProfL",
+        "RealProfS",
+        "RealSumLoc",
+        "RealSumSys"
+      ]
+    }
+  },
+  {
+    "question_id": 216,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What are the directions to the Maddron Bald Trail?",
+    "gold_sql": "select directions from tbl_Locations where trail = 'maddron bald trail'",
+    "schema_links": {
+      "tbl_Locations": [
+        "Directions",
+        "Trail"
+      ]
+    }
+  },
+  {
+    "question_id": 217,
+    "db_id": "SBODemoUS-Banking",
+    "question": "List the receipt number, card payment internal ID, and card account code for the credit card deposit deposited on 2012-01-31.",
+    "gold_sql": "select RctAbs, DepNum, CardCode from OCRH where DeposDate = '2012-01-31'",
+    "schema_links": {
+      "OCRH": [
+        "CardCode",
+        "DepNum",
+        "DeposDate",
+        "RctAbs"
+      ]
+    }
+  },
+  {
+    "question_id": 218,
+    "db_id": "SBODemoUS-Service",
+    "question": "Show the number of service calls for customer with the 'Silver Warranty' contract template. Include the customer name and count of calls in the result.",
+    "gold_sql": "select CstmrName, count(*) callCount from OCTR join OSCL on OCTR.CstmrCode = OSCL.customer group by CstmrName",
+    "schema_links": {
+      "OCTR": [
+        "CstmrCode",
+        "CstmrName"
+      ],
+      "OSCL": [
+        "customer"
+      ]
+    }
+  },
+  {
+    "question_id": 219,
+    "db_id": "SBODemoUS-Finance",
+    "question": "What is the sum of journal entry debits and sum of journal entry credits due in 2021?",
+    "gold_sql": "select sum(debit) debitSum, sum(credit) creditSum from JDT1 where year(DueDate) = '2021'",
+    "schema_links": {
+      "JDT1": [
+        "Credit",
+        "Debit",
+        "DueDate"
+      ]
+    }
+  },
+  {
+    "question_id": 220,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Which location IDs have crab type turtle traps? Include only one row per location.",
+    "gold_sql": "select distinct t.locationid from tblLocations l join tblFieldDataTurtleTrapSurveys t on l.LocationID = t.LocationID where [trap_type] = 'crab'",
+    "schema_links": {
+      "tblFieldDataTurtleTrapSurveys": [
+        "LocationID",
+        "Trap_Type"
+      ],
+      "tblLocations": [
+        "LocationID"
+      ]
+    }
+  },
+  {
+    "question_id": 221,
+    "db_id": "NTSB",
+    "question": "List the tire model names found on Jeep Wranglers. Ensure only one row per model name.",
+    "gold_sql": "SELECT DISTINCT TIREMODEL FROM TIRE T JOIN VPICDECODE V ON T.CASEID = V.CASEID AND T.VEHNO = V.VEHNO WHERE MAKE = 'JEEP' AND MODEL = 'WRANGLER'",
+    "schema_links": {
+      "TIRE": [
+        "CASEID",
+        "TIREMODEL",
+        "VEHNO"
+      ],
+      "VPICDECODE": [
+        "CASEID",
+        "Make",
+        "Model",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 222,
+    "db_id": "NYSED_SRC2022",
+    "question": "For each year and status type, what is the number of entities in accountability each status for the all students subgroup?",
+    "gold_sql": "select YEAR, OVERALL_STATUS, count(*) entCount from [Accountability_Status_by_Subgroup] where SUBGROUP_NAME = 'All Students' group by year, OVERALL_STATUS",
+    "schema_links": {
+      "Accountability_Status_by_Subgroup": [
+        "OVERALL_STATUS",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 223,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Which observers participated in events where measurements of turtle were made? Show their initials, and first and last names.",
+    "gold_sql": "select distinct o.ObsInits, firstName, lastName  from tlinkObservers ol join Observer_LU o on ol.ObsInits = o.ObsInits join tblFieldDataTurtleMeasurements tm on tm.EventID = ol.EventID",
+    "schema_links": {
+      "Observer_LU": [
+        "FirstName",
+        "LastName",
+        "ObsInits"
+      ],
+      "tlinkObservers": [
+        "EventID",
+        "ObsInits"
+      ],
+      "tblFieldDataTurtleMeasurements": [
+        "EventID"
+      ]
+    }
+  },
+  {
+    "question_id": 224,
+    "db_id": "NTSB",
+    "question": "How many vehicles with fewer than 400, but more than 0, ignition cycles are in the data?",
+    "gold_sql": "SELECT COUNT(*) AS VEHICLECOUNT FROM ( \tSELECT DISTINCT CASEID, VEHNO, IGCYCRASH \tFROM EDREVENT ) E WHERE IGCYCRASH > 0 AND IGCYCRASH < 400",
+    "schema_links": {
+      "EDREVENT": [
+        "CASEID",
+        "IGCYCRASH",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 225,
+    "db_id": "CratersWildlifeObservations",
+    "question": "For each survey category of vertebrate records, show a count of observations made by the observer stefanic",
+    "gold_sql": "select survey, count(*) stefCount from VERTEBRATES where observer like 'stefanic' group by survey",
+    "schema_links": {
+      "VERTEBRATES": [
+        "Observer",
+        "Survey"
+      ]
+    }
+  },
+  {
+    "question_id": 226,
+    "db_id": "SBODemoUS-Reports",
+    "question": "Display the group description, log instance, the updated date, and the created date of the query group with the code 'Group4'",
+    "gold_sql": "select AUTHGRPN, LogInstanc, UpdateDate, CreateDate from OQAG where AUTHGRPCD = 'Group4'",
+    "schema_links": {
+      "OQAG": [
+        "AUTHGRPCD",
+        "AUTHGRPN",
+        "CreateDate",
+        "LogInstanc",
+        "UpdateDate"
+      ]
+    }
+  },
+  {
+    "question_id": 227,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the names of the board of cooperative educational services and the number of counties, for boards that have more than one county.",
+    "gold_sql": "select BOCES_NAME, count(distinct COUNTY_NAME) CountyCount from [BOCES_and_N/RC] group by BOCES_NAME having count(distinct COUNTY_NAME) > 1",
+    "schema_links": {
+      "BOCES_and_N/RC": [
+        "BOCES_NAME",
+        "COUNTY_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 228,
+    "db_id": "SBODemoUS-General",
+    "question": "How many queries does the dashboard entry with code DAB002 have?",
+    "gold_sql": "select count(*) queryCount from ODAB join DAB1 on ODAB.AbsEntry = DAB1.DsbEntry where DashbdCode = 'DAB002'",
+    "schema_links": {
+      "ODAB": [
+        "AbsEntry",
+        "DashbdCode"
+      ],
+      "DAB1": [
+        "DsbEntry"
+      ]
+    }
+  },
+  {
+    "question_id": 229,
+    "db_id": "NTSB",
+    "question": "Make a list that shows the time it took for emergency services to be notified after an accident, the time it took for emergency services to arrive at the scene, the time it took for them to depart the scene, and the time it took for them to arrive at the hospital. Show these times for each crash by case id. Only show cases where an ambulance responded. The lookupcode for ambulance is 1.",
+    "gold_sql": "SELECT CASEID, NOTIFIED, SCENEARR, SCENEDEP, ARRMEDICAL FROM EMSCARE WHERE EMSTYPE = 1",
+    "schema_links": {
+      "EMSCARE": [
+        "ARRMEDICAL",
+        "CASEID",
+        "EMSTYPE",
+        "NOTIFIED",
+        "SCENEARR",
+        "SCENEDEP"
+      ]
+    }
+  },
+  {
+    "question_id": 230,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "What is the email address and federal tax ID of the target with the position of CIO that is of target type C?",
+    "gold_sql": "select E_Mail, LicTradNum from TGG1 join OTGG on TGG1.TargetCode = OTGG.TargetCode where Position = 'CIO' and TargetType = 'C'",
+    "schema_links": {
+      "TGG1": [
+        "E_Mail",
+        "LicTradNum",
+        "Position",
+        "TargetCode"
+      ],
+      "OTGG": [
+        "TargetCode",
+        "TargetType"
+      ]
+    }
+  },
+  {
+    "question_id": 231,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Show the average temperature, salinity, conductivity, and pH level of the water at locations corresponding to turtle observation records.",
+    "gold_sql": "select avg(tempc) avgTempC, avg(salinity) avgSalinity, avg(conductivity) avgConduct, avg(pH) avgPH from tblFieldDataWaterProperties w, tblFieldDataTurtleTrapSurveys t where w. recordid in ( \tselect recordid from tblFieldDataTurtleTrapSurveys )",
+    "schema_links": {
+      "tblFieldDataWaterProperties": [
+        "Conductivity",
+        "RecordID",
+        "Salinity",
+        "TempC",
+        "pH"
+      ],
+      "tblFieldDataTurtleTrapSurveys": [
+        "RecordID"
+      ]
+    }
+  },
+  {
+    "question_id": 232,
+    "db_id": "ATBI",
+    "question": "what is the condition number for the 'Dead' condition text entry?",
+    "gold_sql": "select Cond_Num from tlu_live_dead where Cond_Text = 'Dead'",
+    "schema_links": {
+      "tlu_Live_Dead": [
+        "Cond_Num",
+        "Cond_Text"
+      ]
+    }
+  },
+  {
+    "question_id": 233,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Make a list of events that are repeat samples that were verified by Lauren Smith, and that includes the event id, station id, and the start date,.",
+    "gold_sql": "select event_id, station_id, start_date  from tbl_events where repeat_sample = 1 and verified_by = 'Lauren Smith'",
+    "schema_links": {
+      "tbl_Events": [
+        "Event_ID",
+        "Repeat_Sample",
+        "Start_Date",
+        "Station_ID",
+        "Verified_by"
+      ]
+    }
+  },
+  {
+    "question_id": 234,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "For each tree condition, show the number of trees for trees with a tag number (not tag ID) greater than 220.",
+    "gold_sql": "select TreeCond, count(*) treeCount from tbl_Tree_Tags tt join tbl_Overstory o on o.TreeTag = tt.Tree_Tag_ID where Tag > 220 group by TreeCond",
+    "schema_links": {
+      "tbl_Overstory": [
+        "TreeCond",
+        "TreeTag"
+      ],
+      "tbl_Tree_Tags": [
+        "Tag",
+        "Tree_Tag_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 235,
+    "db_id": "CratersWildlifeObservations",
+    "question": "What are the common and scientific names of vertebrates observed at the coordinates Universal Transverse Mercator North = 4814897 and Universal Transverse Mercator East = 291766",
+    "gold_sql": "select Common_Name, Scientific_Name from VERTEBRATES where UTMN = 4814897 and UTME = 291766",
+    "schema_links": {
+      "VERTEBRATES": [
+        "Common_Name",
+        "Scientific_Name",
+        "UTME",
+        "UTMN"
+      ]
+    }
+  },
+  {
+    "question_id": 236,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the name of the public school district that had the most teachers teaching out of certification in 2021?",
+    "gold_sql": "select top 1 ENTITY_NAME from [Teachers_Teaching_Out_of_Certification] where year = 2021 \tand entity_cd in ( \t\tselect entity_cd \t\tfrom [Institution_Grouping] \t\twhere GROUP_NAME = 'public school district' \t) order by NUM_OUT_CERT desc",
+    "schema_links": {
+      "Teachers_Teaching_Out_of_Certification": [
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "NUM_OUT_CERT",
+        "YEAR"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 237,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "How many events were documented at each location? Show the location name and count of events. Only show the 10 locations with the highest number of events.",
+    "gold_sql": "select top 10 Loc_Name, count(*) eventCount from tbl_locations l join tbl_events e on l.Location_ID = e.Location_ID group by Loc_Name order by count(*) desc",
+    "schema_links": {
+      "tbl_Locations": [
+        "Loc_Name",
+        "Location_ID"
+      ],
+      "tbl_Events": [
+        "Location_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 238,
+    "db_id": "NYSED_SRC2022",
+    "question": "What are the names of the five public high school entity that have the highest weighted performance index score in math for the all student sub group in 2022? Exclude the value 's' from the index score.",
+    "gold_sql": "select top 5 p.ENTITY_NAME  from [ACC_HS_Core_and_Weighted_Performance] p join [Institution_Grouping] g on p.ENTITY_CD = g.ENTITY_CD where WEIGHTED_INDEX <> 's' \tand group_name = 'Public School' \tand subject = 'MATH' \tand subgroup_name = 'All Students' \tand year = 2022 order by cast(weighted_index as float) desc",
+    "schema_links": {
+      "ACC_HS_Core_and_Weighted_Performance": [
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME",
+        "SUBJECT",
+        "WEIGHTED_INDEX",
+        "YEAR"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 239,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "For the item named 'Printer Paper A4 White', show the package dimensions including height 1, width 1, length 1, and volume, for the packaging that holds a quantity of 24.",
+    "gold_sql": "select height1, width1, length1, volume from ITM4 join OITM on ITM4.ItemCode = OITM.ItemCode where itemname = 'Printer Paper A4 White'       and QtyPerPack = 24",
+    "schema_links": {
+      "ITM4": [
+        "Height1",
+        "ItemCode",
+        "Length1",
+        "QtyPerPack",
+        "Volume",
+        "Width1"
+      ],
+      "OITM": [
+        "ItemCode",
+        "ItemName"
+      ]
+    }
+  },
+  {
+    "question_id": 240,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show a list of event IDs for events that were documented at the Wood River watershed and the Annie Creek sub watershed",
+    "gold_sql": "select Event_ID from tbl_Events e join tbl_locations l on e.Location_ID = l.Location_ID where Watershed = 'Wood River' and Subwatershed = 'Annie Creek'",
+    "schema_links": {
+      "tbl_Events": [
+        "Event_ID",
+        "Location_ID"
+      ],
+      "tbl_Locations": [
+        "Location_ID",
+        "Subwatershed",
+        "Watershed"
+      ]
+    }
+  },
+  {
+    "question_id": 241,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Create a list of species sightings at each station. Include the island, site name, location name, transect and transect type, station, the station's latitude, the event id of the observations, the last names of those who observed as well as their notes, the family, scientific name, common name, and alternate name of each bird observed.",
+    "gold_sql": "select island, site_name, Loc_Name, transect, transect_type, Station, lat_final, te.event_id, last_name, event_notes, family, Scientific_Name, Common_Name, Alternate_Name from tbl_locations tl join tbl_sites ts on tl.Site_ID = ts.Site_ID join tbl_transect tr on tr.Location_ID = tl.Location_ID join tbl_stations st on st.Transect_ID = tr.Transect_ID join tbl_events te on te.station_id = st.station_id join xref_Event_Contacts ec on ec.Event_ID = te.Event_ID join tlu_Contacts con on ec.Contact_ID = con.Contact_ID join tbl_Observations obs on te.Event_ID = obs.Event_ID join tlu_species spc on obs.Species_ID = spc.Species_ID join xref_Species_Alternate_Names spc_alt on spc.Species_ID = spc_alt.Species_ID",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island",
+        "Loc_Name",
+        "Location_ID",
+        "Site_ID"
+      ],
+      "tbl_Sites": [
+        "Site_ID",
+        "Site_Name"
+      ],
+      "tbl_Transect": [
+        "Location_ID",
+        "Transect",
+        "Transect_ID",
+        "Transect_Type"
+      ],
+      "tbl_Stations": [
+        "Lat_final",
+        "Station",
+        "Station_ID",
+        "Transect_ID"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Event_Notes",
+        "Station_ID"
+      ],
+      "tlu_Contacts": [
+        "Contact_ID",
+        "Last_Name"
+      ],
+      "tlu_Species": [
+        "Common_Name",
+        "Family",
+        "Scientific_Name",
+        "Species_ID"
+      ],
+      "xref_Species_Alternate_Names": [
+        "Alternate_Name",
+        "Species_ID"
+      ],
+      "xref_Event_Contacts": [
+        "Contact_ID",
+        "Event_ID"
+      ],
+      "tbl_Observations": [
+        "Event_ID",
+        "Species_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 242,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Display the observation type and a count of invertebrate records for each observation type",
+    "gold_sql": "select OBS_TYPE, count(*) obsCount from INVERTEBRATES group by OBS_TYPE",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "OBS_TYPE"
+      ]
+    }
+  },
+  {
+    "question_id": 243,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show the species, Common_Name, scientific name, habitat definition, observer, and number observed for all vertebrates observed in numbers greater than 100",
+    "gold_sql": "select species, Common_Name,  Scientific_Name, Definition, number from VERTEBRATES v join HABITAT_CODES h on v.Habitat = h.Code where number > 100",
+    "schema_links": {
+      "VERTEBRATES": [
+        "Common_Name",
+        "Habitat",
+        "Number",
+        "Scientific_Name",
+        "Species"
+      ],
+      "HABITAT_CODES": [
+        "Code",
+        "Definition"
+      ]
+    }
+  },
+  {
+    "question_id": 244,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Get a count of invertebrate observations made at the Hot springs location for each observation type",
+    "gold_sql": "select OBS_TYPE, count(*) obsCount from INVERTEBRATES where location like 'Hot springs' group by OBS_TYPE",
+    "schema_links": {
+      "INVERTEBRATES": [
+        "Location",
+        "OBS_TYPE"
+      ]
+    }
+  },
+  {
+    "question_id": 245,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "For the vendor with vendor code V1010, show item names, consignment numbers, and last purchase price for items where the vendor is preferred.",
+    "gold_sql": "select ItemName, Consig, LastPurPrc from ITM2 join OITM on ITM2.ItemCode = OITM.ItemCode where VendorCode = 'V1010'",
+    "schema_links": {
+      "OITM": [
+        "Consig",
+        "ItemCode",
+        "ItemName",
+        "LastPurPrc"
+      ],
+      "ITM2": [
+        "ItemCode",
+        "VendorCode"
+      ]
+    }
+  },
+  {
+    "question_id": 246,
+    "db_id": "SBODemoUS-Finance",
+    "question": "Show the names of the financial report categories that have father number 10",
+    "gold_sql": "select name from OFRC where FatherNum = 10",
+    "schema_links": {
+      "OFRC": [
+        "FatherNum",
+        "Name"
+      ]
+    }
+  },
+  {
+    "question_id": 247,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show the notes for gray wolf observations with Bureau of Land Management (BLM) ownership",
+    "gold_sql": "select notes  from VERTEBRATES where Ownership = 'BLM' and Common_Name like 'gray wolf'",
+    "schema_links": {
+      "VERTEBRATES": [
+        "Common_Name",
+        "Notes",
+        "Ownership"
+      ]
+    }
+  },
+  {
+    "question_id": 248,
+    "db_id": "NTSB",
+    "question": "List the Front and rear axle weight ratings for vehicles that have a gross vehicle weight rating between 4000 and 9000",
+    "gold_sql": "SELECT GAWRFRONT, GAWRREAR FROM TIREPLAC WHERE GVWR BETWEEN 4000 AND 9000",
+    "schema_links": {
+      "TIREPLAC": [
+        "GAWRFRONT",
+        "GAWRREAR",
+        "GVWR"
+      ]
+    }
+  },
+  {
+    "question_id": 249,
+    "db_id": "NTSB",
+    "question": "For each case where measurements were performed, show the case ID, vehicle number, and all of the different crush measurements and the maximum. Codes 888 and 999 indicate that measurements are not available.",
+    "gold_sql": "SELECT CASEID, VEHNO, CMAX, C1, C2, C3, C4, C5, C6 FROM CDC WHERE CMAX NOT IN (888, 999)",
+    "schema_links": {
+      "CDC": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "CASEID",
+        "CMAX",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 250,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "What is the dimension code of the cost center named 'General Center 3'?",
+    "gold_sql": "select DimCode from OPRC where PrcName = 'General Center 3'",
+    "schema_links": {
+      "OPRC": [
+        "DimCode",
+        "PrcName"
+      ]
+    }
+  },
+  {
+    "question_id": 251,
+    "db_id": "NTSB",
+    "question": "What is the average time it takes for emergency services to arrive at the scene after a crash occurs? Exclude values greater than 1600.",
+    "gold_sql": "SELECT AVG(SCENEARR) AVGARRIVALTIME FROM EMSCARE WHERE SCENEARR <= 1600",
+    "schema_links": {
+      "EMSCARE": [
+        "SCENEARR"
+      ]
+    }
+  },
+  {
+    "question_id": 252,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Show a count of observations by species habitat",
+    "gold_sql": "select habitat, count(*) obsCount from tlu_species s join tbl_observations o on o.Species_ID = s.Species_ID group by habitat",
+    "schema_links": {
+      "tlu_Species": [
+        "Habitat",
+        "Species_ID"
+      ],
+      "tbl_Observations": [
+        "Species_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 253,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "What are the names, mobile phone numbers, and email addresses of sales employees in the high commission group?",
+    "gold_sql": "select SlpName, Mobil, Email from OSLP join OCOG on OSLP.GroupCode = OCOG.GroupCode where GroupName = 'High Commission'",
+    "schema_links": {
+      "OSLP": [
+        "Email",
+        "GroupCode",
+        "Mobil",
+        "SlpName"
+      ],
+      "OCOG": [
+        "GroupCode",
+        "GroupName"
+      ]
+    }
+  },
+  {
+    "question_id": 254,
+    "db_id": "NTSB",
+    "question": "Show the total occupant count and the mortality count by belt use category. A mortality occured (was fatal) indicated by lookup code 1.",
+    "gold_sql": "SELECT M.BELTUSE, TOTALCOUNT, MORTALCOUNT FROM ( \tSELECT BELTUSE, COUNT(*) MORTALCOUNT \tFROM OCC \tWHERE MORTALITY = 1 \tGROUP BY BELTUSE ) M JOIN ( \tSELECT BELTUSE, COUNT(*) TOTALCOUNT \tFROM OCC \tGROUP BY BELTUSE ) T ON M.BELTUSE = T.BELTUSE",
+    "schema_links": {
+      "OCC": [
+        "BELTUSE",
+        "MORTALITY"
+      ]
+    }
+  },
+  {
+    "question_id": 255,
+    "db_id": "NTSB",
+    "question": "List the number of crashes by vehicle make from most to least",
+    "gold_sql": "SELECT MAKE, COUNT(*) AS CRASHCOUNT FROM VPICDECODE GROUP BY MAKE ORDER BY CRASHCOUNT DESC",
+    "schema_links": {
+      "VPICDECODE": [
+        "Make"
+      ]
+    }
+  },
+  {
+    "question_id": 256,
+    "db_id": "NTSB",
+    "question": "What is the average length of the first object stuck after the vehicle departs the shoulder or roadway? Valid values range from 0 to 120 centimeters. Ignore values outside of this range.",
+    "gold_sql": "SELECT AVG(STRKLENGTH) AVGLENGTH FROM GV WHERE STRKLENGTH BETWEEN 0 AND 120",
+    "schema_links": {
+      "GV": [
+        "STRKLENGTH"
+      ]
+    }
+  },
+  {
+    "question_id": 257,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "What is the useful life, remaining life, and remaining day parameters for the item that uses depreciation area 'GAAP'?",
+    "gold_sql": "select UsefulLife, RemainLife, RemainDays from ITM7 where DprArea = 'GAAP'",
+    "schema_links": {
+      "ITM7": [
+        "DprArea",
+        "RemainDays",
+        "RemainLife",
+        "UsefulLife"
+      ]
+    }
+  },
+  {
+    "question_id": 258,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "How many events had both overstory and deadwood entries?",
+    "gold_sql": "select count(distinct Event_ID) eventCount from tbl_Deadwood d where d.Event_ID in (select event_id from tbl_Overstory)",
+    "schema_links": {
+      "tbl_Deadwood": [
+        "Event_ID"
+      ],
+      "tbl_Overstory": [
+        "Event_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 259,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "Show the bank details, to include bank code, country, account number, branch, and city, for the business partner with the card name Microchips",
+    "gold_sql": "select OCRB.BankCode, OCRB.Country, Account, Branch, OCRB.City from OCRD join OCRB on OCRD.CardCode = OCRD.CardCode where CardName = 'Microchips'",
+    "schema_links": {
+      "OCRB": [
+        "Account",
+        "BankCode",
+        "Branch",
+        "City",
+        "Country"
+      ],
+      "OCRD": [
+        "CardCode",
+        "CardName"
+      ]
+    }
+  },
+  {
+    "question_id": 260,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "For the event at the highest elevation recorded on July 28 2009, show the light index, evergreen coverage, litter coverage, vegetation height, and elevation",
+    "gold_sql": "select top 1 LightIndex, Evergreen, Litter, VegHeight, Elevation from tbl_MicroHabitat m join tbl_Events e on m.Event_ID = e.Event_ID join tbl_Locations l on e.Location_ID = l.Location_ID where year(Start_Date) = 2009 and month(Start_Date) = 7 and day(Start_Date) = 28 order by Elevation desc",
+    "schema_links": {
+      "tbl_MicroHabitat": [
+        "Event_ID",
+        "Evergreen",
+        "LightIndex",
+        "Litter",
+        "VegHeight"
+      ],
+      "tbl_Locations": [
+        "Elevation",
+        "Location_ID"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Location_ID",
+        "Start_Date"
+      ]
+    }
+  },
+  {
+    "question_id": 261,
+    "db_id": "ATBI",
+    "question": "What is the average diameter at breast height for  trees of the Acer genus?",
+    "gold_sql": "select avg(DBH) AvgDBH from tbl_Overstory o join tlu_PlantSpecies p on o.SpCode = p.SpeciesCode where genus = 'Acer'",
+    "schema_links": {
+      "tbl_Overstory": [
+        "DBH",
+        "SpCode"
+      ],
+      "tlu_PlantSpecies": [
+        "SpeciesCode",
+        "genus"
+      ]
+    }
+  },
+  {
+    "question_id": 262,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "How many plant species have the term 'native' in their notes? Show a count of these species by their genus. Only include the five highest results.",
+    "gold_sql": "select top 5 genus, count(*) speciesCount from tlu_PlantSpecies where SpeciesNotes like '%native%' group by genus order by count(*) desc",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "SpeciesNotes",
+        "genus"
+      ]
+    }
+  },
+  {
+    "question_id": 263,
+    "db_id": "ATBI",
+    "question": "Make a list of genus, species, and common name, for overstory (trees) in Swain county. Include only one row per distinct combination.",
+    "gold_sql": "select distinct genus, species, CommonName from tlu_PlantSpecies sp join tbl_Overstory os on sp.SpeciesCode = os.SpCode join tbl_Tree_Tags tt on tt.Tree_Tag_ID = os.TreeTag join tbl_locations l on l.Location_ID = tt.Location_ID join tlu_PlaceNames pn on pn.ID = l.PlaceNameID where county = 'Swain'",
+    "schema_links": {
+      "tlu_PlantSpecies": [
+        "CommonName",
+        "SpeciesCode",
+        "genus",
+        "species"
+      ],
+      "tbl_Overstory": [
+        "SpCode",
+        "TreeTag"
+      ],
+      "tbl_Tree_Tags": [
+        "Location_ID",
+        "Tree_Tag_ID"
+      ],
+      "tbl_Locations": [
+        "Location_ID",
+        "PlaceNameID"
+      ],
+      "tlu_PlaceNames": [
+        "County",
+        "ID"
+      ]
+    }
+  },
+  {
+    "question_id": 264,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Which island has the most sightings of the bird with the common name Pacific Kingfisher?",
+    "gold_sql": "select top 1 island, count(*) as kingfisher_count from tbl_locations tl join tbl_transect tr on tr.Location_ID = tl.Location_ID join tbl_stations st on st.Transect_ID = tr.Transect_ID join tbl_events te on te.station_id = st.station_id join xref_Event_Contacts ec on ec.Event_ID = te.Event_ID join tlu_Contacts con on ec.Contact_ID = con.Contact_ID join tbl_Observations obs on te.Event_ID = obs.Event_ID join tlu_species spc on obs.Species_ID = spc.Species_ID where common_name = 'Pacific Kingfisher' group by island order by kingfisher_count",
+    "schema_links": {
+      "tbl_Locations": [
+        "Island",
+        "Location_ID"
+      ],
+      "tbl_Transect": [
+        "Location_ID",
+        "Transect_ID"
+      ],
+      "tbl_Stations": [
+        "Station_ID",
+        "Transect_ID"
+      ],
+      "tbl_Events": [
+        "Event_ID",
+        "Station_ID"
+      ],
+      "xref_Event_Contacts": [
+        "Contact_ID",
+        "Event_ID"
+      ],
+      "tlu_Contacts": [
+        "Contact_ID"
+      ],
+      "tbl_Observations": [
+        "Event_ID",
+        "Species_ID"
+      ],
+      "tlu_Species": [
+        "Common_Name",
+        "Species_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 265,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "what is the account balance of the business partner with the payment method code 'Incoming BT' and a currency type that is either 'EUR' or 'CAN'",
+    "gold_sql": "select Balance  from OCRD where Currency in ('EUR', 'CAN') and OCRD.PymCode = 'Incoming BT'",
+    "schema_links": {
+      "OCRD": [
+        "Balance",
+        "Currency",
+        "PymCode"
+      ]
+    }
+  },
+  {
+    "question_id": 266,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show location name and the X and Y coordinates of all the locations at the site named North A",
+    "gold_sql": "select Loc_Name, X_Coord, Y_Coord from tbl_Sites s join tbl_Locations l on s.Site_ID = l.Site_ID where site_name = 'North A'",
+    "schema_links": {
+      "tbl_Locations": [
+        "Loc_Name",
+        "Site_ID",
+        "X_Coord",
+        "Y_Coord"
+      ],
+      "tbl_Sites": [
+        "Site_ID",
+        "Site_Name"
+      ]
+    }
+  },
+  {
+    "question_id": 267,
+    "db_id": "NTSB",
+    "question": "Display a count of vehicle inspections by inspection type",
+    "gold_sql": "SELECT INSPTYPE, COUNT(*) AS VEHCOUNT FROM GV GROUP BY INSPTYPE",
+    "schema_links": {
+      "GV": [
+        "INSPTYPE"
+      ]
+    }
+  },
+  {
+    "question_id": 268,
+    "db_id": "SBODemoUS-Banking",
+    "question": "For incoming payments processed with credit vouchers, show the average of the sums of the first partial payments.",
+    "gold_sql": "select avg(FirstSum) firstPmtAvg from ORCT join RCT3 on ORCT.DocNum = RCT3.DocNum",
+    "schema_links": {
+      "RCT3": [
+        "DocNum",
+        "FirstSum"
+      ],
+      "ORCT": [
+        "DocNum"
+      ]
+    }
+  },
+  {
+    "question_id": 269,
+    "db_id": "ATBI",
+    "question": "What is the text entry for presence number 3?",
+    "gold_sql": "select pres_text  from tlu_presence where pres_num = 3",
+    "schema_links": {
+      "tlu_Presence": [
+        "Pres_Num",
+        "Pres_Text"
+      ]
+    }
+  },
+  {
+    "question_id": 270,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "How many different codes are there for each enumeration group?",
+    "gold_sql": "select Enum_Group, count(*) codeCount from tlu_Enumerations group by Enum_Group",
+    "schema_links": {
+      "tlu_Enumerations": [
+        "Enum_Group"
+      ]
+    }
+  },
+  {
+    "question_id": 271,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "Show the newest sales opportunity start date for each opportunity status code",
+    "gold_sql": "select status, max(OpenDate) maxDate from OOPR group by status",
+    "schema_links": {
+      "OOPR": [
+        "OpenDate",
+        "Status"
+      ]
+    }
+  },
+  {
+    "question_id": 272,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many different elementary school math assessment types are there?",
+    "gold_sql": "select count(distinct ASSESSMENT_NAME) AssessmentCount from [Annual_EM_MATH]",
+    "schema_links": {
+      "Annual_EM_MATH": [
+        "ASSESSMENT_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 273,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "How many turtles were measured at each location where turtles were measured?",
+    "gold_sql": "select locationID, count(*) turtleCount from tblFieldDataTurtleMeasurements group by locationID",
+    "schema_links": {
+      "tblFieldDataTurtleMeasurements": [
+        "LocationID"
+      ]
+    }
+  },
+  {
+    "question_id": 274,
+    "db_id": "SBODemoUS-General",
+    "question": "Show the cockpit subtable left, right, top, and bottom values for the cockpit named purchase",
+    "gold_sql": "select CPT1._left, CPT1._right, CPT1._top, CPT1._bottom from OCPT join CPT1 on OCPT.AbsEntry = CPT1.AbsEntry where Name = 'Purchase'",
+    "schema_links": {
+      "CPT1": [
+        "AbsEntry",
+        "_Bottom",
+        "_Left",
+        "_Right",
+        "_Top"
+      ],
+      "OCPT": [
+        "AbsEntry",
+        "Name"
+      ]
+    }
+  },
+  {
+    "question_id": 275,
+    "db_id": "PacificIslandLandbirds",
+    "question": "What are the weather conditions (cloud cover, rain, wind, and gusts) for events entered by Cari Squibb and updated by Seth Judge?",
+    "gold_sql": "select cloud, rain, wind, gust  from tbl_events e join tbl_Event_Details ed on e.Event_ID = ed.Event_ID where updated_by = 'Seth Judge' and entered_by = 'Cari Squibb'",
+    "schema_links": {
+      "tbl_Event_Details": [
+        "Cloud",
+        "Event_ID",
+        "Gust",
+        "Rain",
+        "Wind"
+      ],
+      "tbl_Events": [
+        "Entered_by",
+        "Event_ID",
+        "Updated_by"
+      ]
+    }
+  },
+  {
+    "question_id": 276,
+    "db_id": "NTSB",
+    "question": "What is the average total time from the time an accident occurs to the time that emergency medical services arrive at the medical facility? Exclude values greater than 1600.",
+    "gold_sql": "SELECT AVG(ARRMEDICAL) AVGMEDARRIVE FROM EMSCARE WHERE ARRMEDICAL <= 1600",
+    "schema_links": {
+      "EMSCARE": [
+        "ARRMEDICAL"
+      ]
+    }
+  },
+  {
+    "question_id": 277,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many stations are there?",
+    "gold_sql": "select count(*) as station_count  from tbl_stations",
+    "schema_links": {
+      "tbl_Stations": []
+    }
+  },
+  {
+    "question_id": 278,
+    "db_id": "NTSB",
+    "question": "How many injuries are there for each body region?",
+    "gold_sql": "SELECT BRI, COUNT(*) AS INJURY_COUNT  FROM ICS GROUP BY BRI",
+    "schema_links": {
+      "ICS": [
+        "BRI"
+      ]
+    }
+  },
+  {
+    "question_id": 279,
+    "db_id": "NTSB",
+    "question": "What is the most common crash avoidance equipment feature?",
+    "gold_sql": "SELECT TOP 1 EQUIP FROM AVOID WHERE AVAIL = 1 GROUP BY EQUIP ORDER BY COUNT(*) DESC",
+    "schema_links": {
+      "AVOID": [
+        "AVAIL",
+        "EQUIP"
+      ]
+    }
+  },
+  {
+    "question_id": 280,
+    "db_id": "NTSB",
+    "question": "How many crashes resulted in the death of a fetus? The lookup value for fetal mortality is 1.",
+    "gold_sql": "SELECT COUNT(DISTINCT CASEID) DEATHCOUNT FROM OCC WHERE FETALMORT = 1",
+    "schema_links": {
+      "OCC": [
+        "CASEID",
+        "FETALMORT"
+      ]
+    }
+  },
+  {
+    "question_id": 281,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "How many records are logged for each turtle trap type?",
+    "gold_sql": "select [trap_type], count(*) recordCount from tblFieldDataTurtleTrapSurveys group by [Trap_Type]",
+    "schema_links": {
+      "tblFieldDataTurtleTrapSurveys": [
+        "Trap_Type"
+      ]
+    }
+  },
+  {
+    "question_id": 282,
+    "db_id": "SBODemoUS-Reports",
+    "question": "What are the background, foreground, bold, and border red / green / blue values for the reporting elements with a height less than 5 and greater than 0?",
+    "gold_sql": "select BGRed, BGGreen, BGBlue, FGRed, FGGreen, FGBlue, MrkrRed, MrkrBlue, MrkrGreen, BrdrRed, BrdrBlue, BrdrGreen from RITM where height < 5 and height > 0",
+    "schema_links": {
+      "RITM": [
+        "BGBlue",
+        "BGGreen",
+        "BGRed",
+        "BrdrBlue",
+        "BrdrGreen",
+        "BrdrRed",
+        "FGBlue",
+        "FGGreen",
+        "FGRed",
+        "Height",
+        "MrkrBlue",
+        "MrkrGreen",
+        "MrkrRed"
+      ]
+    }
+  },
+  {
+    "question_id": 283,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the percent not tested in 2021 on english language assessment ELA4, for each demographic subgroup at PEMBROKE INTERMEDIATE SCHOOL",
+    "gold_sql": "select SUBGROUP_NAME, pct_not_tested from [Annual_EM_ELA] where entity_name = 'PEMBROKE INTERMEDIATE SCHOOL'      and ASSESSMENT_NAME = 'ELA4'     and year = 2021",
+    "schema_links": {
+      "Annual_EM_ELA": [
+        "ASSESSMENT_NAME",
+        "ENTITY_NAME",
+        "PCT_NOT_TESTED",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ]
+    }
+  },
+  {
+    "question_id": 284,
+    "db_id": "SBODemoUS-Finance",
+    "question": "What is the project code and name of the projects valid after 2020?",
+    "gold_sql": "select prjcode, prjname from OPRJ where year(ValidFrom) > 2020",
+    "schema_links": {
+      "OPRJ": [
+        "PrjCode",
+        "PrjName",
+        "ValidFrom"
+      ]
+    }
+  },
+  {
+    "question_id": 285,
+    "db_id": "PacificIslandLandbirds",
+    "question": "what are all of the different sources of species information?",
+    "gold_sql": "select distinct source from tlu_species",
+    "schema_links": {
+      "tlu_Species": [
+        "Source"
+      ]
+    }
+  },
+  {
+    "question_id": 286,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show all of the species listed in the Lava Beds National Monument species lookup table in 2017",
+    "gold_sql": "select Species from tlu_Species_LABE where SampleYear = 2017",
+    "schema_links": {
+      "tlu_Species_LABE": [
+        "SampleYear",
+        "Species"
+      ]
+    }
+  },
+  {
+    "question_id": 287,
+    "db_id": "NTSB",
+    "question": "What is the average total time from the time an accident occurs to the time that emergency services depart the scene of an accident? Exclude values greater than 1600.",
+    "gold_sql": "SELECT AVG(SCENEDEP) AVGDEPTIME FROM EMSCARE WHERE SCENEDEP <= 1600",
+    "schema_links": {
+      "EMSCARE": [
+        "SCENEDEP"
+      ]
+    }
+  },
+  {
+    "question_id": 288,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Make a list of turtle record IDs and measurement comments where the trap survey sex data did not match the measurement sex data.",
+    "gold_sql": "select t.RecordID, m.comments from tblFieldDataTurtleTrapSurveys t join tblFieldDataTurtleMeasurements m on t.RecordID = m.RecordID  \tand m.sex <> t.sex",
+    "schema_links": {
+      "tblFieldDataTurtleTrapSurveys": [
+        "RecordID",
+        "Sex"
+      ],
+      "tblFieldDataTurtleMeasurements": [
+        "Comments",
+        "RecordID",
+        "Sex"
+      ]
+    }
+  },
+  {
+    "question_id": 289,
+    "db_id": "NTSB",
+    "question": "How many vehicles were documented as encountering a direction of force between 150 and 210 degrees inclusive?",
+    "gold_sql": "SELECT COUNT(DISTINCT CONCAT(CASEID, VEHNO)) VEHCOUNT FROM CDC WHERE PDOF >= 150 AND PDOF <= 210",
+    "schema_links": {
+      "CDC": [
+        "CASEID",
+        "PDOF",
+        "VEHNO"
+      ]
+    }
+  },
+  {
+    "question_id": 290,
+    "db_id": "SBODemoUS-Reports",
+    "question": "What is the widest document width for documents with a grid size of 10?",
+    "gold_sql": "select top 1 Width from RDOC where GridSize = 10 order by width desc",
+    "schema_links": {
+      "RDOC": [
+        "GridSize",
+        "Width"
+      ]
+    }
+  },
+  {
+    "question_id": 291,
+    "db_id": "NTSB",
+    "question": "Show a count of vehicles for each type of road rumble strip presence.",
+    "gold_sql": "SELECT RUMBROAD, COUNT(*) VEHCOUNT FROM GV GROUP BY RUMBROAD",
+    "schema_links": {
+      "GV": [
+        "RUMBROAD"
+      ]
+    }
+  },
+  {
+    "question_id": 292,
+    "db_id": "NTSB",
+    "question": "How many vehicles are there with the driver's current residence ZIP as 95020?",
+    "gold_sql": "SELECT COUNT(*) VEHCOUNT FROM GV  WHERE ZIP = 95020",
+    "schema_links": {
+      "GV": [
+        "ZIP"
+      ]
+    }
+  },
+  {
+    "question_id": 293,
+    "db_id": "NTSB",
+    "question": "How many accidents with occupied child seats were related to distracted driving?",
+    "gold_sql": "SELECT COUNT(DISTINCT D.CASEID) ACCIDENTCOUNT FROM DISTRACT D JOIN ( \tSELECT DISTINCT CASEID FROM CHILDSEAT WHERE OCCNO IS NOT NULL ) S ON D.CASEID = S.CASEID",
+    "schema_links": {
+      "DISTRACT": [
+        "CASEID"
+      ],
+      "CHILDSEAT": [
+        "CASEID",
+        "OCCNO"
+      ]
+    }
+  },
+  {
+    "question_id": 294,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many contacts are there from each organization?",
+    "gold_sql": "select organization, count(*) person_count from tlu_contacts group by organization",
+    "schema_links": {
+      "tlu_Contacts": [
+        "Organization"
+      ]
+    }
+  },
+  {
+    "question_id": 295,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Get a count of events by station",
+    "gold_sql": "select station_id, count(*) event_count from tbl_events group by station_id",
+    "schema_links": {
+      "tbl_Events": [
+        "Station_ID"
+      ]
+    }
+  },
+  {
+    "question_id": 296,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the average seedling density of the Acer genus?",
+    "gold_sql": "select avg(Density) avgSeedlingDensity from tbl_seedlings s join tlu_PlantSpecies sp on s.SpCode = sp.SpeciesCode where genus = 'Acer'",
+    "schema_links": {
+      "tbl_Seedlings": [
+        "Density",
+        "SpCode"
+      ],
+      "tlu_PlantSpecies": [
+        "SpeciesCode",
+        "genus"
+      ]
+    }
+  },
+  {
+    "question_id": 297,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Which roadkill species are not included in the Common_Name field of the invertebrates table? Include only one entry per value.",
+    "gold_sql": "select distinct species from Roadkill where species not in ( \tselect Common_Name \tfrom VERTEBRATES )",
+    "schema_links": {
+      "Roadkill": [
+        "Species"
+      ],
+      "VERTEBRATES": [
+        "Common_Name"
+      ]
+    }
+  },
+  {
+    "question_id": 298,
+    "db_id": "NTSB",
+    "question": "How many crashes had a reported fire?",
+    "gold_sql": "SELECT COUNT(DISTINCT CASEID) CRASHCOUNT FROM FIRE",
+    "schema_links": {
+      "FIRE": [
+        "CASEID"
+      ]
+    }
+  },
+  {
+    "question_id": 299,
+    "db_id": "NYSED_SRC2022",
+    "question": "show the school name, sub group name, and total enrollment at public elementary school entities that have the highest absenteeism rate in 2022. Exclude data where the absenteeism rate is 's'.",
+    "gold_sql": "select a.entity_name, subgroup_name, enrollment from [ACC_EM_Chronic_Absenteeism] a join [Institution_Grouping] g on a.ENTITY_CD = g.ENTITY_CD where cast(absent_rate as float) = ( \tselect max(cast(absent_rate as float))  \tfrom [ACC_EM_Chronic_Absenteeism]  \twhere absent_rate <> 's' \tand year = 2022 \t) \tand absent_rate <> 's' \tand year = 2022 \tand group_name = 'public school'",
+    "schema_links": {
+      "ACC_EM_Chronic_Absenteeism": [
+        "ABSENT_RATE",
+        "ENROLLMENT",
+        "ENTITY_CD",
+        "ENTITY_NAME",
+        "SUBGROUP_NAME",
+        "YEAR"
+      ],
+      "Institution_Grouping": [
+        "ENTITY_CD",
+        "GROUP_NAME"
+      ]
+    }
+  },
+  {
+    "question_id": 300,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the average diameter of the fraseri overstory species measurement in each month with an event that measured one?",
+    "gold_sql": "select month(e.Event_Date) Mon, avg(DBH) avgFraseriDiam from tbl_Overstory o join tbl_events e on e.event_id = o.event_id join tlu_PlantSpecies s on o.SpCode = s.SpeciesCode where s.species = 'fraseri' group by month(e.Event_Date)",
+    "schema_links": {
+      "tbl_Events": [
+        "Event_Date",
+        "Event_ID"
+      ],
+      "tbl_Overstory": [
+        "DBH",
+        "Event_ID",
+        "SpCode"
+      ],
+      "tlu_PlantSpecies": [
+        "SpeciesCode",
+        "species"
+      ]
+    }
+  },
+  {
+    "question_id": 301,
+    "db_id": "ATBI",
+    "question": "For each cover class text description, how many nested subplots records are there?",
+    "gold_sql": "select CoverClass_Text, count(*) NestedSubplotCount from tbl_nests n join tlu_Cover_Cls r2 on n.r2 = r2.CoverClass_Num group by CoverClass_Text",
+    "schema_links": {
+      "tlu_Cover_Cls": [
+        "CoverClass_Num",
+        "CoverClass_Text"
+      ],
+      "tbl_Nests": [
+        "R2"
+      ]
+    }
+  }
+]

@@ -1,0 +1,507 @@
+[
+  {
+    "question_id": 1,
+    "db_id": "SBODemoUS-Reports",
+    "question": "Show the Action for extension error, and the number of repetetive areas for documents that require conversion font for email (indicated by 'Y' value)."
+  },
+  {
+    "question_id": 2,
+    "db_id": "NTSB",
+    "question": "What is the maximum depth of crush measured? Codes 888 and 999 should be ignored."
+  },
+  {
+    "question_id": 3,
+    "db_id": "NTSB",
+    "question": "How many crashes involved vehicles that were equipped with crash avoidance features?"
+  },
+  {
+    "question_id": 4,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "what are the Universal Transverse Mercator x and y coordinates for locations where time constrained searches were conducted? Include the location ID and x and y point coordinate averages in the result."
+  },
+  {
+    "question_id": 5,
+    "db_id": "NTSB",
+    "question": "How many crashes involved vehicles with after-marked adaptive driving equipment?"
+  },
+  {
+    "question_id": 6,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the species code and cover class text description of the nested subplot with ID 48?"
+  },
+  {
+    "question_id": 7,
+    "db_id": "PacificIslandLandbirds",
+    "question": "how many events occurred on the most windy days?"
+  },
+  {
+    "question_id": 8,
+    "db_id": "CratersWildlifeObservations",
+    "question": "For each vertebrate observation type, show how many observations the observer named Buckley made"
+  },
+  {
+    "question_id": 9,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What are the location notes for the location that has the phrase 'probably post logging' in the other disturbance entry?"
+  },
+  {
+    "question_id": 10,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the name of the public elementary school entity that has the lowest chronic absence rate of students with disabilities. Exclude data where the rate value is 's'."
+  },
+  {
+    "question_id": 11,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show all of the family values in the invertebrates table that are not in the invertebrates family table. Exclude null values and include only one entry per type."
+  },
+  {
+    "question_id": 12,
+    "db_id": "SBODemoUS-General",
+    "question": "Show the project name and open issue remarks, and open issue solution for projects that have open issues."
+  },
+  {
+    "question_id": 13,
+    "db_id": "NTSB",
+    "question": "Display a count of crashes by lighting condition"
+  },
+  {
+    "question_id": 14,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show the tree condition description and the total count of overstory in each condition category."
+  },
+  {
+    "question_id": 15,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the average elevation of the Annie Creek Subwatershed?"
+  },
+  {
+    "question_id": 16,
+    "db_id": "NYSED_SRC2022",
+    "question": "What are the average public elementary school level 1, level 2, level 3, and level 4 percent tested for each science assessment? Exclude scores with the value 's'."
+  },
+  {
+    "question_id": 17,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "What is the average water temperature (celcius) at locations where amphibians were counted?"
+  },
+  {
+    "question_id": 18,
+    "db_id": "NTSB",
+    "question": "Show the average height of all occupants by age. Ignore height values higher than 220 and age values higher than 120. Show in age order from youngest to oldest."
+  },
+  {
+    "question_id": 19,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Which species are in both the Oregon Caves National Monument species lookup table and the Lassen Volcanic National Park species lookup table? Include only one row per species."
+  },
+  {
+    "question_id": 20,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "For each year, display a count of distinct species in the oregon caves national monument and preserve species lookup table."
+  },
+  {
+    "question_id": 21,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many stations has the Hawaii Amakihi been observed at?"
+  },
+  {
+    "question_id": 22,
+    "db_id": "SBODemoUS-Finance",
+    "question": "What year had the highest rate for currency type 'CAN' from data source I?"
+  },
+  {
+    "question_id": 23,
+    "db_id": "CratersWildlifeObservations",
+    "question": "What is the species, year and month of the roadkill observation with the highest number killed documented?"
+  },
+  {
+    "question_id": 24,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show the comments for roadkill entries made before 1990"
+  },
+  {
+    "question_id": 25,
+    "db_id": "NYSED_SRC2022",
+    "question": "What are the entity codes, names and percentage inexperience teachers, of the five public schools with the highest percentage of inexperienced teachers in 2021?"
+  },
+  {
+    "question_id": 26,
+    "db_id": "NTSB",
+    "question": "Show a count of minor injuries by vehicle make. The lookup code for minor injuries is 1."
+  },
+  {
+    "question_id": 27,
+    "db_id": "SBODemoUS-Service",
+    "question": "Show the assigned date, response date, and resolved date of service calls that originated on the web"
+  },
+  {
+    "question_id": 28,
+    "db_id": "PacificIslandLandbirds",
+    "question": "What species has Patrick Hart observed? List all of them by their scientific and common names. Don't include duplicate rows."
+  },
+  {
+    "question_id": 29,
+    "db_id": "NTSB",
+    "question": "Which vehicle make has the most instances of mismatched front left tires? That is, where the left front tire size on the vehicle does not match the manufacturers first recommended front tire size."
+  },
+  {
+    "question_id": 30,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "show the heaviest turtle for each sex"
+  },
+  {
+    "question_id": 31,
+    "db_id": "SBODemoUS-General",
+    "question": "What is the resource name, type, group code, and resource cost 1 of the employee resource with employee ID 9?"
+  },
+  {
+    "question_id": 32,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the type ID and name of each employee type"
+  },
+  {
+    "question_id": 33,
+    "db_id": "NTSB",
+    "question": "Show me occupant mortality counts by belt use category. A mortality occured (was fatal) indicated by lookup code 1."
+  },
+  {
+    "question_id": 34,
+    "db_id": "NTSB",
+    "question": "What are the case ids, vehicle numbers, and event data recording summary numbers of the vehicles that had 10 events recorded in their event data recorder?"
+  },
+  {
+    "question_id": 35,
+    "db_id": "NTSB",
+    "question": "What vehicle make has the oldest average model year?"
+  },
+  {
+    "question_id": 36,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show a count of roads and trails by layer."
+  },
+  {
+    "question_id": 37,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "Show the site description of locations at plots that were in events in 2001"
+  },
+  {
+    "question_id": 38,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "Show the municipality key, home city, home phone number, work city and office phone number of employees on the sales team."
+  },
+  {
+    "question_id": 39,
+    "db_id": "ATBI",
+    "question": "For each event ID, show the count of nested sub plots for each cover class text description."
+  },
+  {
+    "question_id": 40,
+    "db_id": "NTSB",
+    "question": "How many different vehicles are there?"
+  },
+  {
+    "question_id": 41,
+    "db_id": "SBODemoUS-Banking",
+    "question": "What are the account numbers that have checks for payment with more than one line? Include only one entry per account number."
+  },
+  {
+    "question_id": 42,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "For row-level sales opportunity data, show the weighted amount in both system and local currency for rows with the close date occuring in 2014."
+  },
+  {
+    "question_id": 43,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Show a count of turtle measurements made by each agency."
+  },
+  {
+    "question_id": 44,
+    "db_id": "NTSB",
+    "question": "list all of the cases, vehicle number, occupant number, and number of injuries for cases with an occupant that sustained more than one injury"
+  },
+  {
+    "question_id": 45,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What are the X and Y coordinates, and the species code, of the tree with tag ID 144"
+  },
+  {
+    "question_id": 46,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the species code and diameter at breast height of the witness tree that is furthest from the marking stake? Exclude location ID 4 from the result."
+  },
+  {
+    "question_id": 47,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many  elementary students in the male sub group were given the Science4 assessment in 2021 at FORTS FERRY SCHOOL?"
+  },
+  {
+    "question_id": 48,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "what is the average weight of all turtles?"
+  },
+  {
+    "question_id": 49,
+    "db_id": "SBODemoUS-Reports",
+    "question": "How many queries are there in each category?"
+  },
+  {
+    "question_id": 50,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show the definition of habitats that have more than 40 invertebrate records."
+  },
+  {
+    "question_id": 51,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many public school entities are in each accountability status in the year 2022?"
+  },
+  {
+    "question_id": 52,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "Show the average slope of macro habitat events with Upland hydrology"
+  },
+  {
+    "question_id": 53,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "Show the average snake weight and snout-to-vent length by sex."
+  },
+  {
+    "question_id": 54,
+    "db_id": "NorthernPlainsFireManagement",
+    "question": "What is the distance between the highest and lowest X coordinate locations, and the distance between highest and lowest Y coordinate locations?"
+  },
+  {
+    "question_id": 55,
+    "db_id": "NTSB",
+    "question": "Display a count of all vehicles by glazing (glass) impact damage category"
+  },
+  {
+    "question_id": 56,
+    "db_id": "NYSED_SRC2022",
+    "question": "How many board of cooperative educational services are there?"
+  },
+  {
+    "question_id": 57,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "Display the payment code and tax code for current business partners whos closing date procedure number is lower than 35"
+  },
+  {
+    "question_id": 58,
+    "db_id": "ATBI",
+    "question": "Which tree species were recorded as mature overstory but not as saplings? Include the species name and common name."
+  },
+  {
+    "question_id": 59,
+    "db_id": "NTSB",
+    "question": "What is the highest vehicle-to-object collision speed difference recorded? This would equivalent to the speed of the vehicle if it struck a fixed stationary obstacle. 999 indicates an unknown value."
+  },
+  {
+    "question_id": 60,
+    "db_id": "PacificIslandLandbirds",
+    "question": "what are the common names and alternate names for birds of the family Laridae?"
+  },
+  {
+    "question_id": 61,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "what is the highest snake snout-to-vent length recorded?"
+  },
+  {
+    "question_id": 62,
+    "db_id": "SBODemoUS-Service",
+    "question": "what is the business partner shipping and billing address and email for the customer named 'Aquent Systems'. Display only one row per unique result."
+  },
+  {
+    "question_id": 63,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many observations were made on days when there were no clouds in the sky?"
+  },
+  {
+    "question_id": 64,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the average public high school entity chronic absenteeism rate by student sub group in 2021? Do not include rows where the rate is 's'."
+  },
+  {
+    "question_id": 65,
+    "db_id": "NTSB",
+    "question": "What years does this data span?"
+  },
+  {
+    "question_id": 66,
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "question": "What are the location IDs of locations that have covers made out of wood? Only include one row per location ID."
+  },
+  {
+    "question_id": 67,
+    "db_id": "NTSB",
+    "question": "How many injuries were caused by an unknown energy source? The lookup code unknown is 999."
+  },
+  {
+    "question_id": 68,
+    "db_id": "NYSED_SRC2022",
+    "question": "In 2022, How many students in either the male or the female subgroup at Brocton Middle High School attended an out of state, four-year postsecondary institution?"
+  },
+  {
+    "question_id": 69,
+    "db_id": "ATBI",
+    "question": "Are there any tree species that have not been observed within nested subplots? What are their common names?"
+  },
+  {
+    "question_id": 70,
+    "db_id": "CratersWildlifeObservations",
+    "question": "How many vertebrate observations were made of the Mammal class?"
+  },
+  {
+    "question_id": 71,
+    "db_id": "ATBI",
+    "question": "How many events observed at least some stage of decay?"
+  },
+  {
+    "question_id": 72,
+    "db_id": "NTSB",
+    "question": "How many vehicle occupants did not wear a seatbelt even though there was one available? The codes that correspond to no use are 0 and 1. The codes that correspond to a belt being available are 2, 3, 4, 5, 6, 7 and 8."
+  },
+  {
+    "question_id": 73,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the deciduous, shrub, herb, debris, litter, ground, and rock coverage of micro habitatis with a Flowering Phenology and a cover percentage greater than 90"
+  },
+  {
+    "question_id": 74,
+    "db_id": "NYSED_SRC2022",
+    "question": "For the 2022 subgroup 'All Students' at Oneida Senior High School, what is the total graduate count, the percent of graduates who enrolled in a new york state public two-year postsecondary institution, and the percent of graduates who enrolled in a new york state public four-year postsecondary institution?"
+  },
+  {
+    "question_id": 75,
+    "db_id": "NYSED_SRC2022",
+    "question": "Show the number of teachers, number of inexperienced teaches, and percentage of inexperienced teaches at sheridan prep academy in 2021."
+  },
+  {
+    "question_id": 76,
+    "db_id": "ATBI",
+    "question": "What is the quad name for the location with a topographic position of 7?"
+  },
+  {
+    "question_id": 77,
+    "db_id": "PacificIslandLandbirds",
+    "question": "Show all of the zip codes for the city of Hilo."
+  },
+  {
+    "question_id": 78,
+    "db_id": "NTSB",
+    "question": "Show the number of vehicles in each intrusion magnitude category"
+  },
+  {
+    "question_id": 79,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the average percantage of inexperienced teachers for the five school districts with the highest average? Include the district name in the result."
+  },
+  {
+    "question_id": 80,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "How many locations were a randomly generated plot that was found to have an infestation?"
+  },
+  {
+    "question_id": 81,
+    "db_id": "SBODemoUS-Finance",
+    "question": "Show the account name, the average monthly budget debit, and average monthly budget credit totals for general ledger accounts with the words 'Travel Expense' in their account name."
+  },
+  {
+    "question_id": 82,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "What is the job title code of the employee with the last name  Chan?"
+  },
+  {
+    "question_id": 83,
+    "db_id": "NTSB",
+    "question": "Show the first recommended front and rear tire sizes for all of the Subaru WRXs in the dataset."
+  },
+  {
+    "question_id": 84,
+    "db_id": "NYSED_SRC2022",
+    "question": "What is the overall acountability status for each school type and student subgroup in 2021 for the entity named 'albany city SD'?"
+  },
+  {
+    "question_id": 85,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "What is the number of commited items, the price-per-item, and the total price of the commited items for the item called 'Memory Chip?"
+  },
+  {
+    "question_id": 86,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What are the First names, last names, and position titles of contacts who uploaded an event that started in August of 2021? Include only one row per contact"
+  },
+  {
+    "question_id": 87,
+    "db_id": "SBODemoUS-Inventory and Production",
+    "question": "What is the average volume of items in the 'Items' Item group?"
+  },
+  {
+    "question_id": 88,
+    "db_id": "ATBI",
+    "question": "What is the decay stage description for the decay stage associated with the shortest recorded length?"
+  },
+  {
+    "question_id": 89,
+    "db_id": "SBODemoUS-Business Partners",
+    "question": "Make a contact roster that includes the name, address, cell phone number, and email address of all persons currently in either a CEO or COO position."
+  },
+  {
+    "question_id": 90,
+    "db_id": "KlamathInvasiveSpecies",
+    "question": "What is the name and number of sites of the site with the most locations?"
+  },
+  {
+    "question_id": 91,
+    "db_id": "CratersWildlifeObservations",
+    "question": "Show the observation notes entered by observer stefanic for observations of vertebrates with the Common_Name dusky flycatcher"
+  },
+  {
+    "question_id": 92,
+    "db_id": "ATBI",
+    "question": "Show me the different decay stages and their descriptions"
+  },
+  {
+    "question_id": 93,
+    "db_id": "NTSB",
+    "question": "How many events were recorded by an event data recorder?"
+  },
+  {
+    "question_id": 94,
+    "db_id": "ATBI",
+    "question": "For each presence class text description, how many nested subplots records are there where the presence class is the presence class of species in the firsted nested corner within a module?"
+  },
+  {
+    "question_id": 95,
+    "db_id": "SBODemoUS-Banking",
+    "question": "What is the card code, card name, address, and functional currency transfer amount for the incoming payments created in the year 2012 where the document summary currency code is 'EUR'"
+  },
+  {
+    "question_id": 96,
+    "db_id": "CratersWildlifeObservations",
+    "question": "For each breeding code, show the breeding code definition and count of vertebrate observations for observations of the species with the Common_Name 'mule deer'."
+  },
+  {
+    "question_id": 97,
+    "db_id": "PacificIslandLandbirds",
+    "question": "How many events have a half meter density count greater than 8?"
+  },
+  {
+    "question_id": 98,
+    "db_id": "SBODemoUS-Human Resources",
+    "question": "What are the first and last names of employees on the Sales team?"
+  },
+  {
+    "question_id": 99,
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "question": "For each sales opportunity, show sequence number and, carde code, the average percentage rate of all the rows associated with the opportunity"
+  },
+  {
+    "question_id": 100,
+    "db_id": "PacificIslandLandbirds",
+    "question": "At stations 2 and 3, show the station name and common names of each species observed at each station, and include the total count of observations per species."
+  },
+  {
+    "question_id": 101,
+    "db_id": "NYSED_SRC2022",
+    "question": "For each subject, what is the average percent of students scoring at the entering level on the new york state english as a second language achievement test in 2021 for students at public schools? Exclude score values of 's'."
+  }
+]

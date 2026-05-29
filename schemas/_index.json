@@ -1,0 +1,104 @@
+[
+  {
+    "db_id": "ASIS_20161108_HerpInv_Database",
+    "file": "ASIS_20161108_HerpInv_Database.json",
+    "num_tables": 36,
+    "num_columns": 245
+  },
+  {
+    "db_id": "ATBI",
+    "file": "ATBI.json",
+    "num_tables": 28,
+    "num_columns": 192
+  },
+  {
+    "db_id": "CratersWildlifeObservations",
+    "file": "CratersWildlifeObservations.json",
+    "num_tables": 13,
+    "num_columns": 71
+  },
+  {
+    "db_id": "KlamathInvasiveSpecies",
+    "file": "KlamathInvasiveSpecies.json",
+    "num_tables": 18,
+    "num_columns": 157
+  },
+  {
+    "db_id": "NorthernPlainsFireManagement",
+    "file": "NorthernPlainsFireManagement.json",
+    "num_tables": 27,
+    "num_columns": 190
+  },
+  {
+    "db_id": "NTSB",
+    "file": "NTSB.json",
+    "num_tables": 40,
+    "num_columns": 1161
+  },
+  {
+    "db_id": "NYSED_SRC2022",
+    "file": "NYSED_SRC2022.json",
+    "num_tables": 27,
+    "num_columns": 423
+  },
+  {
+    "db_id": "PacificIslandLandbirds",
+    "file": "PacificIslandLandbirds.json",
+    "num_tables": 21,
+    "num_columns": 196
+  },
+  {
+    "db_id": "SBODemoUS-Banking",
+    "file": "SBODemoUS-Banking.json",
+    "num_tables": 40,
+    "num_columns": 1758
+  },
+  {
+    "db_id": "SBODemoUS-Business Partners",
+    "file": "SBODemoUS-Business_Partners.json",
+    "num_tables": 40,
+    "num_columns": 1456
+  },
+  {
+    "db_id": "SBODemoUS-Finance",
+    "file": "SBODemoUS-Finance.json",
+    "num_tables": 61,
+    "num_columns": 1994
+  },
+  {
+    "db_id": "SBODemoUS-General",
+    "file": "SBODemoUS-General.json",
+    "num_tables": 71,
+    "num_columns": 1053
+  },
+  {
+    "db_id": "SBODemoUS-Human Resources",
+    "file": "SBODemoUS-Human_Resources.json",
+    "num_tables": 28,
+    "num_columns": 455
+  },
+  {
+    "db_id": "SBODemoUS-Inventory and Production",
+    "file": "SBODemoUS-Inventory_and_Production.json",
+    "num_tables": 65,
+    "num_columns": 1960
+  },
+  {
+    "db_id": "SBODemoUS-Reports",
+    "file": "SBODemoUS-Reports.json",
+    "num_tables": 40,
+    "num_columns": 744
+  },
+  {
+    "db_id": "SBODemoUS-Sales Opportunities",
+    "file": "SBODemoUS-Sales_Opportunities.json",
+    "num_tables": 20,
+    "num_columns": 290
+  },
+  {
+    "db_id": "SBODemoUS-Service",
+    "file": "SBODemoUS-Service.json",
+    "num_tables": 40,
+    "num_columns": 902
+  }
+]
