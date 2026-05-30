@@ -1,0 +1,5 @@
+[2026-05-29 23:54:16 -0700] [14324] [INFO] Starting gunicorn 25.3.0
+[2026-05-29 23:54:16 -0700] [14324] [INFO] Listening at: http://127.0.0.1:8851 (14324)
+[2026-05-29 23:54:16 -0700] [14324] [INFO] Using worker: sync
+[2026-05-29 23:54:16 -0700] [14393] [INFO] Booting worker with pid: 14393
+[2026-05-29 23:54:16 -0700] [14324] [INFO] Control socket listening at /home/chl339/.gunicorn/gunicorn.ctl
