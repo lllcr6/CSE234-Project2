@@ -26,12 +26,15 @@ from __future__ import annotations
 
 import argparse
 import json
+from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
 
 import torch
 from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+from tqdm import tqdm
 
 
 SYSTEM_PROMPT = (
@@ -162,17 +165,29 @@ def load_model_and_tokenizer(adapter_path: Path):
     base_model_name = adapter_config["base_model_name_or_path"]
     model_kwargs = {
         "device_map": "auto",
-        "torch_dtype": "auto",
+        "dtype": "auto",
         "trust_remote_code": True,
     }
 
-    base_model = AutoModelForCausalLM.from_pretrained(base_model_name, **model_kwargs)
+    try:
+        base_model = AutoModelForCausalLM.from_pretrained(base_model_name, **model_kwargs)
+    except TypeError:
+        # Older transformers versions may not support `dtype` yet.
+        model_kwargs.pop("dtype")
+        model_kwargs["torch_dtype"] = "auto"
+        base_model = AutoModelForCausalLM.from_pretrained(base_model_name, **model_kwargs)
     tokenizer = AutoTokenizer.from_pretrained(base_model_name, trust_remote_code=True)
 
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     model = PeftModel.from_pretrained(base_model, str(adapter_path))
+    generation_config = deepcopy(model.generation_config)
+    generation_config.do_sample = False
+    generation_config.temperature = None
+    generation_config.top_p = None
+    generation_config.top_k = None
+    model.generation_config = generation_config
     model.eval()
     return model, tokenizer
 
@@ -230,21 +245,15 @@ def predict_schema_links(question: str, db_id: str, schemas_dir: str, model, tok
     input_ids = inputs["input_ids"].to(model.device)
     attention_mask = inputs["attention_mask"].to(model.device) if "attention_mask" in inputs else None
 
-    generation_kwargs = {
-        "max_new_tokens": 256,
-        "do_sample": False,
-        "temperature": 0.0,
-        "top_p": 1.0,
-        "repetition_penalty": 1.0,
-        "pad_token_id": tokenizer.pad_token_id,
-        "eos_token_id": tokenizer.eos_token_id,
-    }
-
     with torch.inference_mode():
         outputs = model.generate(
             input_ids=input_ids,
             attention_mask=attention_mask,
-            **generation_kwargs,
+            max_new_tokens=256,
+            do_sample=False,
+            repetition_penalty=1.0,
+            pad_token_id=tokenizer.pad_token_id,
+            eos_token_id=tokenizer.eos_token_id,
         )
 
     generated_ids = outputs[0][input_ids.shape[-1]:]
@@ -276,7 +285,7 @@ def main():
         items = json.load(f)
 
     preds = []
-    for it in items:
+    for it in tqdm(items, desc="Predicting", unit="question"):
         links = predict_schema_links(
             question=it["question"],
             db_id=it["db_id"],
