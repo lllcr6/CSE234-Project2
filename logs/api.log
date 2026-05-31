@@ -3,3 +3,33 @@
 [2026-05-29 23:54:16 -0700] [14324] [INFO] Using worker: sync
 [2026-05-29 23:54:16 -0700] [14393] [INFO] Booting worker with pid: 14393
 [2026-05-29 23:54:16 -0700] [14324] [INFO] Control socket listening at /home/chl339/.gunicorn/gunicorn.ctl
+[2026-05-30 01:52:21 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:52:25 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 01:58:15 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:00:11 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:01:56 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:01:56 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch
+[2026-05-30 02:07:43 -0700] [14324] [INFO] Handling signal: winch

@@ -1,0 +1,178 @@
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | experiment | INFO | experiment.py:104 | An experiment with the same name already exists. Created a new experiment 'exp-3Models-lora-rank8-2epochs_1' with Experiment ID: 4 and Metric Experiment ID: 4 at /home/chl339/rapidfireai/rapidfire_experiments/exp-3Models-lora-rank8-2epochs_1
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | experiment | INFO | experiment.py:106 | Running RapidFire AI version 0.15.2
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:67 | Found 1 workers/GPUs.
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:95 | Controller initialized
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:594 | Set experiment task to Create Models.
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:607 | Saved datasets to /home/chl339/rapidfireai/rapidfire_experiments/exp-3Models-lora-rank8-2epochs_1/datasets.dill
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:613 | Set seed to 42
+2026-05-30 02:17:57 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | metric_rfmetric_manager.py:141 | Created MLflow run: 2eb3c559ab8c4f58b58dc9d20259bcfc, 1
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:200 | Populated MetricLogger with model config info for run 1.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | metric_rfmetric_manager.py:141 | Created MLflow run: 9bfe2ebb30e64499ae2c24d8a67c9f65, 2
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:200 | Populated MetricLogger with model config info for run 2.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | metric_rfmetric_manager.py:141 | Created MLflow run: 21c67c049a8b4bbc828ab4051aadfbb2, 3
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:200 | Populated MetricLogger with model config info for run 3.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:220 | Created 3 runs - 
+{   1: {   'additional_kwargs.generation_config.max_new_tokens': 256,
+           'additional_kwargs.generation_config.repetition_penalty': 1.05,
+           'additional_kwargs.generation_config.temperature': 0.8,
+           'additional_kwargs.generation_config.top_k': 30,
+           'additional_kwargs.generation_config.top_p': 0.9,
+           'model_kwargs.device_map': 'auto',
+           'model_kwargs.use_cache': False,
+           'model_name': 'Qwen/Qwen2.5-1.5B-Instruct',
+           'model_type': 'causal_lm',
+           'peft_params.bias': 'none',
+           'peft_params.lora_alpha': 16,
+           'peft_params.lora_dropout': 0.1,
+           'peft_params.r': 8,
+           'peft_params.target_modules': ['q_proj', 'v_proj'],
+           'tokenizer': None,
+           'tokenizer_kwargs': None,
+           'trainer_type': 'SFT',
+           'training_args.bf16': True,
+           'training_args.eval_steps': 25,
+           'training_args.eval_strategy': 'steps',
+           'training_args.gradient_accumulation_steps': 1,
+           'training_args.learning_rate': 0.0001,
+           'training_args.logging_steps': 2,
+           'training_args.lr_scheduler_type': 'linear',
+           'training_args.num_train_epochs': 2,
+           'training_args.per_device_eval_batch_size': 4,
+           'training_args.per_device_train_batch_size': 4},
+    2: {   'additional_kwargs.generation_config.max_new_tokens': 256,
+           'additional_kwargs.generation_config.repetition_penalty': 1.05,
+           'additional_kwargs.generation_config.temperature': 0.8,
+           'additional_kwargs.generation_config.top_k': 30,
+           'additional_kwargs.generation_config.top_p': 0.9,
+           'model_kwargs.device_map': 'auto',
+           'model_kwargs.use_cache': False,
+           'model_name': 'meta-llama/Llama-3.2-1B-Instruct',
+           'model_type': 'causal_lm',
+           'peft_params.bias': 'none',
+           'peft_params.lora_alpha': 16,
+           'peft_params.lora_dropout': 0.1,
+           'peft_params.r': 8,
+           'peft_params.target_modules': ['q_proj', 'v_proj'],
+           'tokenizer': None,
+           'tokenizer_kwargs': None,
+           'trainer_type': 'SFT',
+           'training_args.bf16': True,
+           'training_args.eval_steps': 25,
+           'training_args.eval_strategy': 'steps',
+           'training_args.gradient_accumulation_steps': 1,
+           'training_args.learning_rate': 0.0001,
+           'training_args.logging_steps': 2,
+           'training_args.lr_scheduler_type': 'linear',
+           'training_args.num_train_epochs': 2,
+           'training_args.per_device_eval_batch_size': 4,
+           'training_args.per_device_train_batch_size': 4},
+    3: {   'additional_kwargs.generation_config.max_new_tokens': 256,
+           'additional_kwargs.generation_config.repetition_penalty': 1.05,
+           'additional_kwargs.generation_config.temperature': 0.8,
+           'additional_kwargs.generation_config.top_k': 30,
+           'additional_kwargs.generation_config.top_p': 0.9,
+           'model_kwargs.device_map': 'auto',
+           'model_kwargs.use_cache': False,
+           'model_name': 'HuggingFaceTB/SmolLM2-1.7B-Instruct',
+           'model_type': 'causal_lm',
+           'peft_params.bias': 'none',
+           'peft_params.lora_alpha': 16,
+           'peft_params.lora_dropout': 0.1,
+           'peft_params.r': 8,
+           'peft_params.target_modules': ['q_proj', 'v_proj'],
+           'tokenizer': None,
+           'tokenizer_kwargs': None,
+           'trainer_type': 'SFT',
+           'training_args.bf16': True,
+           'training_args.eval_steps': 25,
+           'training_args.eval_strategy': 'steps',
+           'training_args.gradient_accumulation_steps': 1,
+           'training_args.learning_rate': 0.0001,
+           'training_args.logging_steps': 2,
+           'training_args.lr_scheduler_type': 'linear',
+           'training_args.num_train_epochs': 2,
+           'training_args.per_device_eval_batch_size': 4,
+           'training_args.per_device_train_batch_size': 4}}
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:223 | Got 3 runs for Initial.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:227 | Completed creating models.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:625 | Created models.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:631 | Set experiment task to Training and Validation.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:115 | Creating 1 worker processes...
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:121 | Starting worker processes in process group 14740
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:149 | Started Worker 0 with PID 23133
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | INFO | worker_manager.py:156 | Started 1 worker processes successfully
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:637 | Created 1 workers.
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:659 | Starting Training and Validation
+2026-05-30 02:17:58 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:886 | Scheduled run 2 on workers (0,) for chunk 0
+2026-05-30 02:18:16 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:157 | Worker 0 initialized with PID 23133
+2026-05-30 02:18:16 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 02:18:16 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:192 | Loaded datasets
+2026-05-30 02:18:16 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 2
+2026-05-30 02:18:16 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 2 with chunk 0
+2026-05-30 02:18:54 | exp-3Models-lora-rank8-2epochs_1 | worker-0-shm | DEBUG | shm_manager.py:348 | Saved base_model for run meta-llama/Llama-3.2-1B-Instruct
+2026-05-30 02:18:57 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:378 | Beginning training for run 2 on chunk 0
+2026-05-30 02:28:03 | exp-3Models-lora-rank8-2epochs_1 | worker-0-shm | DEBUG | shm_manager.py:445 | Checkpoint update:0 in-place, 7 new
+2026-05-30 02:28:03 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:473 | Saved checkpoint to shared memory for run 2 on chunk 0
+2026-05-30 02:28:05 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:714 | Completed task: run 2, chunk 0 on workers (0,)
+2026-05-30 02:28:05 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:717 | Run 2 completed steps - 76/152
+2026-05-30 02:28:05 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:773 | Run 2 has completed epoch (1/1 chunks)
+2026-05-30 02:28:05 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:886 | Scheduled run 3 on workers (0,) for chunk 0
+2026-05-30 02:28:06 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 3
+2026-05-30 02:28:06 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 3 with chunk 0
+2026-05-30 02:28:39 | exp-3Models-lora-rank8-2epochs_1 | worker-0-shm | DEBUG | shm_manager.py:348 | Saved base_model for run HuggingFaceTB/SmolLM2-1.7B-Instruct
+2026-05-30 02:28:42 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:378 | Beginning training for run 3 on chunk 0
+2026-05-30 02:43:15 | exp-3Models-lora-rank8-2epochs_1 | worker-0-shm | DEBUG | shm_manager.py:445 | Checkpoint update:0 in-place, 7 new
+2026-05-30 02:43:15 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:473 | Saved checkpoint to shared memory for run 3 on chunk 0
+2026-05-30 02:43:17 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:714 | Completed task: run 3, chunk 0 on workers (0,)
+2026-05-30 02:43:17 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:717 | Run 3 completed steps - 76/152
+2026-05-30 02:43:17 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:773 | Run 3 has completed epoch (1/1 chunks)
+2026-05-30 02:43:17 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:886 | Scheduled run 1 on workers (0,) for chunk 0
+2026-05-30 02:43:18 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 1
+2026-05-30 02:43:18 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 1 with chunk 0
+2026-05-30 02:43:59 | exp-3Models-lora-rank8-2epochs_1 | worker-0-shm | DEBUG | shm_manager.py:348 | Saved base_model for run Qwen/Qwen2.5-1.5B-Instruct
+2026-05-30 02:44:02 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:378 | Beginning training for run 1 on chunk 0
+2026-05-30 02:57:34 | exp-3Models-lora-rank8-2epochs_1 | worker-0-shm | DEBUG | shm_manager.py:445 | Checkpoint update:0 in-place, 7 new
+2026-05-30 02:57:34 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:473 | Saved checkpoint to shared memory for run 1 on chunk 0
+2026-05-30 02:57:36 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:714 | Completed task: run 1, chunk 0 on workers (0,)
+2026-05-30 02:57:36 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:717 | Run 1 completed steps - 76/152
+2026-05-30 02:57:36 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:773 | Run 1 has completed epoch (1/1 chunks)
+2026-05-30 02:57:36 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:886 | Scheduled run 2 on workers (0,) for chunk 0
+2026-05-30 02:57:37 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 2
+2026-05-30 02:57:37 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 2 with chunk 0
+2026-05-30 02:57:52 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:378 | Beginning training for run 2 on chunk 0
+2026-05-30 03:06:07 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:453 | Saved final checkpoint to disk for run 2 on chunk 0
+2026-05-30 03:06:09 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:714 | Completed task: run 2, chunk 0 on workers (0,)
+2026-05-30 03:06:09 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:717 | Run 2 completed steps - 152/152
+2026-05-30 03:06:09 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:760 | Run 2 has completed all its epochs - steps 152/152
+2026-05-30 03:06:09 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:886 | Scheduled run 3 on workers (0,) for chunk 0
+2026-05-30 03:06:09 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 3
+2026-05-30 03:06:09 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 3 with chunk 0
+2026-05-30 03:06:29 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:378 | Beginning training for run 3 on chunk 0
+2026-05-30 03:20:36 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:453 | Saved final checkpoint to disk for run 3 on chunk 0
+2026-05-30 03:20:39 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:714 | Completed task: run 3, chunk 0 on workers (0,)
+2026-05-30 03:20:39 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:717 | Run 3 completed steps - 152/152
+2026-05-30 03:20:39 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:760 | Run 3 has completed all its epochs - steps 152/152
+2026-05-30 03:20:39 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:886 | Scheduled run 1 on workers (0,) for chunk 0
+2026-05-30 03:20:40 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 1
+2026-05-30 03:20:40 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 1 with chunk 0
+2026-05-30 03:21:03 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:378 | Beginning training for run 1 on chunk 0
+2026-05-30 03:34:15 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:453 | Saved final checkpoint to disk for run 1 on chunk 0
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:714 | Completed task: run 1, chunk 0 on workers (0,)
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:717 | Run 1 completed steps - 152/152
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:760 | Run 1 has completed all its epochs - steps 152/152
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | controller | INFO | controller.py:848 | Scheduler indicates all runs have completed all chunks
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | controller | DEBUG | controller.py:904 | Set experiment task to Idle.
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:163 | WorkerManager shutdown initiated...
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:167 | Signaling graceful shutdown...
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:712 | Worker 0 shutdown requested
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | INFO | worker_manager.py:50 | Worker 0 process exiting
+2026-05-30 03:34:17 | exp-3Models-lora-rank8-2epochs_1 | worker_0 | DEBUG | worker.py:712 | Worker 0 shutdown requested
+2026-05-30 03:34:19 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:186 | All workers shutdown gracefully
+2026-05-30 03:34:19 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:163 | WorkerManager shutdown initiated...
+2026-05-30 03:34:19 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:167 | Signaling graceful shutdown...
+2026-05-30 03:34:19 | exp-3Models-lora-rank8-2epochs_1 | worker_manager | DEBUG | worker_manager.py:186 | All workers shutdown gracefully
+2026-05-30 03:34:21 | exp-3Models-lora-rank8-2epochs_1 | exp-3Models-lora-rank8-2epochs_1 | DEBUG | experiment_utils.py:271 | Reset experiment states and set current experiment task to idle
+2026-05-30 03:34:21 | exp-3Models-lora-rank8-2epochs_1 | exp-3Models-lora-rank8-2epochs_1 | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 03:34:21 | exp-3Models-lora-rank8-2epochs_1 | exp-3Models-lora-rank8-2epochs_1 | INFO | metric_mlflow_manager.py:133 | No active MLflow run to clear
+2026-05-30 03:34:21 | exp-3Models-lora-rank8-2epochs_1 | exp-3Models-lora-rank8-2epochs_1 | INFO | experiment_utils.py:240 | Experiment exp-3Models-lora-rank8-2epochs_1 ended

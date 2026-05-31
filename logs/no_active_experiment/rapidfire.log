@@ -1,0 +1,8 @@
+2026-05-30 00:00:27 | no_active_experiment | exp-SFT-smoke-test | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 00:00:27 | no_active_experiment | exp-SFT-smoke-test | INFO | metric_rfmetric_manager.py:119 | Creating MLflow experiment: exp-SFT-smoke-test
+2026-05-30 00:02:20 | no_active_experiment | exp-3Models-lora-rank8 | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 00:02:20 | no_active_experiment | exp-3Models-lora-rank8 | INFO | metric_rfmetric_manager.py:119 | Creating MLflow experiment: exp-3Models-lora-rank8
+2026-05-30 01:11:40 | no_active_experiment | exp-3Models-lora-rank8-2epochs | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 01:11:40 | no_active_experiment | exp-3Models-lora-rank8-2epochs | INFO | metric_rfmetric_manager.py:119 | Creating MLflow experiment: exp-3Models-lora-rank8-2epochs
+2026-05-30 02:17:57 | no_active_experiment | exp-3Models-lora-rank8-2epochs_1 | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 02:17:57 | no_active_experiment | exp-3Models-lora-rank8-2epochs_1 | INFO | metric_rfmetric_manager.py:119 | Creating MLflow experiment: exp-3Models-lora-rank8-2epochs_1
