@@ -1,0 +1,222 @@
+2026-05-30 22:08:55 | exp-Qwen2.5-learning-rate | experiment | INFO | experiment.py:104 | The previously running experiment exp-Qwen2.5-lr was forcibly ended. Created a new experiment 'exp-Qwen2.5-learning-rate' with Experiment ID: 6 and Metric Experiment ID: 6 at /home/chl339/rapidfireai/rapidfire_experiments/exp-Qwen2.5-learning-rate
+2026-05-30 22:08:55 | exp-Qwen2.5-learning-rate | experiment | INFO | experiment.py:106 | Running RapidFire AI version 0.15.2
+2026-05-30 22:08:57 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:67 | Found 1 workers/GPUs.
+2026-05-30 22:08:57 | exp-Qwen2.5-learning-rate | controller | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 22:08:57 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:95 | Controller initialized
+2026-05-30 22:08:57 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:594 | Set experiment task to Create Models.
+2026-05-30 22:08:57 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:607 | Saved datasets to /home/chl339/rapidfireai/rapidfire_experiments/exp-Qwen2.5-learning-rate/datasets.dill
+2026-05-30 22:08:57 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:613 | Set seed to 42
+2026-05-30 22:08:57 | exp-Qwen2.5-learning-rate | controller | INFO | metric_rfmetric_manager.py:141 | Created MLflow run: 8392417978ef470aba278fbbf0c94992, 1
+2026-05-30 22:08:58 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:200 | Populated MetricLogger with model config info for run 1.
+2026-05-30 22:08:58 | exp-Qwen2.5-learning-rate | controller | INFO | metric_rfmetric_manager.py:141 | Created MLflow run: 9ce33f4f4c8247208590d4a3d6f373aa, 2
+2026-05-30 22:08:58 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:200 | Populated MetricLogger with model config info for run 2.
+2026-05-30 22:08:58 | exp-Qwen2.5-learning-rate | controller | INFO | metric_rfmetric_manager.py:141 | Created MLflow run: fab7b97a1bbc44468e4fc32434d4adfe, 3
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:200 | Populated MetricLogger with model config info for run 3.
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | INFO | metric_rfmetric_manager.py:141 | Created MLflow run: 2d06845b6a72480493bb6944e5185500, 4
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:200 | Populated MetricLogger with model config info for run 4.
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:220 | Created 4 runs - 
+{   1: {   'additional_kwargs.generation_config.max_new_tokens': 256,
+           'additional_kwargs.generation_config.repetition_penalty': 1.05,
+           'additional_kwargs.generation_config.temperature': 0.8,
+           'additional_kwargs.generation_config.top_k': 30,
+           'additional_kwargs.generation_config.top_p': 0.9,
+           'model_kwargs.device_map': 'auto',
+           'model_kwargs.use_cache': False,
+           'model_name': 'Qwen/Qwen2.5-1.5B-Instruct',
+           'model_type': 'causal_lm',
+           'peft_params.bias': 'none',
+           'peft_params.lora_alpha': 16,
+           'peft_params.lora_dropout': 0.1,
+           'peft_params.r': 8,
+           'peft_params.target_modules': ['q_proj', 'v_proj'],
+           'tokenizer': None,
+           'tokenizer_kwargs': None,
+           'trainer_type': 'SFT',
+           'training_args.bf16': True,
+           'training_args.eval_steps': 25,
+           'training_args.eval_strategy': 'steps',
+           'training_args.gradient_accumulation_steps': 1,
+           'training_args.learning_rate': 1e-05,
+           'training_args.logging_steps': 2,
+           'training_args.lr_scheduler_type': 'linear',
+           'training_args.num_train_epochs': 2,
+           'training_args.per_device_eval_batch_size': 4,
+           'training_args.per_device_train_batch_size': 4},
+    2: {   'additional_kwargs.generation_config.max_new_tokens': 256,
+           'additional_kwargs.generation_config.repetition_penalty': 1.05,
+           'additional_kwargs.generation_config.temperature': 0.8,
+           'additional_kwargs.generation_config.top_k': 30,
+           'additional_kwargs.generation_config.top_p': 0.9,
+           'model_kwargs.device_map': 'auto',
+           'model_kwargs.use_cache': False,
+           'model_name': 'Qwen/Qwen2.5-1.5B-Instruct',
+           'model_type': 'causal_lm',
+           'peft_params.bias': 'none',
+           'peft_params.lora_alpha': 16,
+           'peft_params.lora_dropout': 0.1,
+           'peft_params.r': 8,
+           'peft_params.target_modules': ['q_proj', 'v_proj'],
+           'tokenizer': None,
+           'tokenizer_kwargs': None,
+           'trainer_type': 'SFT',
+           'training_args.bf16': True,
+           'training_args.eval_steps': 25,
+           'training_args.eval_strategy': 'steps',
+           'training_args.gradient_accumulation_steps': 1,
+           'training_args.learning_rate': 5e-05,
+           'training_args.logging_steps': 2,
+           'training_args.lr_scheduler_type': 'linear',
+           'training_args.num_train_epochs': 2,
+           'training_args.per_device_eval_batch_size': 4,
+           'training_args.per_device_train_batch_size': 4},
+    3: {   'additional_kwargs.generation_config.max_new_tokens': 256,
+           'additional_kwargs.generation_config.repetition_penalty': 1.05,
+           'additional_kwargs.generation_config.temperature': 0.8,
+           'additional_kwargs.generation_config.top_k': 30,
+           'additional_kwargs.generation_config.top_p': 0.9,
+           'model_kwargs.device_map': 'auto',
+           'model_kwargs.use_cache': False,
+           'model_name': 'Qwen/Qwen2.5-1.5B-Instruct',
+           'model_type': 'causal_lm',
+           'peft_params.bias': 'none',
+           'peft_params.lora_alpha': 16,
+           'peft_params.lora_dropout': 0.1,
+           'peft_params.r': 8,
+           'peft_params.target_modules': ['q_proj', 'v_proj'],
+           'tokenizer': None,
+           'tokenizer_kwargs': None,
+           'trainer_type': 'SFT',
+           'training_args.bf16': True,
+           'training_args.eval_steps': 25,
+           'training_args.eval_strategy': 'steps',
+           'training_args.gradient_accumulation_steps': 1,
+           'training_args.learning_rate': 0.0002,
+           'training_args.logging_steps': 2,
+           'training_args.lr_scheduler_type': 'linear',
+           'training_args.num_train_epochs': 2,
+           'training_args.per_device_eval_batch_size': 4,
+           'training_args.per_device_train_batch_size': 4},
+    4: {   'additional_kwargs.generation_config.max_new_tokens': 256,
+           'additional_kwargs.generation_config.repetition_penalty': 1.05,
+           'additional_kwargs.generation_config.temperature': 0.8,
+           'additional_kwargs.generation_config.top_k': 30,
+           'additional_kwargs.generation_config.top_p': 0.9,
+           'model_kwargs.device_map': 'auto',
+           'model_kwargs.use_cache': False,
+           'model_name': 'Qwen/Qwen2.5-1.5B-Instruct',
+           'model_type': 'causal_lm',
+           'peft_params.bias': 'none',
+           'peft_params.lora_alpha': 16,
+           'peft_params.lora_dropout': 0.1,
+           'peft_params.r': 8,
+           'peft_params.target_modules': ['q_proj', 'v_proj'],
+           'tokenizer': None,
+           'tokenizer_kwargs': None,
+           'trainer_type': 'SFT',
+           'training_args.bf16': True,
+           'training_args.eval_steps': 25,
+           'training_args.eval_strategy': 'steps',
+           'training_args.gradient_accumulation_steps': 1,
+           'training_args.learning_rate': 0.0005,
+           'training_args.logging_steps': 2,
+           'training_args.lr_scheduler_type': 'linear',
+           'training_args.num_train_epochs': 2,
+           'training_args.per_device_eval_batch_size': 4,
+           'training_args.per_device_train_batch_size': 4}}
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:223 | Got 4 runs for Initial.
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:227 | Completed creating models.
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:625 | Created models.
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:631 | Set experiment task to Training and Validation.
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:115 | Creating 1 worker processes...
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:121 | Starting worker processes in process group 8564
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:149 | Started Worker 0 with PID 8758
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | worker_manager | INFO | worker_manager.py:156 | Started 1 worker processes successfully
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:637 | Created 1 workers.
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:659 | Starting Training and Validation
+2026-05-30 22:08:59 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 4 on workers (0,) for chunk 0
+2026-05-30 22:09:17 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:157 | Worker 0 initialized with PID 8758
+2026-05-30 22:09:17 | exp-Qwen2.5-learning-rate | worker_0 | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-30 22:09:17 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:192 | Loaded datasets
+2026-05-30 22:09:17 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 4
+2026-05-30 22:09:17 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 4 with chunk 0
+2026-05-30 22:10:09 | exp-Qwen2.5-learning-rate | worker-0-shm | DEBUG | shm_manager.py:348 | Saved base_model for run Qwen/Qwen2.5-1.5B-Instruct
+2026-05-30 22:10:12 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 4 on chunk 0
+2026-05-30 22:23:54 | exp-Qwen2.5-learning-rate | worker-0-shm | DEBUG | shm_manager.py:445 | Checkpoint update:0 in-place, 7 new
+2026-05-30 22:23:54 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:473 | Saved checkpoint to shared memory for run 4 on chunk 0
+2026-05-30 22:23:56 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 4, chunk 0 on workers (0,)
+2026-05-30 22:23:56 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 4 completed steps - 76/152
+2026-05-30 22:23:56 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:773 | Run 4 has completed epoch (1/1 chunks)
+2026-05-30 22:23:56 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 2 on workers (0,) for chunk 0
+2026-05-30 22:23:57 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 2
+2026-05-30 22:23:57 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 2 with chunk 0
+2026-05-30 22:24:17 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 2 on chunk 0
+2026-05-30 22:38:06 | exp-Qwen2.5-learning-rate | worker-0-shm | DEBUG | shm_manager.py:445 | Checkpoint update:0 in-place, 7 new
+2026-05-30 22:38:06 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:473 | Saved checkpoint to shared memory for run 2 on chunk 0
+2026-05-30 22:38:08 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 2, chunk 0 on workers (0,)
+2026-05-30 22:38:08 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 2 completed steps - 76/152
+2026-05-30 22:38:08 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:773 | Run 2 has completed epoch (1/1 chunks)
+2026-05-30 22:38:08 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 3 on workers (0,) for chunk 0
+2026-05-30 22:38:08 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 3
+2026-05-30 22:38:08 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 3 with chunk 0
+2026-05-30 22:38:29 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 3 on chunk 0
+2026-05-30 22:52:30 | exp-Qwen2.5-learning-rate | worker-0-shm | DEBUG | shm_manager.py:445 | Checkpoint update:0 in-place, 7 new
+2026-05-30 22:52:30 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:473 | Saved checkpoint to shared memory for run 3 on chunk 0
+2026-05-30 22:52:32 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 3, chunk 0 on workers (0,)
+2026-05-30 22:52:32 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 3 completed steps - 76/152
+2026-05-30 22:52:32 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:773 | Run 3 has completed epoch (1/1 chunks)
+2026-05-30 22:52:32 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 1 on workers (0,) for chunk 0
+2026-05-30 22:52:32 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 1
+2026-05-30 22:52:32 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 1 with chunk 0
+2026-05-30 22:52:52 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 1 on chunk 0
+2026-05-30 23:06:49 | exp-Qwen2.5-learning-rate | worker-0-shm | DEBUG | shm_manager.py:445 | Checkpoint update:0 in-place, 7 new
+2026-05-30 23:06:49 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:473 | Saved checkpoint to shared memory for run 1 on chunk 0
+2026-05-30 23:06:51 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 1, chunk 0 on workers (0,)
+2026-05-30 23:06:51 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 1 completed steps - 76/152
+2026-05-30 23:06:51 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:773 | Run 1 has completed epoch (1/1 chunks)
+2026-05-30 23:06:51 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 4 on workers (0,) for chunk 0
+2026-05-30 23:06:51 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 4
+2026-05-30 23:06:51 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 4 with chunk 0
+2026-05-30 23:07:13 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 4 on chunk 0
+2026-05-30 23:20:39 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:453 | Saved final checkpoint to disk for run 4 on chunk 0
+2026-05-30 23:20:41 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 4, chunk 0 on workers (0,)
+2026-05-30 23:20:41 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 4 completed steps - 152/152
+2026-05-30 23:20:41 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:760 | Run 4 has completed all its epochs - steps 152/152
+2026-05-30 23:20:41 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 2 on workers (0,) for chunk 0
+2026-05-30 23:20:41 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 2
+2026-05-30 23:20:41 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 2 with chunk 0
+2026-05-30 23:21:02 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 2 on chunk 0
+2026-05-30 23:34:26 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:453 | Saved final checkpoint to disk for run 2 on chunk 0
+2026-05-30 23:34:28 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 2, chunk 0 on workers (0,)
+2026-05-30 23:34:28 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 2 completed steps - 152/152
+2026-05-30 23:34:28 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:760 | Run 2 has completed all its epochs - steps 152/152
+2026-05-30 23:34:28 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 3 on workers (0,) for chunk 0
+2026-05-30 23:34:28 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 3
+2026-05-30 23:34:28 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 3 with chunk 0
+2026-05-30 23:34:50 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 3 on chunk 0
+2026-05-30 23:48:18 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:453 | Saved final checkpoint to disk for run 3 on chunk 0
+2026-05-30 23:48:20 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 3, chunk 0 on workers (0,)
+2026-05-30 23:48:20 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 3 completed steps - 152/152
+2026-05-30 23:48:20 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:760 | Run 3 has completed all its epochs - steps 152/152
+2026-05-30 23:48:20 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:886 | Scheduled run 1 on workers (0,) for chunk 0
+2026-05-30 23:48:21 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:667 | Received task WorkerTask.TRAIN_VAL for run 1
+2026-05-30 23:48:21 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:205 | Received run_fit on worker for run 1 with chunk 0
+2026-05-30 23:48:41 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:378 | Beginning training for run 1 on chunk 0
+2026-05-31 00:01:59 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:453 | Saved final checkpoint to disk for run 1 on chunk 0
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:714 | Completed task: run 1, chunk 0 on workers (0,)
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:717 | Run 1 completed steps - 152/152
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:760 | Run 1 has completed all its epochs - steps 152/152
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | controller | INFO | controller.py:848 | Scheduler indicates all runs have completed all chunks
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | controller | DEBUG | controller.py:904 | Set experiment task to Idle.
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:163 | WorkerManager shutdown initiated...
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:167 | Signaling graceful shutdown...
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:712 | Worker 0 shutdown requested
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | worker_0 | INFO | worker_manager.py:50 | Worker 0 process exiting
+2026-05-31 00:02:01 | exp-Qwen2.5-learning-rate | worker_0 | DEBUG | worker.py:712 | Worker 0 shutdown requested
+2026-05-31 00:02:03 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:186 | All workers shutdown gracefully
+2026-05-31 00:02:03 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:163 | WorkerManager shutdown initiated...
+2026-05-31 00:02:03 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:167 | Signaling graceful shutdown...
+2026-05-31 00:02:03 | exp-Qwen2.5-learning-rate | worker_manager | DEBUG | worker_manager.py:186 | All workers shutdown gracefully
+2026-05-31 00:02:04 | exp-Qwen2.5-learning-rate | exp-Qwen2.5-learning-rate | DEBUG | experiment_utils.py:271 | Reset experiment states and set current experiment task to idle
+2026-05-31 00:02:04 | exp-Qwen2.5-learning-rate | exp-Qwen2.5-learning-rate | INFO | metric_rfmetric_manager.py:55 | Initialized MLflowMetricLogger: rf_mlflow
+2026-05-31 00:02:04 | exp-Qwen2.5-learning-rate | exp-Qwen2.5-learning-rate | INFO | metric_mlflow_manager.py:133 | No active MLflow run to clear
+2026-05-31 00:02:04 | exp-Qwen2.5-learning-rate | exp-Qwen2.5-learning-rate | INFO | experiment_utils.py:240 | Experiment exp-Qwen2.5-learning-rate ended
