@@ -1,8 +1,7 @@
-[2026-05-31 13:48:33 -0700] [2483] [INFO] Starting gunicorn 25.3.0
-[2026-05-31 13:48:33 -0700] [2483] [INFO] Listening at: http://127.0.0.1:8851 (2483)
-[2026-05-31 13:48:33 -0700] [2483] [INFO] Using worker: sync
-[2026-05-31 13:48:33 -0700] [2601] [INFO] Booting worker with pid: 2601
-[2026-05-31 13:48:33 -0700] [2483] [INFO] Control socket listening at /home/chl339/.gunicorn/gunicorn.ctl
-[2026-05-31 13:48:41 -0700] [2483] [INFO] Handling signal: winch
-[2026-05-31 13:48:41 -0700] [2483] [INFO] Handling signal: winch
-[2026-05-31 13:48:41 -0700] [2483] [INFO] Handling signal: winch
+[2026-05-31 18:33:01 -0700] [2612] [INFO] Starting gunicorn 25.3.0
+[2026-05-31 18:33:01 -0700] [2612] [INFO] Listening at: http://127.0.0.1:8851 (2612)
+[2026-05-31 18:33:01 -0700] [2612] [INFO] Using worker: sync
+[2026-05-31 18:33:01 -0700] [2681] [INFO] Booting worker with pid: 2681
+[2026-05-31 18:33:01 -0700] [2612] [INFO] Control socket listening at /home/chl339/.gunicorn/gunicorn.ctl
+[2026-05-31 18:33:37 -0700] [2612] [INFO] Handling signal: winch
+[2026-05-31 18:33:37 -0700] [2612] [INFO] Handling signal: winch
