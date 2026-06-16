@@ -1,203 +1,255 @@
-# Project 2 Release Packet -- CSE/DSC 234, Spring 2026
+# Schema Linking with LoRA-Tuned Qwen2.5
 
-This packet accompanies the Project 2 statement PDF. **Read the statement first**;
-this README only documents the files, commands, and a handful of likely gotchas.
+This repository contains a schema-linking pipeline for CSE/DSC 234 Project 2.
+Given a natural-language question and a target database schema, the system
+predicts the tables and columns needed to answer the question.
 
-## Quick-start checklist (read before writing code)
+This project uses a LoRA-tuned `Qwen/Qwen2.5-1.5B-Instruct` model with
+schema-aware JSON post-processing. On the validation set, the selected
+configuration achieves an overall schema-linking score of **0.4993**, with
+table score **0.5566** and column score **0.4421**.
 
-The following are easy to get wrong and will cost you score or break your runs:
+The overall score is `0.5 * table_score + 0.5 * column_score`. Each component
+score is the mean of precision, recall, and F1 at that granularity.
 
-- [ ] **`question_id` is per-file, not globally unique.** `train.json` has IDs
-      1..301, `validation_input.json` has 1..101, the hidden test has 1..N
-      starting at 1 again. Do not assume globally unique IDs across splits.
-- [ ] **Four `db_id` values contain spaces** and map to underscored filenames:
-      `"SBODemoUS-Business Partners"` → `schemas/SBODemoUS-Business_Partners.json`
-      (also `Human Resources`, `Inventory and Production`, `Sales Opportunities`).
-- [ ] **Schemas use Spider format.** Their `column_names_original` field is
-      a list of `[table_index, column_name]` pairs, plus a synthetic
-      `[-1, "*"]` entry at index 0 that you should ignore. See the loader
-      snippet below.
-- [ ] **A referenced table with no columns is `{"t": []}`, not omitted.**
-      `select count(*) from t` and `select * from t` both produce
-      `{"t": []}` for the table-only case.
-- [ ] **Hallucinated identifiers (not in schema) count as false positives.**
-      They lower your precision. Post-process your model's output to drop
-      identifiers absent from the target schema.
-- [ ] **Identifier casing in the output is matched case-insensitively** during
-      grading, but emit the schema's casing for easy debugging.
-- [ ] **Output order doesn't matter** (graded by `question_id`), but you must
-      output exactly one entry per input `question_id`.
-- [ ] **Commit the `schemas/` folder into your repo** so that `main.py` can
-      find it at `./schemas/` when graders run it.
+## Task
 
-## Loading a schema in Python
-
-```python
-import json
-def load_schema_as_dict(db_id, schemas_dir='./schemas'):
-    fname = db_id.replace(' ', '_').replace('/', '_') + '.json'
-    with open(f'{schemas_dir}/{fname}') as f:
-        s = json.load(f)
-    schema = {t: [] for t in s['table_names_original']}
-    for tidx, cname in s['column_names_original']:
-        if tidx == -1:       # skip the synthetic '*' entry
-            continue
-        schema[s['table_names_original'][tidx]].append(cname)
-    return schema  # {table_name: [col, col, ...]}
-```
-
-## Contents
-
-```
-release_packet/
-├── README.md                            (this file)
-├── schemas/                             one Spider-format JSON per database (17 dbs)
-│   ├── _index.json                      summary of all schemas
-│   ├── ASIS_20161108_HerpInv_Database.json
-│   ├── ATBI.json
-│   ├── ... (15 more)
-├── train.json                           301 training examples (q, db_id, gold_sql, schema_links)
-├── validation.json                      101 validation examples (same fields as train)
-├── validation_input.json                Same 101 questions in input-only format (what your main.py sees)
-├── validation_gold_schema_links.json    Parallel gold answers for the validation split
-├── eval.py                              Grader: computes Table & Column P/R/F1 + leaderboard score
-├── sql_to_schema_links.py               Helper: extract schema_links from any SQL (for data aug)
-└── sample_main.py                       Stub illustrating the expected CLI / I/O contract for main.py
-```
-
-## File formats
-
-### Schema file (Spider format)
-
-```json
-{
-  "db_id": "NTSB",
-  "table_names_original": ["AIRBAG", "CHILDSEAT", "CRASH", "CDC", "EVENT", ...],
-  "column_names_original": [
-      [-1, "*"],
-      [0, "CASEID"], [0, "PSU"], [0, "CASENO"], [0, "BAGDEPLOY"], ...,
-      [1, "CASEID"], [1, "SEATTYPE"], ...
-  ],
-  "column_types": ["int", "int", "int", "varchar", ...],
-  "primary_keys": [...],
-  "foreign_keys": [...]
-}
-```
-
-Each `column_names_original` entry is `[table_index, column_name]`. The first
-entry `[-1, "*"]` is a synthetic wildcard you should ignore for schema
-linking. See the loader snippet at the top of this README for a 6-line
-function that converts this into a `{table: [columns]}` Python dict.
-
-### Training example
+Input examples contain a question, a `db_id`, and a schema stored in Spider JSON
+format under `schemas/`. The model outputs a JSON object mapping referenced
+tables to referenced columns:
 
 ```json
 {
   "question_id": 1,
-  "db_id": "NTSB",
-  "question": "Show a count of injuries by body region where the injury severity is critical. The lookup code for critical injury is 5.",
-  "gold_sql": "SELECT REGION, COUNT(*) INJCOUNT FROM INJURY WHERE AIS = 5 GROUP BY REGION",
   "schema_links": {
     "INJURY": ["AIS", "REGION"]
   }
 }
 ```
 
-### Input to `main.py` (what TA grader feeds in)
+Tables referenced without specific columns are included with an empty list. For
+example, `select count(*) from AIRBAG` corresponds to:
 
 ```json
-[
-  {"question_id": 1, "db_id": "<DB_NAME>", "question": "<NL question>"},
-  ...
-]
+{"AIRBAG": []}
 ```
 
-### Output from `main.py` (what your model must produce)
+## Repository Layout
 
-```json
-[
-  {"question_id": 1,
-   "schema_links": {"<Table1>": ["<Col1>", "<Col2>"], "<Table2>": []}},
-  ...
-]
+```text
+.
+├── main.py                         # Inference entry point
+├── eval.py                         # Validation grader
+├── train.json                      # Training split with gold SQL and links
+├── validation.json                 # Validation split with gold SQL and links
+├── validation_input.json           # Input-only validation questions
+├── validation_gold_schema_links.json
+├── schemas/                        # Spider-format database schemas
+├── adapter/                        # Selected LoRA adapter
+├── all_adapters/                   # Saved adapters from ablations
+├── predictions/                    # Validation predictions from experiments
+├── eval_results.md                 # Full validation result tables
+├── scheme_linking_SFT.ipynb        # RapidFire AI SFT experiments
+└── scheme_linking_SFT_Qwen_lr.ipynb # Qwen learning-rate sweep
 ```
 
-A table referenced with no columns (e.g. `select count(*) from t`) MUST appear with
-an empty list, not be omitted. Identifier casing should match the schema (case-insensitive
-matching is applied during grading, but matching casing helps you debug).
+## Setup
 
-### Boundary cases for wildcards (`*`)
-
-The gold ground-truth treats SQL `*` as a syntactic wildcard, NOT as "all columns".
-Concretely:
-
-| Gold SQL                                  | Gold `schema_links`         |
-|-------------------------------------------|-----------------------------|
-| `select count(*) from t`                  | `{"t": []}`                 |
-| `select * from t`                         | `{"t": []}`                 |
-| `select * from t where x=1`               | `{"t": ["x"]}`              |
-| `select count(*), x from t group by x`    | `{"t": ["x"]}`              |
-| `select a from t1 join t2 on t1.k=t2.k`   | `{"t1": ["a","k"], "t2": ["k"]}` |
-
-Note that the table appears in the output even when no specific columns are named.
-This matches what `sql_to_schema_links.py` produces from any SQL.
-
-## Commands
-
-### Run the sample stub end-to-end and grade it
+Create a Python environment and install the inference dependencies:
 
 ```bash
-python sample_main.py \
-    --input  validation_input.json \
-    --output preds.json \
-    --schemas_dir schemas/
+python -m venv .venv
+source .venv/bin/activate
 
+pip install torch transformers peft accelerate tqdm
+```
+
+The training notebooks also require RapidFire AI and the usual SFT stack
+(`trl`, `datasets`, etc.).
+
+## Run Inference
+
+Run the selected model on the validation input:
+
+```bash
+python main.py \
+  --input validation_input.json \
+  --output preds.json \
+  --schemas_dir schemas \
+  --adapter adapter
+```
+
+The default adapter path is `./adapter`, so this shorter command is equivalent:
+
+```bash
+python main.py \
+  --input validation_input.json \
+  --output preds.json \
+  --schemas_dir schemas
+```
+
+To evaluate a different saved adapter:
+
+```bash
+python main.py \
+  --input validation_input.json \
+  --output preds_qwen_lr2e4.json \
+  --schemas_dir schemas \
+  --adapter all_adapters/qwen2.5-1.5b-lora-rank8-qv-3epoch-lr2e-4
+```
+
+## Evaluate Predictions
+
+```bash
 python eval.py \
-    --predictions preds.json \
-    --gold        validation_gold_schema_links.json \
-    --schemas_dir schemas/ \
-    --questions_input validation_input.json \
-    --per_question_out per_q.csv
+  --predictions preds.json \
+  --gold validation_gold_schema_links.json \
+  --schemas_dir schemas \
+  --questions_input validation_input.json \
+  --per_question_out per_question_metrics.csv
 ```
 
-### Generate schema_links for an SQL query (e.g. for augmentation)
+The evaluator reports table precision/recall/F1, column precision/recall/F1,
+table score, column score, and the combined overall schema-linking score.
 
-```bash
-python sql_to_schema_links.py --schemas_dir schemas/ \
-    --db_id NTSB \
-    --sql "select count(*) from AIRBAG where BAGDEPLOY = 'YES'"
+## Pipeline
+
+The pipeline has four stages:
+
+1. Load the target schema from `schemas/<db_id>.json`.
+2. Serialize the schema compactly as one table per line, e.g.
+   `TABLE_NAME(col1, col2, col3)`.
+3. Prompt `Qwen/Qwen2.5-1.5B-Instruct` with the database id, schema, question,
+   and JSON-only output rules.
+4. Extract the first valid JSON object from generation and canonicalize it
+   against the schema.
+
+Selected model and adapter settings:
+
+| Component | Setting |
+|---|---|
+| Base model | `Qwen/Qwen2.5-1.5B-Instruct` |
+| Adapter | LoRA |
+| LoRA rank | 8 |
+| LoRA alpha | 16 |
+| LoRA dropout | 0.1 |
+| Target modules | `q_proj`, `v_proj` |
+| Epochs | 3 |
+| Learning rate | `2e-4` |
+| Decoding | greedy, `max_new_tokens=256` |
+
+Post-processing removes hallucinated tables and columns, matches identifiers
+case-insensitively, deduplicates columns, and emits schema-canonical casing.
+This is important because invalid identifiers count as false positives during
+grading.
+
+## Training Methodology
+
+Training examples come from `train.json`. Each example provides:
+
+- `question_id`
+- `db_id`
+- natural-language `question`
+- `gold_sql`
+- gold `schema_links`
+
+The model is trained to produce `schema_links`, not SQL. For each example, the
+Spider-format schema is converted into compact text:
+
+```text
+TABLE_1(col_a, col_b, col_c)
+TABLE_2(col_d, col_e)
 ```
 
-Batch mode (over a list of `{db_id, gold_sql, ...}` records):
+The prompt uses a fixed chat format with a system instruction to return only
+valid JSON. The completion is the gold schema-link object serialized with sorted
+keys. We did not add data augmentation.
 
-```bash
-python sql_to_schema_links.py --schemas_dir schemas/ \
-    --batch_in  my_aug_queries.json \
-    --batch_out my_aug_queries_with_links.json
-```
+Experiments were run with RapidFire AI multi-config sweeps over base model,
+epoch count, learning rate, LoRA rank, and LoRA target modules. Training-time
+loss and token accuracy were used for diagnostics, while model selection was
+based on `eval.py` schema-linking metrics.
 
-## Dataset provenance
+## Results
 
-The NL questions, gold SQL queries, and database schemas are drawn from SNAILS
-[Luoma & Kumar, SIGMOD 2025], an artifact suite developed at UCSD ADALab.
-We extract per-question schema-link ground truth automatically from each gold
-SQL using `sqlglot` parsing + schema-aware column qualification (see
-`sql_to_schema_links.py`). The same extractor was used to build the training
-and validation splits in this packet.
+### Model Selection
 
-The hidden test set is drawn from the same source distribution and graded
-with the same `eval.py` script.
+The first comparison used rank-8 LoRA on `q_proj + v_proj` with learning rate
+`1e-4`.
 
-## Required Python dependencies
+| Model | Epochs | Table Score | Column Score | Overall Score |
+|---|---:|---:|---:|---:|
+| Qwen2.5-1.5B | 1 | 0.4619 | 0.2882 | 0.3750 |
+| Qwen2.5-1.5B | 2 | 0.4283 | 0.2928 | 0.3606 |
+| Qwen2.5-1.5B | 3 | 0.4994 | 0.3724 | 0.4359 |
+| Llama3.2-1B | 1 | 0.1169 | 0.0909 | 0.1039 |
+| Llama3.2-1B | 2 | 0.2150 | 0.1408 | 0.1779 |
+| SmolLM2-1.7B | 1 | 0.2589 | 0.1508 | 0.2049 |
+| SmolLM2-1.7B | 2 | 0.2903 | 0.1720 | 0.2312 |
 
-The grader (`eval.py`) uses only the Python standard library and has no
-third-party dependencies. The helper (`sql_to_schema_links.py`), which you
-will need only if you generate augmented training data, requires:
+Qwen2.5-1.5B was clearly strongest, especially on table detection, so later
+sweeps focused on Qwen.
 
-```
-sqlglot>=23.0
-```
+### Learning Rate and Epoch Sweep
 
-(Your own training/inference pipeline will additionally need `rapidfireai`,
-`transformers`, `trl`,
-`peft`, etc.; install those as part of your environment setup.)
+All runs below use Qwen2.5-1.5B with rank-8 LoRA on `q_proj + v_proj`.
+
+| Epochs | LR | Table Score | Column Score | Overall Score |
+|---:|---:|---:|---:|---:|
+| 1 | `5e-4` | 0.4669 | 0.3977 | 0.4323 |
+| 1 | `2e-4` | 0.4167 | 0.2748 | 0.3458 |
+| 1 | `1e-4` | 0.4619 | 0.2882 | 0.3750 |
+| 1 | `5e-5` | 0.4487 | 0.2763 | 0.3625 |
+| 1 | `1e-5` | 0.0490 | 0.0667 | 0.0578 |
+| 2 | `5e-4` | 0.5134 | 0.4110 | 0.4622 |
+| 2 | `2e-4` | 0.5114 | 0.4104 | 0.4609 |
+| 2 | `1e-4` | 0.4283 | 0.2928 | 0.3606 |
+| 2 | `5e-5` | 0.4609 | 0.3094 | 0.3852 |
+| 2 | `1e-5` | 0.2891 | 0.1977 | 0.2434 |
+| 3 | `5e-4` | 0.5280 | 0.4133 | 0.4707 |
+| 3 | `2e-4` | **0.5566** | **0.4421** | **0.4993** |
+| 3 | `1e-4` | 0.4994 | 0.3724 | 0.4359 |
+
+The best validation result came from 3 epochs and learning rate `2e-4`. Very
+low learning rates underfit badly, while `5e-4` was strong but slightly worse
+than `2e-4` after longer training.
+
+### LoRA Ablation
+
+These runs use Qwen2.5-1.5B, 3 epochs, and learning rate `2e-4`.
+
+| Config | Rank | Target Modules | Table Score | Column Score | Overall Score |
+|---|---:|---|---:|---:|---:|
+| qv | 8 | `q_proj + v_proj` | **0.5566** | **0.4421** | **0.4993** |
+| qv | 16 | `q_proj + v_proj` | 0.5200 | 0.4047 | 0.4623 |
+| qvko | 8 | `q_proj + v_proj + k_proj + o_proj` | 0.5252 | 0.3870 | 0.4561 |
+| qvko | 16 | `q_proj + v_proj + k_proj + o_proj` | 0.5553 | 0.4352 | 0.4953 |
+
+The simpler rank-8 `q_proj + v_proj` adapter performed best. Increasing adapter
+capacity did not consistently improve generalization on this small dataset.
+
+## Analysis
+
+Base model choice was the largest factor. Qwen2.5-1.5B substantially outscored
+Llama3.2-1B and SmolLM2-1.7B on both table and column metrics, likely because it
+followed the JSON-only instruction more reliably and handled schema grounding
+better.
+
+Learning rate and epoch count were the next most important knobs. Column-level
+metrics improved most from longer training at a moderate learning rate: the
+column score rose from 0.2748 at 1 epoch with `2e-4` to 0.4421 at 3 epochs with
+the same learning rate. Table-level predictions were easier; exact column
+selection remained the main source of errors.
+
+The LoRA ablation showed that bigger adapters are not automatically better.
+Rank 16 with more target modules nearly matched the best score, but the smaller
+rank-8 query/value adapter was still best. This suggests the dataset is small
+enough that extra adapter capacity can overfit training patterns without
+improving exact schema-link generalization.
+
+## Dataset Provenance
+
+The natural-language questions, SQL queries, and database schemas are drawn from
+SNAILS (Luoma & Kumar, SIGMOD 2025), an artifact suite developed at UCSD
+ADALab. Gold schema links are extracted automatically from SQL using
+`sqlglot` parsing plus schema-aware column qualification.
